@@ -89,7 +89,7 @@ CsoundForAndroid subdirectory of this repository and execute
 
 Run Android Studio and load the CsoundForAndroid/build.gradle project.
 
-Attach an Android device, enable USB debugging on it, and debug the
+Attach an Android device, enable USB debugging on it, and run or debug the
 CsoundApplication project.
 
 For a production build, apply to me for the signing key, build for

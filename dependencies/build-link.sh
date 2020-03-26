@@ -11,4 +11,4 @@ make
 
 cd ..
 
-echo "Finished building all local  dependencies of csound-extended."
+echo "Finished building all local dependencies of csound-android."

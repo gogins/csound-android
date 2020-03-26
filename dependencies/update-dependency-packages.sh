@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Updating all Debian packages required for csound-extended..."
+echo "Updating all Debian packages required for csound-android..."
 echo
 sudo apt-get update
 sudo apt-get upgrade
@@ -56,4 +56,4 @@ sudo apt-get install python3.5-dev
 echo "Updating sbcl..."
 sudo apt-get install sbcl
 
-echo "Finished updating all Debian packages required for csound-extended."
+echo "Finished updating all Debian packages required for csound-android."

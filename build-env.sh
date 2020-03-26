@@ -8,10 +8,10 @@ echo "Configure for Android/ARM..."
 unset CSOUND_HOME
 #export CSOUND_HOME=/home/mkg/csound/csound
 unset CSOUND_SRC_ROOT
-export CSOUND_SRC_ROOT=/home/mkg/csound-extended/dependencies/csound
+export CSOUND_SRC_ROOT=/home/mkg/csound-android/dependencies/csound
 #export CSOUND_HOME=/home/mkg/csound/csound
 unset NDK_MODULE_PATH
-export NDK_MODULE_PATH=/home/mkg/csound-extended/CsoundForAndroid/ndk-libraries
+export NDK_MODULE_PATH=/home/mkg/csound-android/CsoundForAndroid/ndk-libraries
 unset ANDROID_NDK_ROOT
 export ANDROID_NDK_ROOT=/home/mkg/Android/Sdk/ndk-bundle
 unset ANDROID_STUDIO_ROOT

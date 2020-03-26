@@ -1,5 +1,5 @@
 # csound-android
-![GitHub All Releases (total)](https://img.shields.io/github/downloads/gogins/csound-extended/total.svg)<br>
+![GitHub All Releases (total)](https://img.shields.io/github/downloads/gogins/csound-android/total.svg)<br>
 Michael Gogins<br>
 https://github.com/gogins<br>
 http://michaelgogins.tumblr.com
@@ -11,8 +11,8 @@ in an Android app that also integrates Csound with HTML5. Please note,
 dependencies of Csound for Android are fetched from the core Csound 
 repository, and rebuilt using the Android NDK.
 
-This code used to be maintained in the csound-extended repository but now 
-lives in its own repository for easier maintenance. You may notice some 
+This code used to live in the csound-extended repository but has been moved 
+into its own repository for easier maintenance. You may notice some 
 oddities and leftovers...
 
 This repository uses the core Csound packages, and some other third-party

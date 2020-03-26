@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Updating all source dependencies of csound-extended..."
+echo "Updating all source dependencies of csound-android..."
 cd dependencies
 bash update-dependency-downloads.sh
 bash update-dependency-packages.sh
@@ -9,4 +9,4 @@ bash update-dependency-cdns.sh
 bash patch-dependency-sources.sh
 ls -ll
 cd ..
-echo "Finished updating all source dependencies of csound-extended."
+echo "Finished updating all source dependencies of csound-android."

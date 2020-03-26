@@ -55,9 +55,9 @@ build# and which includes files from the `link` subdirectory.
 
 Prerequisites for building Csound for Android include:
 
-1.  You must install up to date versions of Android Studio, Android SDKs 
-    28, 27.1.1, 23, and 21, GDB, LLDB, the NDK, and build tools. Install these 
-    using the SDK manager.
+1.  You must install up to date versions of Android Studio, Android SDK 21 
+    and the current SDK, GDB, LLDB, the NDK, and build tools. Install these 
+    using the SDK Manager.
 
 2.  In order to enable local NDK builds (i.e. in individual subdirectories),
     you must set the following environment variables, probably in your

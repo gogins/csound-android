@@ -6,13 +6,13 @@ http://michaelgogins.tumblr.com
 
 ## Introduction
 
-This repository contains Csound for Android, almost all features of Csound 
+This repository contains Csound for Android: almost all features of Csound,  
 in an Android app that also integrates Csound with HTML5. Please note, 
 dependencies of Csound for Android are fetched from the core Csound 
-repository, and rebuilt using the Android NDK.
+repository and other places, and rebuilt using the Android NDK.
 
 This code used to live in the csound-extended repository but has been moved 
-into its own repository for easier maintenance. You may notice some 
+into this repository for easier maintenance. You may notice some 
 oddities and leftovers...
 
 This repository uses the core Csound packages, and some other third-party
@@ -32,16 +32,15 @@ repository.
 
 ## Building
 
-Currently, the supported platforms are Linux, Android, and WebAssembly.
-The code is generally "cross-platform" in nature and this build system could
-be adapted to build for Windows or OS X.
+First, please understand some general features of the build system, which 
+otherwise might seem odd. Some details are provided below, but in general, all 
+native build steps are performed by shell scripts calling ndk-build and SWIG, 
+as integrating these steps into Android Studio would be complex. Only once the 
+native libraries have been built, can the Csound for Android app be built in 
+Android Studio.
 
 First clone the Git repository at https://github.com/gogins/csound-android.
 
-Source `build-env.sh` to set useful environment variables, as below, for the 
-build and runtime environment on Linux. You may need to copy and modify this 
-script.
-  
 The following environment variables MUST be set before building, perhaps in
 your .profile script. Obviously, modify the paths as required to suit your
 home directory and installation details. These are exported in `build-env.sh` 

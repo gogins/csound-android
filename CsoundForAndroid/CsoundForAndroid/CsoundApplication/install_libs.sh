@@ -10,23 +10,24 @@ mkdir -p $JNILIBS/armeabi-v7a
 mkdir -p $JNILIBS/arm64-v8a
 mkdir -p $JNILIBS/x86_64
 
-
+echo "Copying ndk-build shared libraries..."
 find $NDK_MODULE_PATH -wholename "*/libs/arm64-v8a/*.so" -exec cp -f {} $JNILIBS/arm64-v8a/ ';' 
 find $NDK_MODULE_PATH -wholename "*/libs/armeabi-v7a/*.so" -exec cp -f {} $JNILIBS/armeabi-v7a/ ';'
 find $NDK_MODULE_PATH -wholename "*/libs/x86_64/*.so" -exec cp -f {} $JNILIBS/x86_64/ ';'
-
-rm -f $JNILIBS/arm64-v8a/libsndfile.so
-rm -f $JNILIBS/arm64-v8a/libc++_shared.so
-rm -f $JNILIBS/armeabi-v7a/libsndfile.so
-rm -f $JNILIBS/armeabi-v7a/libc++_shared.so
-rm -f $JNILIBS/x86_64/libsndfile.so
-rm -f $JNILIBS/x86_64/libc++_shared.so
+echo "Copying cmake shared libraries..."
+find $NDK_MODULE_PATH -wholename "*/release/arm64-v8a/*.so" -exec cp -f {} $JNILIBS/arm64-v8a/ ';' 
+find $NDK_MODULE_PATH -wholename "*/release/armeabi-v7a/*.so" -exec cp -f {} $JNILIBS/armeabi-v7a/ ';'
+find $NDK_MODULE_PATH -wholename "*/release/x86_64/*.so" -exec cp -f {} $JNILIBS/x86_64/ ';'
+echo "Copying CsoundAndroid shared libraries..."
+find $NDK_MODULE_PATH/.. -wholename "*/local/arm64-v8a/*.so" -exec cp -f {} $JNILIBS/arm64-v8a/ ';' 
+find $NDK_MODULE_PATH/.. -wholename "*/local/armeabi-v7a/*.so" -exec cp -f {} $JNILIBS/armeabi-v7a/ ';'
+find $NDK_MODULE_PATH/.. -wholename "*/local/x86_64/*.so" -exec cp -f {} $JNILIBS/x86_64/ ';'
 
 echo "These are the built and copied libs for the Csound for Android app:"
 find $JNILIBS -name "*.so" -ls
 find ../../CsoundAndroid/libs -name "*.so" -ls
 
-# Also copy other resources used by Csound opcodes.
+# Also copy other assets used by Csound opcodes or the Csound app.
 
 mkdir -p src/main/assets/samples/
 cp -f $CSOUND_SRC_ROOT/samples/* src/main/assets/samples

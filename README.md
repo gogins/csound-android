@@ -7,9 +7,9 @@ http://michaelgogins.tumblr.com
 ## Introduction
 
 This repository contains Csound for Android: almost all features of Csound,  
-in an Android app that also integrates Csound with HTML5. Please note, 
-dependencies of Csound for Android are fetched from the core Csound 
-repository and other places, and rebuilt using the Android NDK.
+in an Android app that also integrates Csound with HTML5 and a code editor. 
+Please note, dependencies of Csound for Android are fetched from the core 
+Csound repository and other places, and rebuilt using the Android NDK.
 
 This code used to live in the csound-extended repository but has been moved 
 into this repository for easier maintenance. You may notice some 
@@ -28,16 +28,16 @@ log.
 
 The Csound for Android app is available from the Google Play Store, or may
 be installed from the CsoundApplication-release.apk package released from this 
-repository.
+repository, or may be installed from a local build of the .apk file.
 
 ## Building
 
 First, please understand some general features of the build system, which 
 otherwise might seem odd. Some details are provided below, but in general, all 
 native build steps are performed by shell scripts calling ndk-build and SWIG, 
-as integrating these steps into Android Studio would be complex. Only once the 
-native libraries have been built, can the Csound for Android app be built in 
-Android Studio.
+as integrating these steps into Android Studio would be complex. Only once all 
+native libraries have been built and installed, can the Csound for Android app 
+be built in Android Studio.
 
 First clone the Git repository at https://github.com/gogins/csound-android.
 
@@ -55,8 +55,9 @@ build# and which includes files from the `link` subdirectory.
 
 Prerequisites for building Csound for Android include:
 
-1.  You must install Android Studio 3.0.1, Android SDKs 28, 27.1.1, 23, and 21,
-    GDB, LLDB, the NDK, and build tools 26.0.2.
+1.  You must install up to date versions of Android Studio, Android SDKs 
+    28, 27.1.1, 23, and 21, GDB, LLDB, the NDK, and build tools. Install these 
+    using the SDK manager.
 
 2.  In order to enable local NDK builds (i.e. in individual subdirectories),
     you must set the following environment variables, probably in your
@@ -82,9 +83,10 @@ CsoundForAndroid subdirectory of this repository and execute
     you think a dependency has changed.
 
 2.  Execute `bash build-android.sh`. The build system compiles all native
-    libraries, including the Csound library libcsoundandroid.so, required
-    by the Csound for Android app, and copies them to the
-    appropriate subdirectories for further building and packaging.
+    libraries, including the Csound library libcsoundandroid.so and its 
+    plugin opcode libraries, required by the Csound for Android app, and 
+    copies them to the appropriate subdirectories for further building and 
+    packaging.
 
 Run Android Studio and load the CsoundForAndroid/build.gradle project.
 
@@ -92,5 +94,6 @@ Attach an Android device, enable USB debugging on it, and run or debug the
 CsoundApplication project.
 
 For a production build, apply to me for the signing key, build for
-release, and generate a signed .apk.
+release, and generate a signed .apk. The signing key should be installed 
+in the csound-android/CsoundForAndroid/CsoundForAndroid directory.
 

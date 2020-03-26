@@ -143,7 +143,7 @@ fi
 cd ..
 
 echo "Installing binaries for the Csound for Android app..."
-rm -rf CsoundForAndroid/CsoundAndroid/src/main/java/csnd6
+rm -rf CsoundForAndroid/CsoundAndroid/src/main/java
 cp -r CsoundAndroid/src/csnd CsoundForAndroid/CsoundAndroid/src/main/java/
 rm -rf CsoundAndroid/src/csnd
 rm -rf CsoundForAndroid/CsoundAndroid/src/main/jniLibs

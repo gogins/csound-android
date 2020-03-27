@@ -7,7 +7,7 @@ http://michaelgogins.tumblr.com
 ## Introduction
 
 This repository contains Csound for Android: almost all features of Csound, 
-in an Android app with a built-in code editor that also integrates Csound with  
+in an Android app with a built-in code editor that also integrates Csound with 
 HTML5 and JavaScript.
 
 Csound for Android used to live in the 

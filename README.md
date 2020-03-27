@@ -8,7 +8,7 @@ http://michaelgogins.tumblr.com
 
 This repository contains Csound for Android: almost all features of Csound,  
 in an Android app with a built-in code editor that also integrates Csound with  
-HTML5and JavaScript.
+HTML5 and JavaScript.
 
 Csound for Android used to live in the 
 [csound-extended](https://github.com/gogins/csound-extended) repository but 
@@ -71,7 +71,7 @@ and some are built in OTHER subdirectories with their own makefiles that
 refer to source files in the ORIGINAL subdirectories. There is a naming
 convention, e.g. `link` is the original Git repository for the Ableton Link
 Kit which we do not build, and `link-opcodes` is our subdirectory which we do
-build# and which includes files from the `link` subdirectory.
+build and which includes files from the `link` subdirectory.
 
 Prerequisites for building Csound for Android include:
 
@@ -114,6 +114,6 @@ Attach an Android device, enable USB debugging on it, and run or debug the
 CsoundApplication project.
 
 If you need to make a production build, apply to me for the signing key, 
-build forrelease, and generate a signed .apk. The signing key should be 
+build for release, and generate a signed .apk. The signing key should be 
 placed in the csound-android/CsoundForAndroid/CsoundForAndroid directory.
 

@@ -7,7 +7,7 @@ http://michaelgogins.tumblr.com
 ## Introduction
 
 This repository contains Csound for Android: almost all features of Csound,  
-in an Android app with a built-in code editor that also integrates Csound with 
+in an Android app with a built-in code editor that also integrates Csound with  
 HTML5and JavaScript.
 
 Csound for Android used to live in the 
@@ -33,9 +33,9 @@ runs on the following platforms:
 - Devices running Android 5.1 or later with the following application binary 
   interfaces (ABIs):
 
- - armeabi-v7a
- - arm64-v8a
- - x86_64
+  - armeabi-v7a
+  - arm64-v8a
+  - x86_64
 
 - The [Anbox](https://anbox.io/) Android container running on Linux (tested 
   only with the x86_64 ABI, but armeabi-v7a and arm64-v8a _may_ also work).

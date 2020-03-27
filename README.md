@@ -6,7 +6,7 @@ http://michaelgogins.tumblr.com
 
 ## Introduction
 
-This repository contains Csound for Android: almost all features of Csound,  
+This repository contains Csound for Android: almost all features of Csound, 
 in an Android app with a built-in code editor that also integrates Csound with  
 HTML5 and JavaScript.
 
@@ -14,6 +14,9 @@ Csound for Android used to live in the
 [csound-extended](https://github.com/gogins/csound-extended) repository but 
 has been moved into its own repository for easier maintenance. You may notice 
 some oddities and leftovers...
+
+For earlier releases and tags, please use 
+[csound-extended](https://github.com/gogins/csound-extended)
 
 This repository uses the core Csound packages, and some other third-party
 dependencies, as Git submodules, packages, or direct source downloads. These 

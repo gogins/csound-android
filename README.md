@@ -7,22 +7,42 @@ http://michaelgogins.tumblr.com
 ## Introduction
 
 This repository contains Csound for Android: almost all features of Csound,  
-in an Android app that also integrates Csound with HTML5 and a code editor. 
-Please note, dependencies of Csound for Android are fetched from the core 
-Csound repository and other places, and rebuilt using the Android NDK.
+in an Android app with a built-in code editor that also integrates Csound with 
+HTML5and JavaScript.
 
-This code used to live in the csound-extended repository but has been moved 
-into this repository for easier maintenance. You may notice some 
-oddities and leftovers...
+Csound for Android used to live in the 
+[csound-extended](https://github.com/gogins/csound-extended) repository but 
+has been moved into its own repository for easier maintenance. You may notice 
+some oddities and leftovers...
 
 This repository uses the core Csound packages, and some other third-party
-dependencies, as Git submodules, packages, or direct source downloads. 
+dependencies, as Git submodules, packages, or direct source downloads. These 
+dependencies are rebuilt using the Android NDK.
+
+See https://github.com/gogins/csound-android/commits/develop for the commit
+log.
 
 Please log any bug reports or requests for enhancements at
 https://github.com/gogins/csound-android/issues.
 
-See https://github.com/gogins/csound-android/commits/develop for the commit
-log.
+## Supported Platforms
+
+The Csound for Android app is built for 64 bit CPU architecture only. The app 
+runs on the following platforms:
+
+- Devices running Android 5.1 or later with the following application binary 
+  interfaces (ABIs):
+
+ - armeabi-v7a
+ - arm64-v8a
+ - x86_64
+
+- The [Anbox](https://anbox.io/) Android container running on Linux (tested 
+  only with the x86_64 ABI, but armeabi-v7a and arm64-v8a _may_ also work).
+
+For those wishing to develop the same Csound compositions on both Android and 
+Linux, Anbox provides seamless inter-operation. Csound on Anbox runs almost as 
+fast as native Csound.
 
 ## Installation
 
@@ -41,8 +61,8 @@ be built in Android Studio.
 
 First clone the Git repository at https://github.com/gogins/csound-android.
 
-The following environment variables MUST be set before building, perhaps in
-your .profile script. Obviously, modify the paths as required to suit your
+The following environment mentioned below MUST be set before building, perhaps 
+in your .profile script. Obviously, modify the paths as required to suit your
 home directory and installation details. These are exported in `build-env.sh` 
 which you can source in your .profile script.
 
@@ -55,9 +75,9 @@ build# and which includes files from the `link` subdirectory.
 
 Prerequisites for building Csound for Android include:
 
-1.  You must install up to date versions of Android Studio, Android SDK 21 
+1.  You must install up to date versions of Android Studio, Android SDK 22 
     and the current SDK, GDB, LLDB, the NDK, and build tools. Install these 
-    using the SDK Manager.
+    using Android Studio's SDK Manager.
 
 2.  In order to enable local NDK builds (i.e. in individual subdirectories),
     you must set the following environment variables, probably in your
@@ -93,7 +113,7 @@ Run Android Studio and load the CsoundForAndroid/build.gradle project.
 Attach an Android device, enable USB debugging on it, and run or debug the
 CsoundApplication project.
 
-For a production build, apply to me for the signing key, build for
-release, and generate a signed .apk. The signing key should be installed 
-in the csound-android/CsoundForAndroid/CsoundForAndroid directory.
+If you need to make a production build, apply to me for the signing key, 
+build forrelease, and generate a signed .apk. The signing key should be 
+placed in the csound-android/CsoundForAndroid/CsoundForAndroid directory.
 

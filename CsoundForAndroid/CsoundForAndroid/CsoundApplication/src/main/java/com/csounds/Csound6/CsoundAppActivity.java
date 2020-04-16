@@ -367,7 +367,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     public void stopRendering() {
-        csound_oboe.stop();
+        csound_oboe.Stop();
         postMessage("Csound has been stopped.\n");
     }
 

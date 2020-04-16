@@ -342,9 +342,9 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         if (csound_uri.toString().toLowerCase().endsWith(".csd")) {
             int result = 0;
             String filepath = uriToFilepath(csound_uri);
-            result = csound_oboe.compileCsdText(code);
-            result = csound_oboe.start();
-            result = csound_oboe.performAndReset();
+            result = csound_oboe.CompileCsdText(code);
+            result = csound_oboe.Start();
+            result = csound_oboe.PerformAndReset();
         }
     }
 
@@ -700,7 +700,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         try {
             synchronized (this) {
                 if (csound_oboe != null) {
-                    csound_oboe.stop();
+                    csound_oboe.Stop();
                 }
             }
         } catch (Exception e) {
@@ -835,7 +835,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                         double value = progress / (double) seekBar.getMax();
                         synchronized (this) {
                             if (csound_oboe != null) {
-                                csound_oboe.setChannel(channelName, value);
+                                csound_oboe.SetChannel(channelName, value);
                             }
                         }
                     }
@@ -852,13 +852,13 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         synchronized (this) {
                             if (csound_oboe != null) {
-                                csound_oboe.setChannel(channelName, 1);
+                                csound_oboe.SetChannel(channelName, 1.);
                             }
                         }
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
                         synchronized (this) {
                             if (csound_oboe != null) {
-                                csound_oboe.setChannel(channelName, 0);
+                                csound_oboe.SetChannel(channelName, 0.);
                             }
                         }
                      }
@@ -892,8 +892,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     ypos = 1. - (event.getY() / v.getHeight());
                     synchronized (this) {
                         if (csound_oboe != null) {
-                            csound_oboe.setChannel("trackpad.x", xpos);
-                            csound_oboe.setChannel("trackpad.y", ypos);
+                            csound_oboe.SetChannel("trackpad.x", xpos);
+                            csound_oboe.SetChannel("trackpad.y", ypos);
                         }
                     }
                 }
@@ -916,9 +916,9 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     double accelerometerZ = event.values[2];
                     synchronized (this) {
                         if (csound_oboe != null) {
-                            csound_oboe.setChannel("accelerometerX", accelerometerX);
-                            csound_oboe.setChannel("accelerometerY", accelerometerY);
-                            csound_oboe.setChannel("accelerometerZ", accelerometerZ);
+                            csound_oboe.SetChannel("accelerometerX", accelerometerX);
+                            csound_oboe.SetChannel("accelerometerY", accelerometerY);
+                            csound_oboe.SetChannel("accelerometerZ", accelerometerZ);
                         }
                     }
                 }
@@ -1147,7 +1147,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
 
     @JavascriptInterface
     public void setControlChannel(String channelName, double value) {
-        csound_oboe.setChannel(channelName, value);
+        csound_oboe.SetChannel(channelName, value);
     }
 
     @JavascriptInterface

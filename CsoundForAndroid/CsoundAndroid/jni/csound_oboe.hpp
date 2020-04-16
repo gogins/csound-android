@@ -778,6 +778,9 @@ public:
     virtual int compileCsd(const char *csd){
         return CompileCsd(csd);
     }
+    virtual int CompileCsdText(const char *csd_text){
+        return CsoundThreaded::CompileCsdText(csd_text);
+    }
     virtual int compileCsdText(const char *csd_text){
         return CompileCsdText(csd_text);
     }
@@ -798,6 +801,9 @@ public:
     }
     virtual CSOUND *getCsound(){
         return GetCsound();
+    }
+    virtual MYFLT GetChannel(const char *name){
+        return CsoundThreaded::GetControlChannel(name, 0);
     }
     virtual MYFLT getChannel(const char *name){
         return GetControlChannel(name, 0);
@@ -932,10 +938,13 @@ public:
         return RunUtility(name, argc, argv);
     }
     virtual void setAudioChannel(const char *name, MYFLT *samples){
-        SetChannel(name, samples);
+        CsoundThreaded::SetChannel(name, samples);
+    }
+    virtual void SetChannel(const char *name, double value){
+        CsoundThreaded::SetControlChannel(name, value);
     }
     virtual void setChannel(const char *name, double value){
-        SetControlChannel(name, value);
+        SetChannel(name, value);
     }
     virtual void setControlChannel(const char *name, double value){
         SetControlChannel(name, value);

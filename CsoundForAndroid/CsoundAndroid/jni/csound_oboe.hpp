@@ -476,14 +476,28 @@ public
 %}
 #endif
 
+// For the purpose of making the Csound API consistent across all of the
+// JavaScript-enabled platforms supported by Csound, all methods exposed to 
+// the JavaScript context are defined here in both camel case and initial 
+// caps, and are implemented by delegating to the real definitions declared 
+// here or in base classes with initial caps. All these methods also are 
+// annotated for exposure to WebKit by SWIG at the head of this file. 
+// NOTE: Please keep ALL of these methods in alphabetical order. Also, it is 
+// IMPERATIVE to keep the semantics completely consistent with csound.hpp.
+
 class PUBLIC CsoundOboe : public CsoundThreaded, public oboe::AudioStreamCallback
 {
 public:
+    virtual ~CsoundOboe()
+    {
+    }
+    
     CsoundOboe()
     {
         stabilized_callback = new oboe::StabilizedCallback(this);
         internal_reset();
     }
+    
     virtual void internal_reset() {
         timeout_nanoseconds = 1000000;
         frames_per_kperiod = 0;
@@ -498,12 +512,6 @@ public:
         audio_stream_out = nullptr;
         zero_dbfs = 32767.;
     }
-    virtual ~CsoundOboe()
-    {
-    }
-    
-    void play() {
-    }
     
     void oboeStopThreadRoutine()
     {
@@ -511,7 +519,7 @@ public:
             audio_stream_out->close();
         }
     }
-
+    
     /** 
      * This callback is used for both audio input from Oboe, and audio output 
      * to Oboe. We do not assume that Csound and Oboe use the same size of 
@@ -612,6 +620,415 @@ public:
         return oboe::DataCallbackResult::Continue;
     }
     
+    virtual int Cleanup(){
+        return CsoundThreaded::Cleanup();
+    }
+    virtual int cleanup(){
+        return CsoundThreaded::Cleanup();
+    }
+    
+    virtual int CompileCsd(const char *csd){
+        return CsoundThreaded::CompileCsd(csd);
+    }
+    virtual int compileCsd(const char *csd){
+        return CsoundThreaded::CompileCsd(csd);
+    }
+
+    virtual int CompileCsdText(const char *csd_text){
+        return CsoundThreaded::CompileCsdText(csd_text);
+    }
+    virtual int compileCsdText(const char *csd_text){
+        return CsoundThreaded::CompileCsdText(csd_text);
+    }
+    
+    virtual int CompileOrc(const char *str){
+        return CsoundThreaded::CompileOrc(str);
+    }
+    virtual int compileOrc(const char *str){
+        return CsoundThreaded::CompileOrc(str);
+    }
+
+    virtual MYFLT EvalCode(const char *str){
+        return CsoundThreaded::EvalCode(str);
+    }
+    virtual MYFLT evalCode(const char *str){
+        return CsoundThreaded::EvalCode(str);
+    }
+
+    virtual MYFLT Get0dBFS(){
+        return CsoundThreaded::Get0dBFS();
+    }
+    virtual MYFLT get0dBFS(){
+        return CsoundThreaded::Get0dBFS();
+    }
+
+    virtual int GetAPIVersion(){
+        return CsoundThreaded::GetAPIVersion();
+    }
+    virtual int getAPIVersion(){
+        return CsoundThreaded::GetAPIVersion();
+    }
+
+    virtual void GetAudioChannel(const char *name, MYFLT *samples){
+        CsoundThreaded::GetAudioChannel(name,samples);
+    }
+    virtual void getAudioChannel(const char *name, MYFLT *samples){
+        CsoundThreaded::GetAudioChannel(name,samples);
+    }
+
+    virtual CSOUND *GetCsound(){
+        return CsoundThreaded::GetCsound();
+    }
+    virtual CSOUND *getCsound(){
+        return CsoundThreaded::GetCsound();
+    }
+
+    virtual MYFLT GetChannel(const char *name){
+        int *nada = nullptr;
+        return CsoundThreaded::GetControlChannel(name, nada);
+    }
+    virtual MYFLT getChannel(const char *name){
+        int *nada = nullptr;
+        return CsoundThreaded::GetControlChannel(name, nada);
+    }
+
+    virtual MYFLT GetControlChannel(const char *name){
+        int *nada = nullptr;
+        return CsoundThreaded::CsoundThreaded::GetControlChannel(name, nada);
+    }
+    virtual MYFLT getControlChannel(const char *name){
+        int *nada = nullptr;
+        return CsoundThreaded::GetControlChannel(name, nada);
+    }
+
+    virtual long GetCurrentTimeSamples(){
+        return CsoundThreaded::GetCurrentTimeSamples();
+    }
+    virtual long getCurrentTimeSamples(){
+        return CsoundThreaded::GetCurrentTimeSamples();
+    }
+
+    virtual const char *GetEnv(const char *name){
+        return CsoundThreaded::GetEnv(name);
+    }
+    virtual const char *getEnv(const char *name){
+        return CsoundThreaded::GetEnv(name);
+    }
+
+    virtual MYFLT GetKr(){
+        return CsoundThreaded::GetKr();
+    }
+    virtual MYFLT getKr(){
+        return CsoundThreaded::GetKr();
+    }
+
+    virtual int GetKsmps(){
+        return CsoundThreaded::GetKsmps();
+    }
+    virtual int getKsmps(){
+        return CsoundThreaded::GetKsmps();
+    }
+
+    virtual int GetMessageLevel(){
+        return CsoundThreaded::GetMessageLevel();
+    }
+    virtual int getMessageLevel(){
+        return CsoundThreaded::GetMessageLevel();
+    }
+
+    virtual int GetNchnls(){
+        return CsoundThreaded::GetNchnls();
+    }
+    virtual int getNchnls(){
+        return CsoundThreaded::GetNchnls();
+    }
+
+    virtual int GetNchnlsInput(){
+        return CsoundThreaded::GetNchnlsInput();
+    }
+    virtual int getNchnlsInput(){
+        return CsoundThreaded::GetNchnlsInput();
+    }
+
+    virtual const char *GetOutputName(){
+        return CsoundThreaded::GetOutputName();
+    }
+    virtual const char *getOutputName(){
+        return CsoundThreaded::GetOutputName();
+    }
+
+    virtual MYFLT GetScoreOffsetSeconds(){
+        return CsoundThreaded::GetScoreOffsetSeconds();
+    }
+    virtual MYFLT getScoreOffsetSeconds(){
+        return CsoundThreaded::GetScoreOffsetSeconds();
+    }
+
+    virtual double GetScoreTime(){
+        return CsoundThreaded::GetScoreTime();
+    }
+    virtual double getScoreTime(){
+        return CsoundThreaded::GetScoreTime();
+    }
+
+    virtual MYFLT GetSr(){
+        return CsoundThreaded::GetSr();
+    }
+    virtual MYFLT getSr(){
+        return CsoundThreaded::GetSr();
+    }
+
+    virtual void GetStringChannel(const char *name, char *string){
+        CsoundThreaded::GetStringChannel(name,string);
+    }
+    virtual void getStringChannel(const char *name, char *string){
+        CsoundThreaded::GetStringChannel(name,string);
+    }
+
+    virtual int GetVersion(){
+        return CsoundThreaded::GetVersion();
+    }
+    virtual int getVersion(){
+        return CsoundThreaded::GetVersion();
+    }
+
+    virtual void InputMessage(const char *message){
+        CsoundThreaded::InputMessage(message);
+    }
+    virtual void inputMessage(const char *message){
+        CsoundThreaded::InputMessage(message);
+    }
+
+    virtual int IsScorePending(){
+        return CsoundThreaded::IsScorePending();
+    }
+    virtual int isScorePending(){
+        return CsoundThreaded::IsScorePending();
+    }
+
+    virtual void KeyPressed(char c){
+        CsoundThreaded::KeyPressed(c);
+    }
+    virtual void keyPressed(char c){
+        CsoundThreaded::KeyPressed(c);
+    }
+
+#if defined(SWIG)
+%proxycode %{
+    @JavascriptInterface
+    public void Message(String text) {
+        message(text);
+    }
+%}
+#endif
+    virtual void message(const char *text){
+        CsoundThreaded::Message(text);
+    }
+    
+   /**
+     * When Oboe is driving the performance, this is a dummy;
+     * otherwise, Csound runs in a separate thread of execution.
+     */
+    virtual int Perform()
+    {
+        Message("CsoundOboe::Perform...\n");
+        if (audio_stream_out != nullptr) {
+            return 0;
+        }
+        if (audio_stream_in != nullptr) {
+            return 0;
+        }
+        return CsoundThreaded::Perform();
+    }
+    virtual int perform(){
+        return Perform();
+    }
+    
+    virtual int PerformAndReset()
+    {
+        Message("CsoundOboe::PerformAndReset...\n");
+        if (audio_stream_out != nullptr) {
+            return 0;
+        }
+        if (audio_stream_in != nullptr) {
+            return 0;
+        }
+        return CsoundThreaded::PerformAndReset();
+    }
+    virtual int performAndReset()
+    {
+        return PerformAndReset();
+    }
+
+    void Play() {
+    }
+    void play() {
+        Play();
+    }
+        
+    virtual int PvsinSet(const PVSDATEXT* value, const char *name){
+        return CsoundThreaded::PvsinSet(value, name);
+    }
+    virtual int pvsinSet(const PVSDATEXT* value, const char *name){
+        return CsoundThreaded::PvsinSet(value, name);
+    }
+
+    virtual int PvsoutGet(PVSDATEXT* value, const char *name){
+        return CsoundThreaded::PvsoutGet(value, name);
+    }
+    virtual int pvsoutGet(PVSDATEXT* value, const char *name){
+        return CsoundThreaded::PvsoutGet(value, name);
+    }
+
+    virtual int ReadScore(const char *str) {
+        return CsoundThreaded::ReadScore(str);
+    }
+    virtual int readScore(const char *str) {
+        return CsoundThreaded::ReadScore(str);
+    }
+    
+    virtual void Reset(){
+        CsoundThreaded::Reset();
+    }
+    virtual void reset(){
+        CsoundThreaded::Reset();
+    }
+
+    virtual void RewindScore(){
+        CsoundThreaded::RewindScore();
+    }
+    virtual void rewindScore(){
+        CsoundThreaded::RewindScore();
+    }
+
+    virtual int RunUtility(const char *name, int argc, char **argv)
+    {
+        return CsoundThreaded::RunUtility(name, argc, argv);
+    }
+    virtual int runUtility(const char *name, int argc, char **argv)
+    {
+        return CsoundThreaded::RunUtility(name, argc, argv);
+    }
+
+    virtual int ScoreEvent(char type, const MYFLT *pFields, long numFields){
+        return CsoundThreaded::ScoreEvent(type, pFields, numFields);
+    }
+    virtual int scoreEvent(char type, const MYFLT *pFields, long numFields){
+        return CsoundThreaded::ScoreEvent(type, pFields, numFields);
+    }
+    
+    virtual void SetAudioChannel(const char *name, MYFLT *samples){
+        CsoundThreaded::SetChannel(name, samples);
+    }
+    virtual void setAudioChannel(const char *name, MYFLT *samples){
+        CsoundThreaded::SetChannel(name, samples);
+    }
+
+    virtual void SetChannel(const char *name, char *string){
+        CsoundThreaded::SetStringChannel(name, string);
+    }
+    virtual void setChannel(const char *name, char *string){
+        CsoundThreaded::SetStringChannel(name, string);
+    }
+
+    virtual void SetChannel(const char *name, double value){
+        CsoundThreaded::SetChannel(name, value);
+    }
+    virtual void setChannel(const char *name, double value){
+        CsoundThreaded::SetChannel(name, value);
+    }
+
+    virtual void SetControlChannel(const char *name, double value){
+        CsoundThreaded::SetControlChannel(name, value);
+    }
+    virtual void setControlChannel(const char *name, double value){
+        CsoundThreaded::SetControlChannel(name, value);
+    }
+
+    virtual void SetInput(const char *name){
+        CsoundThreaded::SetInput(name);
+    }
+    virtual void setInput(const char *name){
+        CsoundThreaded::SetInput(name);
+    }
+
+    virtual int SetGlobalEnv(const char *name, const char *value){
+        return CsoundThreaded::SetGlobalEnv(name, value);
+    }
+    virtual int setGlobalEnv(const char *name, const char *value){
+        return CsoundThreaded::SetGlobalEnv(name, value);
+    }
+    
+    virtual void SetMessageLevel(int messageLevel){
+        CsoundThreaded::SetMessageLevel(messageLevel);
+    }
+    virtual void setMessageLevel(int messageLevel){
+        CsoundThreaded::SetMessageLevel(messageLevel);
+    }
+
+    virtual void SetMIDIFileInput(const char *name){
+        CsoundThreaded::SetMIDIFileInput(name);
+    }
+    virtual void setMIDIFileInput(const char *name){
+        CsoundThreaded::SetMIDIFileInput(name);
+    }
+
+    virtual void SetMIDIFileOutput(const char *name){
+        CsoundThreaded::SetMIDIFileOutput(name);
+    }
+    virtual void setMIDIFileOutput(const char *name){
+        CsoundThreaded::SetMIDIFileOutput(name);
+    }
+
+    virtual void SetMIDIInput(const char *name){
+        CsoundThreaded::SetMIDIInput(name);
+    }
+    virtual void setMIDIInput(const char *name){
+        CsoundThreaded::SetMIDIInput(name);
+    }
+
+    virtual void SetMIDIOutput(const char *name){
+        CsoundThreaded::SetMIDIOutput(name);
+    }
+    virtual void setMIDIOutput(const char *name){
+        CsoundThreaded::SetMIDIOutput(name);
+    }
+
+    virtual int SetOption(const char *option){
+        return CsoundThreaded::SetOption(option);
+    }
+    virtual int setOption(const char *option){
+        return CsoundThreaded::SetOption(option);
+    }
+
+    virtual void SetOutput(const char *name,const char *type,const char *format){
+        CsoundThreaded::SetOutput(name, type, format);
+    }
+    virtual void setOutput(const char *name,const char *type,const char *format){
+        CsoundThreaded::SetOutput(name, type, format);
+    }
+
+    virtual void SetScoreOffsetSeconds(double time){
+        CsoundThreaded::SetScoreOffsetSeconds((MYFLT) time);
+    }
+    virtual void setScoreOffsetSeconds(double time){
+        CsoundThreaded::SetScoreOffsetSeconds((MYFLT) time);
+    }
+
+    virtual void SetScorePending(int pending){
+        CsoundThreaded::SetScorePending(pending);
+    }
+    virtual void setScorePending(int pending){
+        CsoundThreaded::SetScorePending(pending);
+    }
+    
+    virtual void SetStringChannel(const char *name, char *string){
+        CsoundThreaded::SetStringChannel(name, string);
+    }
+    virtual void setStringChannel(const char *name, char *string){
+        CsoundThreaded::SetStringChannel(name, string);
+    }
+
     virtual int Start()
     {
         Message("CsoundOboe::Start...\n");
@@ -725,32 +1142,11 @@ public:
          }
         return 0;
     }
-    /**
-     * When Oboe is driving the performance, this is a dummy;
-     * otherwise, Csound runs in a separate thread of execution.
-     */
-    virtual int Perform()
+    virtual int start() 
     {
-        Message("CsoundOboe::Perform...\n");
-        if (audio_stream_out != nullptr) {
-            return 0;
-        }
-        if (audio_stream_in != nullptr) {
-            return 0;
-        }
-        return CsoundThreaded::Perform();
+        return Start();
     }
-    virtual int PerformAndReset()
-    {
-        Message("CsoundOboe::PerformAndReset...\n");
-        if (audio_stream_out != nullptr) {
-            return 0;
-        }
-        if (audio_stream_in != nullptr) {
-            return 0;
-        }
-        return CsoundThreaded::PerformAndReset();
-    }
+    
     virtual void Stop()
     {
         Message("CsoundOboe::Stop...\n");
@@ -764,206 +1160,34 @@ public:
         }
         Csound::Stop();
     }
-    // For the purpose of making the Csound API consistent across all of the
-    // JavaScript-enabled platforms supported by Csound, all methods exposed
-    // to the JavaScript context are redeclared here in camel case, and are
-    // implemented by delegating to the real definitions declared with initial
-    // caps. These methods also are annotated for exposure to WebKit by SWIG
-    // at the head of this file. NOTE: Please keep these methods in
-    // alphabetical order. Also, it is IMPERATIVE to keep the semantics
-    // completely consistent with csound.hpp.
-    virtual int cleanup(){
-        return Cleanup();
-    }
-    virtual int compileCsd(const char *csd){
-        return CompileCsd(csd);
-    }
-    virtual int CompileCsdText(const char *csd_text){
-        return CsoundThreaded::CompileCsdText(csd_text);
-    }
-    virtual int compileCsdText(const char *csd_text){
-        return CompileCsdText(csd_text);
-    }
-    virtual int compileOrc(const char *str){
-        return CompileOrc(str);
-    }
-    virtual MYFLT evalCode(const char *str){
-        return EvalCode(str);
-    }
-    virtual MYFLT get0dBFS(){
-        return Get0dBFS();
-    }
-    virtual int getAPIVersion(){
-        return GetAPIVersion();
-    }
-    virtual void getAudioChannel(const char *name, MYFLT *samples){
-        GetAudioChannel(name,samples);
-    }
-    virtual CSOUND *getCsound(){
-        return GetCsound();
-    }
-    virtual MYFLT GetChannel(const char *name){
-        return CsoundThreaded::GetControlChannel(name, 0);
-    }
-    virtual MYFLT getChannel(const char *name){
-        return GetControlChannel(name, 0);
-    }
-    virtual MYFLT getControlChannel(const char *name){
-        return GetControlChannel(name, 0);
-    }
-    virtual long getCurrentTimeSamples(){
-        return GetCurrentTimeSamples();
-    }
-    virtual const char *getEnv(const char *name){
-        return GetEnv(name);
-    }
-    virtual MYFLT getKr(){
-        return GetKr();
-    }
-    virtual int getKsmps(){
-        return GetKsmps();
-    }
-    virtual int getMessageLevel(){
-        return GetMessageLevel();
-    }
-    virtual int getNchnls(){
-        return GetNchnls();
-    }
-    virtual int getNchnlsInput(){
-        return GetNchnlsInput();
-    }
-    virtual const char *getOutputName(){
-        return GetOutputName();
-    }
-    virtual MYFLT getScoreOffsetSeconds(){
-        return GetScoreOffsetSeconds();
-    }
-    virtual double getScoreTime(){
-        return GetScoreTime();
-    }
-     virtual MYFLT getSr(){
-        return GetSr();
-    }
-    virtual void getStringChannel(const char *name, char *string){
-        GetStringChannel(name,string);
-    }
-    virtual int getVersion(){
-        return GetVersion();
-    }
-    virtual void inputMessage(const char *message){
-        InputMessage(message);
-    }
-    virtual int isScorePending(){
-        return IsScorePending();
-    }
-    virtual void keyPressed(char c){
-        KeyPressed(c);
-    }
-    virtual void message(const char *text){
-        Message(text);
-    }
-#if defined(SWIG)
-%proxycode %{
-    @JavascriptInterface
-    public void Message(String text) {
-        message(text);
-    }
-%}
-#endif
-    virtual int perform(){
-        return Perform();
-    }
-    virtual int performAndReset(){
-        return PerformAndReset();
-    }
-    virtual int pvsinSet(const PVSDATEXT* value, const char *name){
-        return PvsinSet(value, name);
-    }
-    virtual int pvsoutGet(PVSDATEXT* value, const char *name){
-        return PvsoutGet(value, name);
-    }
-    virtual int readScore(const char *str) {
-        return ReadScore(str);
-    }
-    virtual void reset(){
-        Reset();
-    }
-    virtual void rewindScore(){
-        RewindScore();
-    }
-    virtual void setInput(const char *name){
-        SetInput(name);
-    }
-    virtual int setGlobalEnv(const char *name, const char *value){
-        return SetGlobalEnv(name, value);
-    }
-    virtual void setMessageLevel(int messageLevel){
-        SetMessageLevel(messageLevel);
-    }
-    virtual void setMIDIFileInput(const char *name){
-        SetMIDIFileInput(name);
-    }
-    virtual void setMIDIFileOutput(const char *name){
-        SetMIDIFileOutput(name);
-    }
-    virtual void setMIDIInput(const char *name){
-        SetMIDIInput(name);
-    }
-    virtual void setMIDIOutput(const char *name){
-        SetMIDIOutput(name);
-    }
-    virtual int setOption(const char *option){
-        return SetOption(option);
-    }
-    virtual void setOutput(const char *name,const char *type,const char *format){
-        SetOutput(name, type, format);
-    }
-    virtual void setScoreOffsetSeconds(double time){
-        SetScoreOffsetSeconds((MYFLT) time);
-    }
-    virtual void setScorePending(int pending){
-        SetScorePending(pending);
-    }
-    virtual int start(){
-        return Start();
-    }
-    virtual void stop(){
+    virtual void stop() 
+    {
         Stop();
     }
-    virtual int scoreEvent(char type, const MYFLT *pFields, long numFields){
-        return ScoreEvent(type, pFields, numFields);
-    }
-    virtual int runUtility(const char *name, int argc, char **argv)
-    {
-        return RunUtility(name, argc, argv);
-    }
-    virtual void setAudioChannel(const char *name, MYFLT *samples){
-        CsoundThreaded::SetChannel(name, samples);
-    }
-    virtual void SetChannel(const char *name, double value){
-        CsoundThreaded::SetControlChannel(name, value);
-    }
-    virtual void setChannel(const char *name, double value){
-        SetChannel(name, value);
-    }
-    virtual void setControlChannel(const char *name, double value){
-        SetControlChannel(name, value);
-    }
-    virtual void setChannel(const char *name, char *string){
-        SetStringChannel(name, string);
-    }
-    virtual void setStringChannel(const char *name, char *string){
-        SetStringChannel(name, string);
-    }
-    virtual int tableLength(int table){
-        return TableLength(table);
+    
+    virtual MYFLT TableGet(int table, int index){
+        return CsoundThreaded::TableGet(table, index);
     }
     virtual MYFLT tableGet(int table, int index){
-        return TableGet(table, index);
+        return CsoundThreaded::TableGet(table, index);
+    }
+
+    virtual int TableLength(int table){
+        return CsoundThreaded::TableLength(table);
+    }
+    virtual int tableLength(int table){
+        return CsoundThreaded::TableLength(table);
+    }
+
+    virtual void TableSet(int table, int index, double value){
+        CsoundThreaded::TableSet(table, index, (MYFLT) value);
     }
     virtual void tableSet(int table, int index, double value){
-        TableSet(table, index, (MYFLT) value);
+        CsoundThreaded::TableSet(table, index, (MYFLT) value);
     }
+    
+    // The methods below are not exposed in JavaScript.
+
     virtual void setOboeApi(int oboe_api_index_) {
         oboe_api_index = (oboe::AudioApi) oboe_api_index_;
     }

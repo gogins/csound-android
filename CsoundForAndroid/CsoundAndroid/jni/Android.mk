@@ -250,18 +250,8 @@ csound_orclex.c \
 csound_prelex.c \
 csound_prslex.c \
 csound_orcparse.c \
-rtopensl.c \
-AndroidCsound.cpp \
-$(CSOUND_SRC_ROOT)/interfaces/CppSound.cpp \
-$(CSOUND_SRC_ROOT)/interfaces/CsoundFile.cpp \
-$(CSOUND_SRC_ROOT)/interfaces/Soundfile.cpp \
-$(CSOUND_SRC_ROOT)/interfaces/csPerfThread.cpp \
-$(CSOUND_SRC_ROOT)/interfaces/cs_glue.cpp \
-$(CSOUND_SRC_ROOT)/interfaces/filebuilding.cpp \
 java_interfaceJAVA_wrap.cpp \
 $(CSOUND_SRC_ROOT)/Opcodes/paulstretch.c
-
-#CsoundObj.cpp
 
 LOCAL_LDLIBS += -llog -lOpenSLES -ldl -lm -lc -latomic 
 

@@ -930,8 +930,10 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         postMessage("This is the Csound for Android app version code: " +  BuildConfig.VERSION_CODE + "\n");
         postMessage( "The Csound native library version is: " + csnd.csound_oboeJNI.csoundGetVersion() + "\n");
         postMessage(
-                "The public data directory for this app is: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).toString() + "\n");
-    }
+            "The external storage public directory for music for Csound is: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).toString() + "\n");
+        postMessage(
+            "The external files directory for music for Csound is: " + getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC).toString() + "\n");
+     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

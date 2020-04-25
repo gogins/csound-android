@@ -250,6 +250,8 @@ csound_orclex.c \
 csound_prelex.c \
 csound_prslex.c \
 csound_orcparse.c \
+$(CSOUND_SRC_ROOT)/interfaces/Soundfile.cpp \
+$(CSOUND_SRC_ROOT)/interfaces/cs_glue.cpp \
 java_interfaceJAVA_wrap.cpp \
 $(CSOUND_SRC_ROOT)/Opcodes/paulstretch.c
 

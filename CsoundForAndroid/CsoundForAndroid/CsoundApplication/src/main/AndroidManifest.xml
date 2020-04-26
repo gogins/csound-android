@@ -25,6 +25,7 @@
         android:icon="@drawable/cs"
         android:hardwareAccelerated="true"
         android:allowBackup="false"
+        android:requestLegacyExternalStorage="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".CsoundAppActivity"

@@ -385,132 +385,142 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         }
     }
 
+    // This seems to be what I need to understand: https://developer.android.com/guide/topics/providers/document-provider
+    // and https://developer.android.com/training/data-storage/shared/documents-files
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        File outFile = null;
-        switch (item.getItemId()) {
-            case R.id.action_new:
-                Intent new_intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                new_intent.setType("*/*");
-                new_intent.addCategory(Intent.CATEGORY_OPENABLE);
-                Intent new_chooser = Intent.createChooser(new_intent, "Name");
-                startActivityForResult(new_chooser, NEW_FILE_REQUEST);
-                return true;
-            case R.id.action_open:
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.setType("*/*");
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                Intent chooser = Intent.createChooser(intent, "Open file");
-                startActivityForResult(chooser, OPEN_FILE_REQUEST);
-                return true;
-            case R.id.action_save:
-                // Use this Intent, saved from "Open..." or "New...", to
-                // preserve write and truncate permissions on the file. This
-                // is a hack.
-                onActivityResult(SAVE_FILE_REQUEST, 0, csound_uri_intent);
-                return true;
-            case R.id.action_save_as:
-                Intent save_as_intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                save_as_intent.setType("*/*");
-                save_as_intent.addCategory(Intent.CATEGORY_OPENABLE);
-                Intent save_as_chooser = Intent.createChooser(save_as_intent, "Save as");
-                startActivityForResult(save_as_chooser, SAVE_FILE_REQUEST);
-                return true;
-            case R.id.action_render:
-                getEditorTextAndRun();
-                return true;
-            case R.id.itemGuide:
-                File user_guide = copyAsset("Csound6_User_Guide.pdf");
-                Uri uri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID, user_guide);
-                Intent guide_intent = new Intent(Intent.ACTION_VIEW, uri);
-                guide_intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                guide_intent.setDataAndType(uri, "application/pdf");
-                startActivity(guide_intent);
-                return true;
-            case R.id.itemPrivacy:
-                goToUrl("http://csound.github.io/csound_for_android_privacy.html");
-                return true;
-            case R.id.itemSettings:
-                Intent intent1 = new Intent(this, SettingsActivity.class);
-                startActivity(intent1);
-                return true;
-            case R.id.itemTrapped: {
-                outFile = copyAsset("examples/Boulanger/trapped.csd");
-                if (outFile != null) {
-                    LoadFile(outFile);
-                }
-            }
-            return true;
-            case R.id.itemDroneIV: {
-                outFile = copyAsset("examples/Gogins/Drone-IV.csd");
-                if (outFile != null) {
-                    LoadFile(outFile);
-                }
-            }
-            return true;
-            case R.id.itemPartikkel: {
-                outFile = copyAsset("examples/Khosravi/partikkel.csd");
-                if (outFile != null) {
-                    LoadFile(outFile);
-                }
-            }
-            return true;
-            case R.id.itemXanadu: {
-                outFile = copyAsset("examples/Kung/xanadu.csd");
-                if (outFile != null) {
-                    LoadFile(outFile);
+        try {
+            Log.d("Csound", "onOptionsItemSelected: " + item.toString() + "\n");
+            File outFile = null;
+            switch (item.getItemId()) {
+                case R.id.action_new:
+                    Intent new_intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    new_intent.setType("*/*");
+                    new_intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    Intent new_chooser = Intent.createChooser(new_intent, "Name");
+                    startActivityForResult(new_chooser, NEW_FILE_REQUEST);
+                    return true;
+                case R.id.action_open:
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.setType("*/*");
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    Intent chooser = Intent.createChooser(intent, "Open file");
+                    chooser.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivityForResult(chooser, OPEN_FILE_REQUEST);
+                    return true;
+                case R.id.action_save:
+                    // Use this Intent, saved from "Open..." or "New...", to
+                    // preserve write and truncate permissions on the file. This
+                    // is a hack.
+                    onActivityResult(SAVE_FILE_REQUEST, 0, csound_uri_intent);
+                    return true;
+                case R.id.action_save_as:
+                    Intent save_as_intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    save_as_intent.setType("*/*");
+                    save_as_intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    Intent save_as_chooser = Intent.createChooser(save_as_intent, "Save as");
+                    startActivityForResult(save_as_chooser, SAVE_FILE_REQUEST);
+                    return true;
+                case R.id.action_render:
+                    getEditorTextAndRun();
+                    return true;
+                case R.id.itemGuide:
+                    File user_guide = copyAsset("Csound6_User_Guide.pdf");
+                    Uri uri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID, user_guide);
+                    Intent guide_intent = new Intent(Intent.ACTION_VIEW, uri);
+                    guide_intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    guide_intent.setDataAndType(uri, "application/pdf");
+                    startActivity(guide_intent);
+                    return true;
+                case R.id.itemPrivacy:
+                    goToUrl("http://csound.github.io/csound_for_android_privacy.html");
+                    return true;
+                case R.id.itemSettings:
+                    Intent intent1 = new Intent(this, SettingsActivity.class);
+                    startActivity(intent1);
+                    return true;
+                case R.id.itemTrapped: {
+                    outFile = copyAsset("examples/Boulanger/trapped.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
                 }
                 return true;
-            }
-            case R.id.itemModulatedDelay: {
-                outFile = copyAsset("examples/Gogins/ModulateInput.csd");
-                if (outFile != null) {
-                    LoadFile(outFile);
+                case R.id.itemDroneIV: {
+                    outFile = copyAsset("examples/Gogins/Drone-IV.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
                 }
                 return true;
-            }
-            case R.id.itemBuiltinChannels: {
-                outFile = copyAsset("examples/Gogins/BuiltinChannels.csd");
-                if (outFile != null) {
-                    LoadFile(outFile);
+                case R.id.itemPartikkel: {
+                    outFile = copyAsset("examples/Khosravi/partikkel.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
                 }
                 return true;
-            }
-            case R.id.itemMessage: {
-                outFile = copyAsset("examples/Gogins/silencio/js/jquery.js");
-                if (outFile == null) {
+                case R.id.itemXanadu: {
+                    outFile = copyAsset("examples/Kung/xanadu.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
                     return true;
                 }
-                outFile = copyAsset("examples/Gogins/Message.html");
-                if (outFile != null) {
-                    LoadFile(outFile);
+                case R.id.itemModulatedDelay: {
+                    outFile = copyAsset("examples/Gogins/ModulateInput.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
+                    return true;
                 }
-                return true;
-            }
-            case R.id.itemKoanI: {
-                outFile = copyAsset("examples/McCurdy/i.csd");
-                if (outFile != null) {
-                    LoadFile(outFile);
+                case R.id.itemBuiltinChannels: {
+                    outFile = copyAsset("examples/Gogins/BuiltinChannels.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
+                    return true;
                 }
-                return true;
-            }
-            case R.id.itemScrims: {
-                outFile = copyAsset("examples/Gogins/Scrims.html");
-                if (outFile != null) {
-                    LoadFile(outFile);
+                case R.id.itemMessage: {
+                    outFile = copyAsset("examples/Gogins/silencio/js/jquery.js");
+                    if (outFile == null) {
+                        return true;
+                    }
+                    outFile = copyAsset("examples/Gogins/Message.html");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
+                    return true;
                 }
-                return true;
-            }
-            case R.id.itemOblivion: {
-                outFile = copyAsset("examples/Gogins/oblivion-gm.csd");
-                if (outFile != null) {
-                    LoadFile(outFile);
+                case R.id.itemKoanI: {
+                    outFile = copyAsset("examples/McCurdy/i.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
+                    return true;
                 }
-                return true;
+                case R.id.itemScrims: {
+                    outFile = copyAsset("examples/Gogins/Scrims.html");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
+                    return true;
+                }
+                case R.id.itemOblivion: {
+                    outFile = copyAsset("examples/Gogins/oblivion-gm.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
+                    return true;
+                }
+                default:
+                    return super.onOptionsItemSelected(item);
             }
-            default:
-                return super.onOptionsItemSelected(item);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @JavascriptInterface
@@ -1072,6 +1082,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
         try {
+            Log.d("Csound", "onActivityResult: " + requestCode + "," + resultCode + ", " + intent.toString() + "\n");
             if (requestCode == NEW_FILE_REQUEST && intent != null) {
                 if (checkOnePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     return;

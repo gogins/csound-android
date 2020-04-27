@@ -190,7 +190,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     // the public external storage music directory.
     // The asset directory becomes a subdirectory of the music directory.
     private File copyAsset(String fromAssetPath) {
-        if (checkDangerousPermissions() == false) {
+        if (checkOnePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
         AssetManager assetManager = getAssets();
@@ -600,7 +600,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     public String loadTextFile(File file) {
         String code = null;
         try {
-            if (checkDangerousPermissions() == false) {
+            if (checkOnePermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 return "";
             }
             FileReader in = new FileReader(file);
@@ -755,6 +755,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 postMessage(e.toString() + "\n");
             }
         }
+        // Do this before copying anything.
+        checkDangerousPermissions();
         copyRawwaves();
         copyAssetsRecursively("samples");
         copyAssetsRecursively("examples");
@@ -1006,17 +1008,30 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
 
     static final int MY_REQUEST_DANGEROUS_PERMISSIONS = 2149;
 
+    protected int checkOnePermission(String permission) {
+        int result = ContextCompat.checkSelfPermission(CsoundAppActivity.this, permission);
+        Log.d("Csound", "ContextCompat.checkSelfPermission for " + permission + " returned: " + result + "\n");
+        if (result != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(CsoundAppActivity.this, new String[]{permission}, MY_REQUEST_DANGEROUS_PERMISSIONS);
+        }
+        return result;
+    }
+
     protected boolean checkDangerousPermissions() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(getApplicationContext(),
-                        Manifest.permission.RECORD_AUDIO)
-                        != PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.BODY_SENSORS)  != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)  != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.RECORD_AUDIO)   != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(CsoundAppActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.RECORD_AUDIO},
-                    MY_REQUEST_DANGEROUS_PERMISSIONS);
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.BODY_SENSORS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.RECORD_AUDIO},
+                MY_REQUEST_DANGEROUS_PERMISSIONS);
             return false;
         } else {
             return true;
@@ -1058,7 +1073,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                                     Intent intent) {
         try {
             if (requestCode == NEW_FILE_REQUEST && intent != null) {
-                if (checkDangerousPermissions() == false) {
+                if (checkOnePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 csound_uri_intent = intent;
@@ -1069,7 +1084,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 setTitle(title);
             }
             if (requestCode == SAVE_FILE_REQUEST && intent != null) {
-                if (checkDangerousPermissions() == false) {
+                if (checkOnePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 csound_uri_intent = intent;
@@ -1080,7 +1095,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 setTitle(title);
             }
             if (requestCode == OPEN_FILE_REQUEST && intent != null) {
-                if (checkDangerousPermissions() == false) {
+                if (checkOnePermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 csound_uri_intent = intent;

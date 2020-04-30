@@ -1,5 +1,5 @@
 [submodule "dependencies/csound"]
-	path = dependencies/csound
+	path = CsoundForAndroid/ndk-libraries/csound
 	url = https://github.com/csound/csound.git
 [submodule "dependencies/libsndfile"]
 	path = dependencies/libsndfile

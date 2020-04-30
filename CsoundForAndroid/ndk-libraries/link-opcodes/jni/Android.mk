@@ -1,6 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
+CSOUND_SRC_ROOT := $(NDK_MODULE_PATH)/csound
 
 ABLETON_LINK_HOME :=$(LOCAL_PATH)/../../link
 

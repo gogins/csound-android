@@ -10,6 +10,8 @@ mkdir -p $JNILIBS/armeabi-v7a
 mkdir -p $JNILIBS/arm64-v8a
 mkdir -p $JNILIBS/x86_64
 
+CSOUND_SRC_ROOT=$NDK_MODULE_PATH/csound
+
 echo "Copying ndk-build shared libraries..."
 find $NDK_MODULE_PATH -wholename "*/libs/arm64-v8a/*.so" -exec cp -f {} $JNILIBS/arm64-v8a/ ';' 
 find $NDK_MODULE_PATH -wholename "*/libs/armeabi-v7a/*.so" -exec cp -f {} $JNILIBS/armeabi-v7a/ ';'

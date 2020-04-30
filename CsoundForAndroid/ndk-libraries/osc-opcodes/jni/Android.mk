@@ -1,6 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
+CSOUND_SRC_ROOT := $(NDK_MODULE_PATH)/csound
 
 LIBLO_SRC_DIR := $(NDK_MODULE_PATH)/liblo-android/jni
 

@@ -6,7 +6,9 @@ case "${MACHINE}" in
   *) NDK_BUILD_CMD=$ANDROID_NDK_ROOT/ndk-build
 esac
 
-echo "NDK_BUILD_COMMAND = $NDK_BUILD_CMD"
+echo "NDK_BUILD_COMMAND: $NDK_BUILD_CMD"
+export CSOUND_SRC_ROOT=$NDK_MODULE_PATH/csound
+echo "CSOUND_SRC_ROOT: $CSOUND_SRC_ROOT"
 
 flex -B -t $CSOUND_SRC_ROOT/Engine/csound_orc.lex > jni/csound_orclex.c 
 flex -B $CSOUND_SRC_ROOT/Engine/csound_pre.lex > jni/csound_prelex.c 

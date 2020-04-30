@@ -1,6 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
+CSOUND_SRC_ROOT := $(NDK_MODULE_PATH)/csound
 
 LIBSNDFILE_SRC_DIR := $(NDK_MODULE_PATH)/libsndfile-android/jni/
 LIBFLUIDSYNTH_SRC_DIR := $(NDK_MODULE_PATH)/fluidsynth-android/jni/

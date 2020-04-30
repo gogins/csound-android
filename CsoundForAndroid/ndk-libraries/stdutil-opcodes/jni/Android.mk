@@ -1,8 +1,10 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
+CSOUND_SRC_ROOT := $(NDK_MODULE_PATH)/csound
 
 LIBSNDFILE_SRC_DIR := $(NDK_MODULE_PATH)/libsndfile-android/jni/
+CSOUND_SRC_ROOT := $(NDK_MODULE_PATH)/csound
 
 LOCAL_MODULE   := stdutil
 LOCAL_C_INCLUDES := $(CSOUND_SRC_ROOT)/Engine $(CSOUND_SRC_ROOT)/H $(CSOUND_SRC_ROOT)/include $(CSOUND_SRC_ROOT)/ $(LIBSNDFILE_SRC_DIR) $(LOCAL_PATH)/../../../CsoundAndroid/jni

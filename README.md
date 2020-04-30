@@ -11,9 +11,8 @@ in an Android app with a built-in code editor that also integrates Csound with
 HTML5 and JavaScript.
 
 Csound for Android used to live in the 
-[csound-extended](https://github.com/gogins/csound-extended) repository but 
-has been moved into its own repository for easier maintenance. You may notice 
-some oddities and leftovers...
+[csound-extended](https://github.com/gogins/csound-extended) repository, but 
+has been moved here into its own repository for easier maintenance. 
 
 For earlier releases and tags, please use 
 [csound-extended](https://github.com/gogins/csound-extended)
@@ -30,7 +29,7 @@ https://github.com/gogins/csound-android/issues.
 
 ## Supported Platforms
 
-The Csound for Android app is built for 64 bit CPU architecture only. The app 
+The Csound for Android app is built for 64 bit CPU architectures only. The app 
 runs on the following platforms:
 
 - Devices running Android 5.1 or later with the following application binary 
@@ -92,10 +91,7 @@ Prerequisites for building Csound for Android include:
     2.2.    ANDROID_SDK_ROOT with the full pathname of your Android Software
             Development kit, perhaps something like ~/Android/Sdk.
 
-    2.3.    CSOUND_SRC_ROOT with the full pathname to this repository's
-            dependencies/csound subdirectory.
-
-    2.4.    NDK_MODULE_PATH with the full pathname to this repository's
+    2.3.    NDK_MODULE_PATH with the full pathname to this repository's
             CsoundForAndroid/ndk-libraries subdirectory.
 
 To build for Android on Linux for the first time, change to the

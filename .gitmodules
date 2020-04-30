@@ -62,7 +62,7 @@
 	path = CsoundForAndroid/ndk-libraries/ecl
 	url = https://gitlab.com/embeddable-common-lisp/ecl.git
 [submodule "dependencies/bformdec2"]
-	path = dependencies/bformdec2
+	path = CsoundForAndroid/ndk-libraries/bformdec2
 	url = https://github.com/pzinemanas/bformdec2.git
 [submodule "dependencies/cm-fomus"]
 	path = dependencies/cm-fomus

@@ -461,6 +461,13 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     }
                 }
                 return true;
+                case R.id.itemParachronic: {
+                    outFile = copyAsset("examples/Gogins/parachronic.html");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
+                }
+                return true;
                 case R.id.itemXanadu: {
                     outFile = copyAsset("examples/Kung/xanadu.csd");
                     if (outFile != null) {
@@ -501,7 +508,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     return true;
                 }
                 case R.id.itemScrims: {
-                    outFile = copyAsset("examples/Gogins/Scrims.html");
+                    outFile = copyAsset("examples/Gogins/scrims.html");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
@@ -542,31 +549,31 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         CsoundAppActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (doClear == true) {
-                    messageTextView.setText("");
-                    messageTextViewSmall.setText("");
+            if (doClear == true) {
+                messageTextView.setText("");
+                messageTextViewSmall.setText("");
+            }
+            if (message == null) {
+                return;
+            }
+            messageTextView.append(message);
+            messages_tab.fullScroll(ScrollView.FOCUS_DOWN);
+            messageTextViewSmall.append(message);
+            messageTextViewSmallScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            // Send Csound messages to the WebView's console.log function.
+            // This should happen when and only when a newline appears.
+            for (int i = 0, n = message.length(); i < n; i++) {
+                char c = message.charAt(i);
+                if (c == '\n') {
+                    String line = csoundMessageStringBuilder.toString();
+                    String code = String.format("console.log(\"%s\\n\");", line);
+                    html_tab.evaluateJavascript(code, null);
+                    csoundMessageStringBuilder.setLength(0);
+                } else {
+                    csoundMessageStringBuilder.append(c);
                 }
-                if (message == null) {
-                    return;
-                }
-                messageTextView.append(message);
-                messages_tab.fullScroll(ScrollView.FOCUS_DOWN);
-                messageTextViewSmall.append(message);
-                messageTextViewSmallScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                // Send Csound messages to the WebView's console.log function.
-                // This should happen when and only when a newline appears.
-                for (int i = 0, n = message.length(); i < n; i++) {
-                    char c = message.charAt(i);
-                    if (c == '\n') {
-                        String line = csoundMessageStringBuilder.toString();
-                        String code = String.format("console.log(\"%s\\n\");", line);
-                        html_tab.evaluateJavascript(code, null);
-                        csoundMessageStringBuilder.setLength(0);
-                    } else {
-                        csoundMessageStringBuilder.append(c);
-                    }
-                }
-                Log.i("Csound:", message);
+            }
+            Log.i("Csound:", message);
             }
         });
     }
@@ -861,20 +868,20 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             button.setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        synchronized (this) {
-                            if (csound_oboe != null) {
-                                csound_oboe.SetChannel(channelName, 1.);
-                            }
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    synchronized (this) {
+                        if (csound_oboe != null) {
+                            csound_oboe.SetChannel(channelName, 1.);
                         }
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        synchronized (this) {
-                            if (csound_oboe != null) {
-                                csound_oboe.SetChannel(channelName, 0.);
-                            }
+                    }
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    synchronized (this) {
+                        if (csound_oboe != null) {
+                            csound_oboe.SetChannel(channelName, 0.);
                         }
-                     }
-                    return true;
+                    }
+                 }
+                return true;
                 }
             });
         }

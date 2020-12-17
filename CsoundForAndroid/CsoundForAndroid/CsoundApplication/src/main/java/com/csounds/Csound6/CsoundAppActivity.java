@@ -490,11 +490,11 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     return true;
                 }
                 case R.id.itemMessage: {
-                    outFile = copyAsset("examples/Gogins/silencio/js/jquery.js");
+                    outFile = copyAsset("examples/Gogins/js/jquery.js");
                     if (outFile == null) {
                         return true;
                     }
-                    outFile = copyAsset("examples/Gogins/Message.html");
+                    outFile = copyAsset("examples/Gogins/message.html");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }

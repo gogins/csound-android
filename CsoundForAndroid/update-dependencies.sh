@@ -8,11 +8,10 @@ git branch
 echo "Finished updating all submodules for CsoundForAndroid."
 ls -ll
 echo "Downloading some examples and WebAssemby files from the csound-extended repository..."
-wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/WebAssembly/examples/parachronic.html -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/parachronic.html
-wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/WebAssembly/examples/scrims.html -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/scrims.html
 wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/WebAssembly/examples/csound_loader.js -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/csound_loader.js
-wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/docs/CsoundAC.js -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins//CsoundAC.js
+wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/docs/CsoundAC.js -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/CsoundAC.js
 wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/silencio/js/dat.gui.js -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/js/dat.gui.js
+wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/silencio/js/jquery.js -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/js/jquery.js
 wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/silencio/js/numeric.js -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/js/numeric.js
 wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/silencio/js/piano-roll.js -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/js/piano-roll.js
 wget -L https://raw.githubusercontent.com/gogins/csound-extended/develop/silencio/js/sprintf.js -O CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins/js/sprintf.js

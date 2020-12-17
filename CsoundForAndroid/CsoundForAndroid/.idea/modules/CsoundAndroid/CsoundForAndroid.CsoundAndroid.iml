@@ -32,9 +32,9 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../CsoundAndroid">
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundAndroid/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundAndroid/build/generated/res/resValues/release" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundAndroid/build/generated/source/buildConfig/release" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundAndroid/build/generated/ap_generated_sources/release/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundAndroid/build/generated/source/buildConfig/release" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundAndroid/build/generated/res/resValues/release" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../CsoundAndroid/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../CsoundAndroid/build" />
     </content>

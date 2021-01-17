@@ -29,7 +29,7 @@
             <item
                 android:id="@+id/itemMessage"
                 android:enabled="true"
-                android:title="Message from Another Planet (HTML), Jacob Joaquin and Michael Gogins"
+                android:title="Message from Another Planet (HTML5), Jacob Joaquin and Michael Gogins"
                 android:titleCondensed="Message"
                 android:visible="true" />
             <!-- n<item android:id="@+id/itemPoustinia" android:visible="true" android:titleCondensed="Poustinia" android:enabled="true" android:title="Poustinia, Michael Gogins"/> -->
@@ -52,7 +52,7 @@
             <item
                 android:id="@+id/itemScrims"
                 android:enabled="true"
-                android:title="Scrims, Michael Gogins"
+                android:title="Scrims (HTML5), Michael Gogins"
                 android:titleCondensed="Scrims"
                 android:visible="true" />
             <item
@@ -60,6 +60,12 @@
                 android:enabled="true"
                 android:title="Oblivion, Astor Piazzola"
                 android:titleCondensed="Oblivion"
+                android:visible="true" />
+            <item
+                android:id="@+id/itemChordSpace"
+                android:enabled="true"
+                android:title="Chord Space for Trichords (HTML5), Michael Gogins"
+                android:titleCondensed="ChordSpace"
                 android:visible="true" />
         </menu>
     </item>

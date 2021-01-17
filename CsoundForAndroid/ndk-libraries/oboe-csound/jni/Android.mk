@@ -43,6 +43,7 @@ $(OBOE_SRC_ROOT)/fifo/FifoBuffer.cpp \
 $(OBOE_SRC_ROOT)/fifo/FifoControllerBase.cpp \
 $(OBOE_SRC_ROOT)/fifo/FifoControllerIndirect.cpp \
 $(OBOE_SRC_ROOT)/fifo/FifoController.cpp \
+$(OBOE_SRC_ROOT)/flowgraph/ChannelCountConverter.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/ClipToRange.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/FlowGraphNode.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/SampleRateConverter.cpp \
@@ -55,6 +56,7 @@ $(OBOE_SRC_ROOT)/flowgraph/SinkI24.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/ManyToMultiConverter.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/SourceI16.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/MonoToMultiConverter.cpp \
+$(OBOE_SRC_ROOT)/flowgraph/MultiToMonoConverter.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/resampler/SincResampler.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/resampler/SincResamplerStereo.cpp \
 $(OBOE_SRC_ROOT)/flowgraph/resampler/IntegerRatio.cpp \

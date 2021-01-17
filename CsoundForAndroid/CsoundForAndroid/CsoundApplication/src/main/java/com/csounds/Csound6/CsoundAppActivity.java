@@ -490,10 +490,14 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     return true;
                 }
                 case R.id.itemMessage: {
-                    outFile = copyAsset("examples/Gogins/js/jquery.js");
-                    if (outFile == null) {
-                        return true;
-                    }
+///                    outFile = copyAsset("examples/Gogins/js/jquery.js");
+///                    if (outFile == null) {
+///                        return true;
+///                    }
+///                    outFile = copyAsset("examples/Gogins/csound_loader.js");
+///                    if (outFile == null) {
+///                        return true;
+///                    }
                     outFile = copyAsset("examples/Gogins/message.html");
                     if (outFile != null) {
                         LoadFile(outFile);
@@ -508,6 +512,10 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     return true;
                 }
                 case R.id.itemScrims: {
+///                    outFile = copyAsset("examples/Gogins/csound_loader.js");
+///                    if (outFile == null) {
+///                        return true;
+///                    }
                     outFile = copyAsset("examples/Gogins/scrims.html");
                     if (outFile != null) {
                         LoadFile(outFile);
@@ -516,6 +524,13 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 }
                 case R.id.itemOblivion: {
                     outFile = copyAsset("examples/Gogins/oblivion-gm.csd");
+                    if (outFile != null) {
+                        LoadFile(outFile);
+                    }
+                    return true;
+                }
+                case R.id.itemChordSpace: {
+                    outFile = copyAsset("examples/Gogins/trichord_ space.html");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }

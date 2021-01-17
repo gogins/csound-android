@@ -1032,6 +1032,10 @@ public:
     virtual int Start()
     {
         Message("CsoundOboe::Start...\n");
+        // Prevent re-entrance.
+        if (is_playing == true) {
+            return 0;
+        }
         int csound_result = 0;
         internal_reset();
         // If and only if -odac, enable host-implemented audio.

@@ -530,7 +530,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     return true;
                 }
                 case R.id.itemChordSpace: {
-                    outFile = copyAsset("examples/Gogins/trichord_ space.html");
+                    outFile = copyAsset("examples/Gogins/trichord_space.html");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
@@ -689,6 +689,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     if (baseUrlString.endsWith("/") == false) {
                         baseUrlString = baseUrlString + "/";
                     }
+                    html_tab.loadUrl("about:blank");
                     html_tab.loadDataWithBaseURL(baseUrlString,
                             html5_page, "text/html", "utf-8", null);
                 }

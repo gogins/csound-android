@@ -33,10 +33,10 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/src/main/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/src/main/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/ap_generated_sources/release/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/source/buildConfig/release" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/res/resValues/release" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/src/androidTest/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/ap_generated_sources/release/out" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/../../../CsoundApplication/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build" />
     </content>

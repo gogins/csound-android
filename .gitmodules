@@ -28,3 +28,6 @@
 [submodule "dependencies/bformdec2"]
 	path = CsoundForAndroid/ndk-libraries/bformdec2
 	url = https://github.com/pzinemanas/bformdec2.git
+[submodule "CsoundForAndroid/csound-examples"]
+	path = CsoundForAndroid/csound-examples
+	url = https://github.com/gogins/csound-examples.git

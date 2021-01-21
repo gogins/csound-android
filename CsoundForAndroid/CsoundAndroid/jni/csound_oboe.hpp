@@ -502,22 +502,38 @@ public:
         timeout_nanoseconds = 1000000;
         frames_per_kperiod = 0;
         is_playing = false;
-        audio_stream_in = nullptr;
+        ///audio_stream_in = nullptr;
         spin = nullptr;
         input_channel_count = 0;
         spin_size = 0;
         spout = nullptr;
         output_channel_count = 0;
         spout_size = 0;
-        audio_stream_out = nullptr;
+        ///audio_stream_out = nullptr;
         zero_dbfs = 32767.;
     }
     
     void oboeStopThreadRoutine()
     {
+        Message("oboeStopThreadRoutine...\n");
         if (audio_stream_out != nullptr) {
             audio_stream_out->close();
         }
+    }
+    
+    virtual bool onError(oboe::AudioStream *oboeStream, oboe::Result error) override {
+        Message("onError: %s\n", oboe::convertToText(error));
+        // A chance to do something about the error... the app might stop and close 
+        // open and running streams, then return true to indicate handling the error.
+        return false;
+    }
+    
+    virtual void onErrorAfterClose(oboe::AudioStream *oboeStream, oboe::Result error) override {
+        Message("onErrorAfterClose: %s\n", oboe::convertToText(error));
+    }
+    
+    virtual void onErrorBeforeClose(oboe::AudioStream * oboeStream, oboe::Result error) override {
+        Message("onErrorBeforeClose: %s\n", oboe::convertToText(error));
     }
     
     /** 
@@ -1034,14 +1050,17 @@ public:
         Message("CsoundOboe::Start...\n");
         // Prevent re-entrance.
         if (is_playing == true) {
+            Message("CsoundOboe::Start: Warning: Already started!\n");
             return 0;
         }
         int csound_result = 0;
         internal_reset();
+        is_playing = true;
         // If and only if -odac, enable host-implemented audio.
         // Need a better way to identify input and output.
         const char *output_name = GetOutputName();
         if (output_name == nullptr) {
+            Message("CsoundOboe::Start: Warning: No output name.\n");
             return -1;
         }
         std::string output_name_string = output_name;
@@ -1051,7 +1070,7 @@ public:
             SetHostImplementedAudioIO(1, 0);
             csound_result = Csound::Start();
             if (csound_result != 0) {
-                Message("Csound::Start error: %d.\n", csound_result);
+                Message("Csound::Start: Error: %d.\n", csound_result);
                 return csound_result;
             }
             oboe::Result result;
@@ -1074,16 +1093,19 @@ public:
                     input_channel_count = GetNchnlsInput();
                     spin_size = sizeof(MYFLT) * frames_per_kperiod * input_channel_count;
                     audio_stream_builder.setAudioApi(oboe_api_index);
-                    audio_stream_builder.setSharingMode(oboe::SharingMode::Exclusive);
+                    //~ audio_stream_builder.setSharingMode(oboe::SharingMode::Exclusive);
+                    audio_stream_builder.setSharingMode(oboe::SharingMode::Shared);
                     audio_stream_builder.setPerformanceMode(oboe::PerformanceMode::LowLatency);
-                    audio_stream_builder.setCallback(stabilized_callback);
-                    audio_stream_builder.setSampleRate(GetSr());
-                    ///audio_stream_builder.setFramesPerCallback(frames_per_kperiod);
+                    //~ audio_stream_builder.setCallback(stabilized_callback);
+                    audio_stream_builder.setDataCallback(stabilized_callback);
+                    audio_stream_builder.setErrorCallback(stabilized_callback);
+                     audio_stream_builder.setSampleRate(GetSr());
+                    ///audio_stream_builder.setFramesPerDataCallback(frames_per_kperiod);
                     audio_stream_builder.setChannelCount(input_channel_count);
                     audio_stream_builder.setDirection(oboe::Direction::Input);
-                    result = audio_stream_builder.openStream(&audio_stream_in);
+                    result = audio_stream_builder.openStream(audio_stream_in);
                     if (result != oboe::Result::OK){
-                        Message("CsoundOboe::Start: Failed to create Oboe input stream. Error: %s.\n", oboe::convertToText(result));
+                        Message("CsoundOboe::Start: Error: Failed to create Oboe input stream. Error: %s.\n", oboe::convertToText(result));
                         return -1;
                     }
                     // We assume that Oboe's input format is always the same as
@@ -1094,18 +1116,21 @@ public:
                 }
             }
             spout_size = sizeof(MYFLT) * frames_per_kperiod * output_channel_count;
+            Message("CsoundOboe::Start: Creating Oboe output stream...\n");
             audio_stream_builder.setAudioApi(oboe_api_index);
-            audio_stream_builder.setSharingMode(oboe::SharingMode::Exclusive);
+            audio_stream_builder.setSharingMode(oboe::SharingMode::Shared);
             audio_stream_builder.setPerformanceMode(oboe::PerformanceMode::LowLatency);
-            audio_stream_builder.setCallback(stabilized_callback);
+            //~ audio_stream_builder.setCallback(stabilized_callback);
+            audio_stream_builder.setDataCallback(stabilized_callback);
+            audio_stream_builder.setErrorCallback(stabilized_callback);
             audio_stream_builder.setSampleRate(GetSr());
-            audio_stream_builder.setBufferCapacityInFrames(frames_per_kperiod * 12);
-            audio_stream_builder.setFramesPerCallback(frames_per_kperiod);           
+            ///audio_stream_builder.setBufferCapacityInFrames(frames_per_kperiod * 12);
+            ///audio_stream_builder.setFramesPerDataCallback(frames_per_kperiod);           
             audio_stream_builder.setChannelCount(output_channel_count);
             audio_stream_builder.setDirection(oboe::Direction::Output);
-            result = audio_stream_builder.openStream(&audio_stream_out);
+            result = audio_stream_builder.openStream(audio_stream_out);
             if (result != oboe::Result::OK) {
-                Message("CsoundOboe::Start: Failed to create Oboe output stream. Error: %s.\n", oboe::convertToText(result));
+                Message("CsoundOboe::Start: Error: Failed to create Oboe output stream: %s.\n", oboe::convertToText(result));
                 return -1;
             }
             bool aaudio_is_supported = audio_stream_builder.isAAudioSupported();
@@ -1115,35 +1140,34 @@ public:
             // Start oboe.
             oboe_audio_format = audio_stream_out->getFormat();
             Message("CsoundOboe::Start: Audio output stream format is: %s.\n", oboe::convertToText(oboe_audio_format));
-            is_playing = true;
             if(audio_stream_in != nullptr) {
                 audio_stream_in->start();
                 Message("CsoundOboe::Start: Started Oboe audio input stream...\n");
             }
             auto frames_per_burst = audio_stream_out->getFramesPerBurst();
             Message("CsoundOboe::Start: Frames per burst: %6d.\n", frames_per_burst);
-            audio_stream_out->start();
-            oboe::AudioApi audioApi = audio_stream_out->getAudioApi();
-            if (audioApi == oboe::AudioApi::AAudio) {
-                audio_stream_out->setBufferSizeInFrames(frames_per_burst * 6);
-            } else {
-               audio_stream_out->setBufferSizeInFrames(frames_per_burst * 2);
-            }
+             oboe::AudioApi audioApi = audio_stream_out->getAudioApi();
+            //~ if (audioApi == oboe::AudioApi::AAudio) {
+                //~ audio_stream_out->setBufferSizeInFrames(frames_per_burst * 6);
+            //~ } else {
+               //~ audio_stream_out->setBufferSizeInFrames(frames_per_burst * 2);
+            //~ }
             Message("CsoundOboe::Start: Oboe audio API is: %s.\n", audioApi == oboe::AudioApi::AAudio ? "AAudio" : "OpenSLES");
-            Message("CsoundOboe::Start: Started Oboe audio output stream...\n");
             oboe::ResultWithValue<double> latency = audio_stream_out->calculateLatencyMillis();
             if (latency) {
                 Message("CsoundOboe::Start: Output stream latency is: %9.4f milliseconds.\n", latency.value());
             }
+            audio_stream_out->start();
+            Message("CsoundOboe::Start: Started Oboe audio output stream...\n");
             ///oboe_performance_thread = std::thread(&CsoundOboe::OboePerform, this);
         } else {
             csound_result = Csound::Start();
             if (csound_result != 0) {
-                Message("CsoundOboe::Start returned: %d.\n", csound_result);
+                Message("CsoundOboe::Start: Error: Csound::Start returned: %d.\n", csound_result);
                 return csound_result;
             }
-            is_playing = true;
-         }
+        }
+        Message("CsoundOboe::Start: completed.\n");
         return 0;
     }
     virtual int start() 
@@ -1226,14 +1250,14 @@ protected:
     int timeout_nanoseconds;
     uint32_t frames_per_kperiod;
     std::atomic<bool> is_playing;
-    oboe::AudioStream *audio_stream_in;
+    std::shared_ptr<oboe::AudioStream> audio_stream_in;
     MYFLT *spin;
     uint32_t input_channel_count;
     size_t spin_size;
     MYFLT *spout;
     uint32_t output_channel_count;
     size_t spout_size;
-    oboe::AudioStream *audio_stream_out;
+    std::shared_ptr<oboe::AudioStream> audio_stream_out;
     oboe::AudioFormat oboe_audio_format;
     oboe::AudioStreamBuilder audio_stream_builder;
     float zero_dbfs;

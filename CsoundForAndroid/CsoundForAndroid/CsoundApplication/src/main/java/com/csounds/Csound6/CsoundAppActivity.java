@@ -325,8 +325,6 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             }
         };
         oboe_callback_wrapper.SetMessageCallback();
-        html_tab.addJavascriptInterface(csound_oboe, "csound");
-        html_tab.addJavascriptInterface(this, "csoundApp");
         // Csound will not be in scope of any JavaScript on the page
         // until the page is reloaded. Also, we want to show any edits
         // to the page.
@@ -440,102 +438,78 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     Intent intent1 = new Intent(this, SettingsActivity.class);
                     startActivity(intent1);
                     return true;
-                case R.id.itemTrapped: {
+                case R.id.itemTrapped:
                     outFile = copyAsset("examples/Boulanger/trapped.csd");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
-                }
-                return true;
+                    return true;
                 case R.id.itemDroneIV: {
                     outFile = copyAsset("examples/Gogins/Drone-IV.csd");
-                    if (outFile != null) {
+                    if (outFile != null)
                         LoadFile(outFile);
                     }
-                }
-                return true;
-                case R.id.itemPartikkel: {
+                    return true;
+                case R.id.itemPartikkel:
                     outFile = copyAsset("examples/Khosravi/partikkel.csd");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
-                }
-                return true;
-                case R.id.itemParachronic: {
+                    return true;
+                case R.id.itemParachronic:
                     outFile = copyAsset("examples/Gogins/parachronic.html");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
-                }
-                return true;
-                case R.id.itemXanadu: {
+                    return true;
+                case R.id.itemXanadu:
                     outFile = copyAsset("examples/Kung/xanadu.csd");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
                     return true;
-                }
-                case R.id.itemModulatedDelay: {
+                case R.id.itemModulatedDelay:
                     outFile = copyAsset("examples/Gogins/ModulateInput.csd");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
                     return true;
-                }
-                case R.id.itemBuiltinChannels: {
+                case R.id.itemBuiltinChannels:
                     outFile = copyAsset("examples/Gogins/BuiltinChannels.csd");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
                     return true;
-                }
-                case R.id.itemMessage: {
-///                    outFile = copyAsset("examples/Gogins/js/jquery.js");
-///                    if (outFile == null) {
-///                        return true;
-///                    }
-///                    outFile = copyAsset("examples/Gogins/csound_loader.js");
-///                    if (outFile == null) {
-///                        return true;
-///                    }
+                case R.id.itemMessage:
                     outFile = copyAsset("examples/Gogins/message.html");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
                     return true;
-                }
-                case R.id.itemKoanI: {
+                case R.id.itemKoanI:
                     outFile = copyAsset("examples/McCurdy/i.csd");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
                     return true;
-                }
-                case R.id.itemScrims: {
-///                    outFile = copyAsset("examples/Gogins/csound_loader.js");
-///                    if (outFile == null) {
-///                        return true;
-///                    }
+                case R.id.itemScrims:
                     outFile = copyAsset("examples/Gogins/scrims.html");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
                     return true;
-                }
-                case R.id.itemOblivion: {
+                case R.id.itemOblivion:
                     outFile = copyAsset("examples/Gogins/oblivion-gm.csd");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
                     return true;
-                }
-                case R.id.itemChordSpace: {
+                case R.id.itemChordSpace:
                     outFile = copyAsset("examples/Gogins/trichord_space.html");
                     if (outFile != null) {
                         LoadFile(outFile);
                     }
                     return true;
-                }
                 default:
                     return super.onOptionsItemSelected(item);
             }
@@ -660,6 +634,9 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             if (!(start == -1 || end == -1)) {
                 String html5_page = code.substring(start, end);
                 if (html5_page.length() > 1) {
+                    html_tab.loadUrl("about:blank");
+                    html_tab.removeJavascriptInterface("csound");
+                    html_tab.removeJavascriptInterface("CsoundApp");
                     html_tab.setLayerType(View.LAYER_TYPE_NONE, null);
                     WebSettings settings = html_tab.getSettings();
                     // Page itself must specify utf-8 in meta tag?
@@ -681,18 +658,17 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     String baseUrlString = baseUrl.toString();
                     baseUrlString = baseUrlString.replace("file:/root/", "file:/");
                     String baseUriPath = csound_uri.getPath();
-                    html_tab.addJavascriptInterface(csound_oboe, "csound");
-                    html_tab.addJavascriptInterface(CsoundAppActivity.this, "CsoundApp");
                     Log.d("Csound:", "csound_uri.toString(): " + csound_uri.toString());
                     Log.d("Csound:", "csound_uri.getPath(): " + csound_uri.getPath());
                     Log.d("Csound:", "baseUrlString: " + baseUrlString);
                     if (baseUrlString.endsWith("/") == false) {
                         baseUrlString = baseUrlString + "/";
                     }
-                    html_tab.loadUrl("about:blank");
+                    html_tab.addJavascriptInterface(csound_oboe, "csound");
+                    html_tab.addJavascriptInterface(CsoundAppActivity.this, "CsoundApp");
                     html_tab.loadDataWithBaseURL(baseUrlString,
                             html5_page, "text/html", "utf-8", null);
-                }
+                    html_tab.invalidate();                }
             } else {
                 html_tab.onPause();
                 html_tab.pauseTimers();
@@ -1213,16 +1189,22 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         String text = tab.getText().toString();
         if (text.contentEquals("Editor")) {
             editor_tab.setVisibility(View.VISIBLE);
+            editor_tab.invalidate();
         } else if (text.contentEquals("Widgets")) {
             widgets_tab.setVisibility(View.VISIBLE);
+            widgets_tab.invalidate();
         } else if (text.contentEquals("Messages")) {
             messages_tab.setVisibility(View.VISIBLE);
+            messages_tab.invalidate();
         } else if (text.contentEquals("HTML")) {
             html_tab.setVisibility(View.VISIBLE);
+            html_tab.invalidate();
         } else if (text.contentEquals("Help")) {
             help_tab.setVisibility(View.VISIBLE);
+            help_tab.invalidate();
         } else if (text.contentEquals("About")) {
             portal_tab.setVisibility(View.VISIBLE);
+            portal_tab.invalidate();
         }
     }
 

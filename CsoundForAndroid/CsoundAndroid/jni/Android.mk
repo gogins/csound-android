@@ -69,6 +69,7 @@ $(CSOUND_SRC_ROOT)/OOps/dumpf.c \
 $(CSOUND_SRC_ROOT)/OOps/fftlib.c \
 $(CSOUND_SRC_ROOT)/OOps/pffft.c \
 $(CSOUND_SRC_ROOT)/OOps/goto_ops.c \
+$(CSOUND_SRC_ROOT)/OOps/lpred.c \
 $(CSOUND_SRC_ROOT)/OOps/midiinterop.c \
 $(CSOUND_SRC_ROOT)/OOps/midiops.c \
 $(CSOUND_SRC_ROOT)/OOps/midiout.c \
@@ -106,6 +107,7 @@ $(CSOUND_SRC_ROOT)/Opcodes/sfont.c  \
 $(CSOUND_SRC_ROOT)/Opcodes/grain4.c  \
 $(CSOUND_SRC_ROOT)/Opcodes/hrtferX.c  \
 $(CSOUND_SRC_ROOT)/Opcodes/loscilx.c \
+$(CSOUND_SRC_ROOT)/Opcodes/lufs.c \
 $(CSOUND_SRC_ROOT)/Opcodes/minmax.c  \
 $(CSOUND_SRC_ROOT)/Opcodes/pan2.c  \
 $(CSOUND_SRC_ROOT)/Opcodes/phisem.c \
@@ -206,6 +208,7 @@ $(CSOUND_SRC_ROOT)/Opcodes/ugmoss.c         \
 $(CSOUND_SRC_ROOT)/Opcodes/ugnorman.c       \
 $(CSOUND_SRC_ROOT)/Opcodes/ugsc.c \
 $(CSOUND_SRC_ROOT)/Opcodes/wave-terrain.c   \
+$(CSOUND_SRC_ROOT)/Opcodes/wterrain2.c   \
 $(CSOUND_SRC_ROOT)/Opcodes/stdopcod.c \
 $(CSOUND_SRC_ROOT)/Opcodes/socksend.c \
 $(CSOUND_SRC_ROOT)/Opcodes/sockrecv.c \

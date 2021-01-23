@@ -105,8 +105,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     ArrayList<SeekBar> sliders = new ArrayList<SeekBar>();
     ArrayList<Button> buttons = new ArrayList<Button>();
     ArrayList<String> str = new ArrayList<String>();
-    private Boolean firstLvl = true;
-    private File path = new File(Environment.getExternalStorageDirectory() + "");
+    private final Boolean firstLvl = true;
+    private final File path = new File(Environment.getExternalStorageDirectory() + "");
     private String chosenFile;
     private static final int BROWSE_DIALOG = 0xFFFFFFFF;
     private static final int ERROR_DIALOG = 0xFFFFFFF0;
@@ -122,7 +122,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     static String SSDIR = null;
     static String SADIR = null;
     static String INCDIR = null;
-    private String screenLayout = "2";
+    private final String screenLayout = "2";
     protected CsoundCallbackWrapper oboe_callback_wrapper = null;
     Intent csound_service_intent = null;
     static final int OPEN_FILE_REQUEST = 8391;
@@ -331,7 +331,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         loadWebView();
         postMessageClear("Csound is starting...\n");
         // Make sure this stuff really got packaged.
-        String samples[] = null;
+        String[] samples = null;
         try {
             samples = getAssets().list("samples");
         } catch (IOException e) {
@@ -350,7 +350,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     // bound to these cores prevent it being migrated to slower or more contended
     // core(s).
     private int[] getExclusiveCores(){
-        int exclusiveCores[] = {};
+        int[] exclusiveCores = {};
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             Log.w("Csound", "getExclusiveCores() not supported. Only available on API " +
                     Build.VERSION_CODES.N + "+");
@@ -529,7 +529,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         postMessageClear_(message_, true);
     }
 
-    private StringBuilder csoundMessageStringBuilder = new StringBuilder();
+    private final StringBuilder csoundMessageStringBuilder = new StringBuilder();
 
     private synchronized void postMessageClear_(String message_,
                                                 boolean doClear_) {

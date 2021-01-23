@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
 	<meta name="created" content="2013-06-11T00:00:00.020113632"/>
-	<meta name="changed" content="2019-08-23T11:12:38.769596728"/>
+	<meta name="changed" content="2021-01-23T13:16:36.482217740"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -33,7 +33,7 @@ Csound for Android
 <p align="center" style="margin-top: 0.08in; margin-bottom: 0in; line-height: 115%">
 <i><b>Michael Gogins</b></i></p>
 <p align="center" style="margin-top: 0.08in; margin-bottom: 0in; line-height: 115%">
-<i><b>23 August 2019</b></i></p>
+<i><b>23 January 2021</b></i></p>
 <p align="center" style="margin-top: 0.08in; margin-bottom: 0in; line-height: 115%">
 <br/>
 
@@ -50,6 +50,11 @@ version of Csound for Android features many changes and improvements:</p>
 	<li/>
 <p style="margin-top: 0.08in; margin-bottom: 0in; line-height: 115%">
 	The app is now built for 64 bit CPU architecture.</p>
+	<li/>
+<p style="margin-top: 0.08in; margin-bottom: 0in; line-height: 115%">
+	The app now comes with a WebAssembly build of the CsoundAC library
+	for algorithmic composition. The scrims.html and trichord_space.html
+	examples use this library for computations in chord space.</p>
 	<li/>
 <p style="margin-top: 0.08in; margin-bottom: 0in; line-height: 115%">
 	The included FluidSynth opcodes have been updated to work on 64 bit
@@ -357,7 +362,7 @@ and log some informative messages during Csound's performance (<font face="Couri
 a blank line between <font face="Courier New, monospace">&lt;CsInstruments&gt;</font>
 and <font face="Courier New, monospace">&lt;/CsInstruments&gt;</font>
 and type the following text:</p>
-<pre class="western" style="margin-top: 0.04in; line-height: 115%">sr = 44100
+<pre class="western" style="margin-top: 0.04in; margin-bottom: 0.08in; line-height: 115%">sr = 44100
 ksmps = 10
 nchnls = 1
 <font color="#000000"><font face="Courier New, monospace"><font size="2" style="font-size: 9pt">instr 1</font></font></font>

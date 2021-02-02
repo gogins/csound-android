@@ -7,7 +7,7 @@ git pull --recurse-submodules
 git branch
 echo "Finished updating all submodules for CsoundForAndroid."
 ls -ll
-cp -rf csound-examples/csound-for-android/* CsoundForAndroid/CsoundApplication/src/main/assets/examples
-cp -rf csound-examples/docs/* CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins
+cp -rf ~/csound-examples/csound-for-android/* CsoundForAndroid/CsoundApplication/src/main/assets/examples
+cp -rf ~/csound-examples/docs/* CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins
 find CsoundForAndroid/CsoundApplication/src/main/assets/
 echo "Finished updating all source dependencies of Csound for Android."

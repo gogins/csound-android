@@ -63,7 +63,7 @@ be built in Android Studio.
 
 First clone the Git repository at https://github.com/gogins/csound-android.
 
-The following environment mentioned below MUST be set before building, perhaps 
+The environment variables mentioned below MUST be set before building, perhaps 
 in your .profile script. Obviously, modify the paths as required to suit your
 home directory and installation details. These are exported in `build-env.sh` 
 which you can source in your .profile script.
@@ -77,7 +77,7 @@ build and which includes files from the `link` subdirectory.
 
 Prerequisites for building Csound for Android include:
 
-1.  You must install up to date versions of Android Studio, Android SDK 22 
+1.  You must install up to date versions of Android Studio, Android SDK, 
     and the current SDK, GDB, LLDB, the NDK, and build tools. Install these 
     using Android Studio's SDK Manager.
 

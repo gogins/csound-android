@@ -26,11 +26,11 @@ weird hacks to ensure binary built with APP_PLATFORM=android-23 to work on Ginge
 
 So we should have:
 
-buildToolsVersion 28
-compileSdkVersion 28
-targetSdkVersion 26
-minSdkVersion 22
-APP_PLATFORM android-22
+buildToolsVersion 30.0.2
+compileSdkVersion 33
+targetSdkVersion 33
+minSdkVersion 33
+APP_PLATFORM android-33
 
 */
 buildscript {
@@ -39,7 +39,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:8.1.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

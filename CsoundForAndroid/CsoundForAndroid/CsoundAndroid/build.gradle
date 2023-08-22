@@ -1,13 +1,10 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 33
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 29
-        versionCode 3
-        versionName "6.12.0"
+        minSdkVersion 33
+        targetSdkVersion 33
     }
     buildTypes {
         release {
@@ -20,9 +17,10 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
+        sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'com.csounds'
 }
 
 dependencies {

@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 33
     defaultConfig {
-        minSdkVersion 33
+        minSdkVersion 26
         targetSdkVersion 33
     }
     buildTypes {

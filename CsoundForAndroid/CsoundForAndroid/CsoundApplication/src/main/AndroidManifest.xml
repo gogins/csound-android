@@ -29,6 +29,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".CsoundAppActivity"
+            android:exported="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:fitsSystemWindows="true"
             android:label="@string/app_name"

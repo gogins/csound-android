@@ -86,10 +86,10 @@ Prerequisites for building Csound for Android include:
     .profile script:
 
     2.1.    ANDROID_NDK_ROOT with the full pathname of your Android Native
-            Development kit, typically $ANDROID_SDK_ROOT/ndk-bundle.
+            Development kit, typically $ANDROID_SDK_ROOT/ndk/{version-number}.
 
     2.2.    ANDROID_SDK_ROOT with the full pathname of your Android Software
-            Development kit, perhaps something like ~/Android/Sdk.
+            Development kit, perhaps something like ~/Android/sdk.
 
     2.3.    NDK_MODULE_PATH with the full pathname to this repository's
             CsoundForAndroid/ndk-libraries subdirectory.

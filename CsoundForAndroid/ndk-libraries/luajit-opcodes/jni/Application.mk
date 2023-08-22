@@ -1,7 +1,7 @@
 APP_ABI := armeabi-v7a arm64-v8a x86_64
 APP_CPPFLAGS += -fexceptions -frtti -std=c++14 -Ofast
 APP_OPTIM := release
-APP_PLATFORM := android-33
+APP_PLATFORM := android-26
 # LuaJIT does not currently build 
 # for Android arm with clang.
 # Both LuaJIT and LuaCsound must be built with gcc,

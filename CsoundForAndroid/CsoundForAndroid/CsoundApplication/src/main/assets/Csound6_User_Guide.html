@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.4.2.3 (MacOSX)"/>
 	<meta name="created" content="2013-06-11T00:00:00.020113632"/>
-	<meta name="changed" content="2023-08-24T11:00:53.801169461"/>
+	<meta name="changed" content="2023-08-24T16:16:29.831366413"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -32,7 +32,7 @@ Csound for Android
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 <i><b>Michael Gogins</b></i></p>
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-<i><b>24 Augustt 2023</b></i></p>
+<i><b>24 August 2023</b></i></p>
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 <br/>
 
@@ -43,40 +43,22 @@ should be just enough to get you started if you already have some
 experience with Csound or, at least, some other “Music N” type
 software synthesizer.</p>
 <h1 class="western" style="line-height: 115%">Changes in This Version</h1>
-<p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">This
-version of Csound for Android features many changes and improvements:</p>
+<p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">Version
+31 of Csound for Android features some changes and improvements:</p>
 <ul>
 	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	The app is now built for 64 bit CPU architecture.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	The app now comes with a WebAssembly build of the CsoundAC library
-	for algorithmic composition. The scrims.html and trichord_space.html
-	examples use this library for computations in chord space.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	The included FluidSynth opcodes have been updated to work on 64 bit
-	CPU architectures.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	A wider selection of plugin opcodes is now included.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	Audio input and output are now implemented using the current version
-	of Google’s Oboe library, which encapsulates differences between
-	audio drivers on different Android platforms. Oboe is integrated
-	with Csound in a new CsoundOboe C++ class. The current version of
-	Oboe seems to perform with fewer dropouts.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	The app now has a built-in text editor based on Ace, replacing
-	CodeMirror. The editor includes find and replace functions. The
-	editor now has specific modes for .csd files and .html files.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	The user interface is tabbed for instantly switching between editing
-	and performing.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	There are now 12 built-in buttons and sliders.</p>
+	The number of built-in buttons and sliders has been increased to 12
+	each.</p>
 	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 	The <i><b>User Guide</b></i> has been updated with information about
 	issues and workarounds.</p>
 	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	The <i><b>Csound Reference Manual</b></i> appears in its own tab.</p>
+	A section has been added on how to run Csound for Android on desktop
+	computers, etc., by using an Android emulator. 
+	</p>
+	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
+	Broken links to the <i><b>Csound Reference Manual</b></i> and to the
+	Csound home page have been fixed.</p>
 </ul>
 <h1 class="western" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 Introduction</h1>
@@ -95,7 +77,7 @@ some types of pieces on multi-core systems.</p>
 <p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">The
 Csound for Android app is by Victor Lazzarini, Steven Yi, Michael
 Gogins, and others, and is currently maintained by Michael Gogins in
-the <a href="https://github.com/gogins/csound-extended">csound-extended</a>
+the <a href="https://github.com/gogins/csound-extended">csound-a</a>ndroid
 repository. The app contains virtually all of Csound, including many
 of the more frequently used plugin opcodes:</p>
 <ul>
@@ -219,8 +201,8 @@ task menu of Csound for Android provides the following functions:
 <p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">The
 predefined widgets on the <i><b>Widgets </b></i>tab are assigned
 control channel names <font face="Courier New, monospace">butt1</font>
-through <font face="Courier New, monospace">butt</font><font face="Courier New, monospace">12</font>,
-<font face="Courier New, monospace">slider1</font> through <font face="Courier New, monospace">slider</font><font face="Courier New, monospace">12</font>,
+through <font face="Courier New, monospace">butt12</font>, <font face="Courier New, monospace">slider1</font>
+through <font face="Courier New, monospace">slider12</font>,
 <font face="Courier New, monospace">trackpad.x</font>, and
 <font face="Courier New, monospace">trackpad.y</font>. In addition,
 the accelerometer on the Android device is available as
@@ -268,7 +250,27 @@ var numberValue = parseFloat(value)
 csoundApp.setControlChannel('gk_Reverb_Feedback', numberValue);
 }
 &lt;/script&gt;</pre><h1 class="western">
-Running on Other Operating Systems</h1>
+Debugging Crashes</h1>
+<p>If Csound crashes when it starts or while it is running, then the
+Csound for Android app simply exits without warning or information.</p>
+<p>This is because Csound is written in C, and the C runtime library
+handles crashes using signal handlers or an atexit function. But the
+Csound for Android app is written in Java, and runs on a Java virtual
+machine. When a fatal error occurs, the signal handler is duly
+called, but the state of the Java virtual machine at that time cannot
+be known. Therefore, the results of calling Java code from the signal
+handler cannot be determined. And so, it’s not possible to throw a
+Java exception or to call from the signal handler back into Java to
+show an alert from the signal handler.</p>
+<p>However, it is still possible to figure out what caused the crash.
+This is done by putting a diagnostic print statement such as <font face="Courier New, monospace">prints
+“Got this far…\n”</font>  in your Csound orchestra code,
+starting in the orchestra header, and moving this print statement
+around in the orchestra until the app crashes before you see the
+message. That must be just after where the crash happened, so you can
+often figure out the cause of the crash by the carefully reading the
+code that runs just before the print statement.</p>
+<h1 class="western">Running on Other Operating Systems</h1>
 <p>The Csound for Android app can run on any desktop operating system
 that has an Android emulator installed. This can sometimes provide
 higher performance or a better user interface than running on an
@@ -321,7 +323,7 @@ script and/or desktop shortcut to run it in one step.</p>
 other Android emulators such as <a href="https://www.oracle.com/virtualization/virtualbox/">VirtualBox</a>
 (<a href="https://www.coolmuster.com/android/run-android-on-mac.html">setup
 for Android instructions here</a>), <a href="https://www.bignox.com/">NoxPlayer</a>,
-and <a href="https://www.bluestacks.com/">Bluestacks</a>. 
+or <a href="https://www.bluestacks.com/">Bluestacks</a>. 
 </p>
 <p>Be aware that using any Android emulator may involve security
 risks. However, downloading the emulator only from the official

@@ -15,11 +15,17 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
+        debug {
+            storeFile file('/Users/michaelgogins/csound-android/CsoundForAndroid/CsoundForAndroid/CsoundApplication/CsoundForAndroid.jks')
+            storePassword 'macadoodles'
+            keyAlias 'csoundapplication'
+            keyPassword 'Barbe48tFrant0'
+        }
         release {
-            keyAlias 'CsoundApplication'
+            keyAlias 'csoundapplication'
             keyPassword 'Barbe48tFrant0'
             storePassword 'macadoodles'
-            storeFile file('CsoundForAndroid.jks')
+            storeFile file('/Users/michaelgogins/csound-android/CsoundForAndroid/CsoundForAndroid/CsoundApplication/CsoundForAndroid.jks')
         }
     }
     compileSdkVersion 33
@@ -30,6 +36,7 @@ android {
         versionCode 31
         versionName '6.18.0'
         multiDexEnabled true
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {

@@ -15,6 +15,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -282,67 +283,72 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     public void startRendering() {
-        messageTextView.setText("");
-        messageTextViewSmall.setText("");
-        File file = new File(OPCODE6DIR);
-        String getOPCODE6DIR = csnd.csound_oboeJNI.csoundGetEnv(0,
-                "OPCODE6DIR");
-        postMessage(
-                "OPCODE6DIR: " + getOPCODE6DIR
-                        + "\n");
-        File[] files = file.listFiles();
-        CsoundAppActivity.this
-                .postMessage("Loading Csound plugins:\n");
-        for (int i = 0; i < files.length; i++) {
-            String pluginPath = files[i].getAbsoluteFile()
-                    .toString();
-            try {
-                CsoundAppActivity.this.postMessage(pluginPath
-                        + "\n");
-                System.load(pluginPath);
-            } catch (Throwable e) {
-                CsoundAppActivity.this.postMessage(e.toString()
-                        + "\n");
-            }
-        }
-        // This must be set before the Csound object is created.
-        csnd.csound_oboeJNI.csoundSetGlobalEnv("OPCODE6DIR", OPCODE6DIR);
-        csnd.csound_oboeJNI.csoundSetGlobalEnv("SFDIR", SFDIR);
-        csnd.csound_oboeJNI.csoundSetGlobalEnv("SSDIR", SSDIR);
-        csnd.csound_oboeJNI.csoundSetGlobalEnv("SADIR", SADIR);
-        csnd.csound_oboeJNI.csoundSetGlobalEnv("INCDIR", INCDIR);
-        int[] exclusive_cores = getExclusiveCores();
-        csound_oboe = new CsoundOboe();
-        String driver_value = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("audioDriver", "0");
-        int driver_index = Integer.parseInt(driver_value);
-        csound_oboe.setOboeApi(driver_index);
-        oboe_callback_wrapper = new CsoundCallbackWrapper(csound_oboe.getCsound()) {
-            @Override
-            public void MessageCallback(int attr, String msg) {
-                Log.d("CsoundOboe:", msg);
-                postMessage(msg);
-            }
-        };
-        oboe_callback_wrapper.SetMessageCallback();
-        // Csound will not be in scope of any JavaScript on the page
-        // until the page is reloaded. Also, we want to show any edits
-        // to the page.
-        loadWebView();
-        postMessageClear("Csound is starting...\n");
-        // Make sure this stuff really got packaged.
-        String[] samples = null;
         try {
-            samples = getAssets().list("samples");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (csound_uri.toString().toLowerCase().endsWith(".csd")) {
-            int result = 0;
-            String filepath = uriToFilepath(csound_uri);
-            result = csound_oboe.CompileCsdText(code);
-            result = csound_oboe.Start();
-            result = csound_oboe.PerformAndReset();
+            messageTextView.setText("");
+            messageTextViewSmall.setText("");
+            File file = new File(OPCODE6DIR);
+            String getOPCODE6DIR = csnd.csound_oboeJNI.csoundGetEnv(0,
+                "OPCODE6DIR");
+            postMessage(
+                "OPCODE6DIR: " + getOPCODE6DIR
+                    + "\n");
+            File[] files = file.listFiles();
+            CsoundAppActivity.this
+                .postMessage("Loading Csound plugins:\n");
+            for (int i = 0; i < files.length; i++) {
+                String pluginPath = files[i].getAbsoluteFile()
+                    .toString();
+                try {
+                    CsoundAppActivity.this.postMessage(pluginPath
+                        + "\n");
+                    System.load(pluginPath);
+                } catch (Throwable e) {
+                    CsoundAppActivity.this.postMessage(e.toString()
+                        + "\n");
+                }
+            }
+            // This must be set before the Csound object is created.
+            csnd.csound_oboeJNI.csoundSetGlobalEnv("OPCODE6DIR", OPCODE6DIR);
+            csnd.csound_oboeJNI.csoundSetGlobalEnv("SFDIR", SFDIR);
+            csnd.csound_oboeJNI.csoundSetGlobalEnv("SSDIR", SSDIR);
+            csnd.csound_oboeJNI.csoundSetGlobalEnv("SADIR", SADIR);
+            csnd.csound_oboeJNI.csoundSetGlobalEnv("INCDIR", INCDIR);
+            int[] exclusive_cores = getExclusiveCores();
+            csound_oboe = new CsoundOboe();
+            String driver_value = PreferenceManager
+                .getDefaultSharedPreferences(this).getString("audioDriver", "0");
+            int driver_index = Integer.parseInt(driver_value);
+            csound_oboe.setOboeApi(driver_index);
+            oboe_callback_wrapper = new CsoundCallbackWrapper(csound_oboe.getCsound()) {
+                @Override
+                public void MessageCallback(int attr, String msg) {
+                    Log.d("CsoundOboe:", msg);
+                    postMessage(msg);
+                }
+            };
+            oboe_callback_wrapper.SetMessageCallback();
+            // Csound will not be in scope of any JavaScript on the page
+            // until the page is reloaded. Also, we want to show any edits
+            // to the page.
+            loadWebView();
+            postMessageClear("Csound is starting...\n");
+            // Make sure this stuff really got packaged.
+            String[] samples = null;
+            try {
+                samples = getAssets().list("samples");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (csound_uri.toString().toLowerCase().endsWith(".csd")) {
+                int result = 0;
+                String filepath = uriToFilepath(csound_uri);
+                result = csound_oboe.CompileCsdText(code);
+                result = csound_oboe.Start();
+                result = csound_oboe.PerformAndReset();
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+            postMessage(t.toString());
         }
     }
 
@@ -816,7 +822,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         help_tab.getSettings().setBuiltInZoomControls(true);
         help_tab.getSettings().setDisplayZoomControls(false);
         help_tab.setWebViewClient(new CsoundWebViewClient());
-        help_tab.loadUrl("https://csound.com/docs/manual/indexframes.html");
+        help_tab.loadUrl("https://csound.com/docs/manual/index.html");
         portal_tab.getSettings().setJavaScriptEnabled(true);
         portal_tab.getSettings().setBuiltInZoomControls(true);
         portal_tab.getSettings().setDisplayZoomControls(false);

@@ -34,8 +34,8 @@ find ../../CsoundAndroid/libs -name "*.so" -ls
 mkdir -p src/main/assets/samples/
 cp -f $CSOUND_SRC_ROOT/samples/* src/main/assets/samples
 
-mkdir -p src/main/assets/examples/examples/Gogins
-cp -rf ../../../silencio src/main/assets/examples/Gogins
-
+rm -rf src/main/assets/examples
+mkdir -p src/main/assets/examples
+cp -rf ../../csound-examples/csound-for-android/* src/main/assets/examples/
 
 

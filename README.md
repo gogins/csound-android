@@ -39,12 +39,10 @@ runs on the following platforms:
   - arm64-v8a
   - x86_64
 
-- The [Anbox](https://anbox.io/) Android container running on Linux (tested 
-  only with the x86_64 ABI, but armeabi-v7a and arm64-v8a _may_ also work).
-
 For those wishing to develop the same Csound compositions on both Android and 
-Linux, Anbox provides seamless inter-operation. Csound on Anbox runs almost as 
-fast as native Csound.
+desktop computers, various Android emulators should work. The Android emulator 
+that comes with Android Studio does work, and is recommended, but others also 
+should work.
 
 ## Installation
 
@@ -62,11 +60,6 @@ native libraries have been built and installed, can the Csound for Android app
 be built in Android Studio.
 
 First clone the Git repository at https://github.com/gogins/csound-android.
-
-The environment variables mentioned below MUST be set before building, perhaps 
-in your .profile script. Obviously, modify the paths as required to suit your
-home directory and installation details. These are exported in `build-env.sh` 
-which you can source in your .profile script.
 
 Please note, some NDK dependencies are built in their own subdirectories,
 and some are built in OTHER subdirectories with their own makefiles that
@@ -94,14 +87,18 @@ Prerequisites for building Csound for Android include:
     2.3.    NDK_MODULE_PATH with the full pathname to this repository's
             CsoundForAndroid/ndk-libraries subdirectory.
 
-To build for Android on Linux for the first time, change to the
+To build for Android on Linux or macOS for the first time, change to the
 CsoundForAndroid subdirectory of this repository and execute
 `bash fresh-build-android.sh`, which does the following:
 
 1.  Execute `bash update-dependencies`. Do this periodically or whenever
     you think a dependency has changed.
+    
+2.  In the ndk-libraries/csound/include directory, create a valid `version.h`
+    file from `version.h.in`, and a valid `float-version.h` from 
+    float-version.h.in.
 
-2.  Execute `bash build-android.sh`. The build system compiles all native
+3.  Execute `bash build-android.sh`. The build system compiles all native
     libraries, including the Csound library libcsoundandroid.so and its 
     plugin opcode libraries, required by the Csound for Android app, and 
     copies them to the appropriate subdirectories for further building and 
@@ -113,6 +110,6 @@ Attach an Android device, enable USB debugging on it, and run or debug the
 CsoundApplication project.
 
 If you need to make a production build, apply to me for the signing key, 
-build for release, and generate a signed .apk. The signing key should be 
+build for release, and generate a signed .aab. The signing key should be 
 placed in the csound-android/CsoundForAndroid/CsoundForAndroid directory.
 

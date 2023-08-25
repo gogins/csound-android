@@ -29,7 +29,7 @@ So we should have:
 buildToolsVersion 30.0.2
 compileSdkVersion 33
 targetSdkVersion 33
-minSdkVersion 26
+minSdkVersion 22
 APP_PLATFORM android-33
 
 */

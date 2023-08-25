@@ -31,7 +31,7 @@ android {
     compileSdkVersion 33
     defaultConfig {
         applicationId "com.csounds.Csound6"
-        minSdkVersion 26
+        minSdkVersion 22
         targetSdkVersion 33
         versionCode 31
         versionName '6.18.0'

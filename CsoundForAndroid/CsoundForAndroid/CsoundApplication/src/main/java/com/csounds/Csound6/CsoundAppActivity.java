@@ -32,6 +32,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -106,7 +108,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     ArrayList<Button> buttons = new ArrayList<Button>();
     ArrayList<String> str = new ArrayList<String>();
     private final Boolean firstLvl = true;
-    private final File path = new File(Environment.getExternalStorageDirectory() + "");
+    private File external_files_dir_music = null;
     private String chosenFile;
     private static final int BROWSE_DIALOG = 0xFFFFFFFF;
     private static final int ERROR_DIALOG = 0xFFFFFFF0;
@@ -190,9 +192,9 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     // the public external storage music directory.
     // The asset directory becomes a subdirectory of the music directory.
     private File copyAsset(String fromAssetPath) {
-        if (checkOnePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            return null;
-        }
+        ///if (checkOnePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        ///    return null;
+        ///}
         AssetManager assetManager = getAssets();
         InputStream in = null;
         OutputStream out = null;
@@ -337,7 +339,9 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (csound_uri.toString().toLowerCase().endsWith(".csd")) {
+        if (csound_uri == null) {
+            Toast.makeText(getApplicationContext(), "You have not selected a piece to run!", Toast.LENGTH_LONG).show();
+        } else if (csound_uri.toString().toLowerCase().endsWith(".csd")) {
             int result = 0;
             String filepath = uriToFilepath(csound_uri);
             result = csound_oboe.CompileCsdText(code);
@@ -606,9 +610,9 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     public String loadTextFile(File file) {
         String code = null;
         try {
-            if (checkOnePermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                return "";
-            }
+            ///if (checkOnePermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ///    return "";
+            ///}
             FileReader in = new FileReader(file);
             StringBuilder contents = new StringBuilder();
             char[] buffer = new char[4096];
@@ -645,6 +649,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     settings.setDatabaseEnabled(true);
                     settings.setBuiltInZoomControls(true);
                     settings.setDisplayZoomControls(false);
+                    settings.setAllowFileAccess(true);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         settings.setAllowFileAccessFromFileURLs(true);
                         settings.setAllowUniversalAccessFromFileURLs(true);
@@ -727,6 +732,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         setContentView(R.layout.main);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         Log.d("Csound:", "onCreate...");
+        external_files_dir_music = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC);
         // Start a service that will keep this activity's process running in the background.
         csound_service_intent = new Intent(this, CsoundService.class);
         ComponentName componentName = startService(csound_service_intent);
@@ -752,6 +758,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         SADIR = sharedPreferences.getString("SADIR", SADIR);
         INCDIR = sharedPreferences.getString("INCDIR", INCDIR);
         String driver = sharedPreferences.getString("audioDriver", "");
+        // Do this before copying anything.
+        checkDangerousPermissions();
         // Pre-load plugin opcodes, not only to ensure that Csound
         // can load them, but for easier debugging if they fail to load.
         File file = new File(OPCODE6DIR);
@@ -764,8 +772,6 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 postMessage(e.toString() + "\n");
             }
         }
-        // Do this before copying anything.
-        checkDangerousPermissions();
         copyRawwaves();
         copyAssetsRecursively("samples");
         copyAssetsRecursively("examples");
@@ -943,7 +949,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         postMessage(
             "The external storage public directory for music for Csound is: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).toString() + "\n");
         postMessage(
-            "The external files directory for music for Csound is: " + getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC).toString() + "\n");
+            "The external files directory for music for Csound is: " + external_files_dir_music.toString() + "\n");
      }
 
     @Override
@@ -1027,17 +1033,48 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     protected boolean checkDangerousPermissions() {
+        if(Build.VERSION.SDK_INT >= 30) {
+            if (!Environment.isExternalStorageManager()) {
+                Snackbar.make(findViewById(android.R.id.content), "Permission needed!", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Settings", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
+                                startActivity(intent);
+                            } catch (Exception ex) {
+                                Intent intent = new Intent();
+                                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                                startActivity(intent);
+                            }
+                        }
+                    })
+                    .show();
+            }
+        }
+        boolean request_permissions = false;
+        if(Build.VERSION.SDK_INT < 30) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                request_permissions = true;
+            }
+        }
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.BODY_SENSORS)  != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE)  != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.RECORD_AUDIO)   != PackageManager.PERMISSION_GRANTED) {
+            Manifest.permission.BODY_SENSORS)  != PackageManager.PERMISSION_GRANTED) {
+            request_permissions = true;
+        }
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),
+            Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            request_permissions = true;
+        }
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),
+            Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            request_permissions = true;
+        }
+        if (request_permissions == true) {
             ActivityCompat.requestPermissions(CsoundAppActivity.this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.BODY_SENSORS,
+                new String[]{Manifest.permission.BODY_SENSORS,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.RECORD_AUDIO},
                 MY_REQUEST_DANGEROUS_PERMISSIONS);
@@ -1105,9 +1142,9 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 setTitle(title);
             }
             if (requestCode == OPEN_FILE_REQUEST && intent != null) {
-                if (checkOnePermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
+                ///if (checkOnePermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ///    return;
+                ///}
                 csound_uri_intent = intent;
                 csound_uri = intent.getData();
                 String text = loadTextFromUri(csound_uri);

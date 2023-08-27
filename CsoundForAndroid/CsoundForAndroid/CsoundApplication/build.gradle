@@ -28,13 +28,13 @@ android {
             storeFile file('/Users/michaelgogins/csound-android/CsoundForAndroid/CsoundForAndroid/CsoundApplication/CsoundForAndroid.jks')
         }
     }
-    compileSdkVersion 33
+    compileSdk 33
     defaultConfig {
         applicationId "com.csounds.Csound6"
         minSdkVersion 22
         targetSdkVersion 33
-        versionCode 31
-        versionName '6.18.0'
+        versionCode 32
+        versionName '6.18.1'
         multiDexEnabled true
         signingConfig signingConfigs.release
     }

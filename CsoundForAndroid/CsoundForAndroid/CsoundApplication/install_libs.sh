@@ -37,5 +37,6 @@ cp -f $CSOUND_SRC_ROOT/samples/* src/main/assets/samples
 rm -rf src/main/assets/examples
 mkdir -p src/main/assets/examples
 cp -rf ../../csound-examples/csound-for-android/* src/main/assets/examples/
+cp -rf ../../csound-examples/docs/* src/main/assets/examples/Gogins
 
 

@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="SELECTED_BUILD_VARIANT" value="release" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
@@ -14,15 +14,15 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output-test url="file://$MODULE_DIR$/../../../CsoundApplication/build/intermediates/javac/debugUnitTest/classes" />
+    <output-test url="file://$MODULE_DIR$/../../../CsoundApplication/build/intermediates/javac/releaseUnitTest/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/ap_generated_sources/debugUnitTest/out" />
+    <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/ap_generated_sources/releaseUnitTest/out" />
     <content url="file://$MODULE_DIR$/../../../CsoundApplication/src/test" />
-    <content url="file://$MODULE_DIR$/../../../CsoundApplication/src/testDebug" />
+    <content url="file://$MODULE_DIR$/../../../CsoundApplication/src/testRelease" />
     <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="CsoundForAndroid.CsoundApplication.main" scope="TEST" />
     <orderEntry type="module" module-name="CsoundForAndroid.CsoundAndroid.main" scope="TEST" />
+    <orderEntry type="module" module-name="CsoundForAndroid.CsoundApplication.main" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.constraint:constraint-layout:2.0.4@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:appcompat-v7:28.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:support-compat:28.0.0@aar" level="project" />

@@ -811,7 +811,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         help_tab.getSettings().setBuiltInZoomControls(true);
         help_tab.getSettings().setDisplayZoomControls(false);
         help_tab.setWebViewClient(new CsoundWebViewClient());
-        help_tab.loadUrl("https://csound.com/docs/manual/indexframes.html");
+        help_tab.loadUrl("https://csound.com/docs/manual/index.html");
         portal_tab.getSettings().setJavaScriptEnabled(true);
         portal_tab.getSettings().setBuiltInZoomControls(true);
         portal_tab.getSettings().setDisplayZoomControls(false);
@@ -1021,29 +1021,28 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         return result;
     }
 
+    final int REQUEST_ALL_FILES_ACCESS_PERMISSION = 4930;
     protected boolean checkDangerousPermissions() {
-        /*
         if(Build.VERSION.SDK_INT >= 30) {
             if (!Environment.isExternalStorageManager()) {
-                Snackbar.make(findViewById(android.R.id.content), "Permission needed!", Snackbar.LENGTH_INDEFINITE)
+                Snackbar.make(findViewById(android.R.id.content), "Permission to access all files is needed to run examples and read/write files!", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Settings", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             try {
                                 Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
                                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
-                                startActivity(intent);
+                                startActivityForResult(intent, REQUEST_ALL_FILES_ACCESS_PERMISSION);
                             } catch (Exception ex) {
                                 Intent intent = new Intent();
                                 intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                                startActivity(intent);
+                                startActivityForResult(intent, REQUEST_ALL_FILES_ACCESS_PERMISSION);
                             }
                         }
                     })
                     .show();
             }
         }
-        */
         boolean request_permissions = false;
         ArrayList<String> permissions_to_request = new ArrayList();
         if (Build.VERSION.SDK_INT >= 30) {

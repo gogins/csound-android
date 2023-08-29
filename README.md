@@ -110,6 +110,6 @@ Attach an Android device, enable USB debugging on it, and run or debug the
 CsoundApplication project.
 
 If you need to make a production build, apply to me for the signing key, 
-build for release, and generate a signed .aab. The signing key should be 
-placed in the csound-android/CsoundForAndroid/CsoundForAndroid directory.
+build for release, and generate a signed .aab or .apk. The signing key should 
+be placed in the csound-android/CsoundForAndroid/CsoundForAndroid directory.
 

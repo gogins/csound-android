@@ -8,6 +8,15 @@
     body {
         overflow: hidden;
     }
+    .ace_scroll-v {
+        z-index: 1000;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 12px;
+        width: 12px;
+        background: whitesmoke
+    }
     #editor {
         margin: 0;
         position: absolute;
@@ -28,8 +37,8 @@
     editor.setTheme("ace/theme/cobalt");
     editor.session.setMode("ace/mode/javascript");
     editor.setOption("autoScrollEditorIntoView", "true");
-    editor.setOption("hScrollBarAlwaysVisible", "true");
-    editor.setOption("vScrollBarAlwaysVisible", "true");
+    editor.setOption("customScrollbar", "true");
+    editor.setOption("scrollSpeed", "50");
 
     var setEmbeddedEditorText = function(mode) {
         try {

@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.4.2.3 (MacOSX)"/>
 	<meta name="created" content="2013-06-11T00:00:00.020113632"/>
-	<meta name="changed" content="2023-08-24T16:16:29.831366413"/>
+	<meta name="changed" content="2023-08-29T16:39:17.055878127"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -32,7 +32,7 @@ Csound for Android
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 <i><b>Michael Gogins</b></i></p>
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-<i><b>24 August 2023</b></i></p>
+<i><b>29 August 2023</b></i></p>
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 <br/>
 
@@ -43,22 +43,45 @@ should be just enough to get you started if you already have some
 experience with Csound or, at least, some other “Music N” type
 software synthesizer.</p>
 <h1 class="western" style="line-height: 115%">Changes in This Version</h1>
-<p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">Version
-31 of Csound for Android features some changes and improvements:</p>
+<p>This is the Android for Csound app, release code 35. It is the
+first major release of this app since 2021.</p>
+<p>The Csound for Android app now targets Android version 13. This
+has required adding <font face="Courier New, monospace">MANAGE_EXTERNAL_STORAGE</font>
+permission, so that the app can now read and write all files on a
+device. Be assured that the app does not, on its own, read any
+private data, or send any private data anywhere, or download any data
+or software on its own. Of course, a user could write a .csd file
+that can do these things, so exercise due care.</p>
+<p>Android versions from 10 forward are still supported.</p>
+<h2 class="western">Upgraded libraries</h2>
 <ul>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	The number of built-in buttons and sliders has been increased to 12
-	each.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	The <i><b>User Guide</b></i> has been updated with information about
-	issues and workarounds.</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	A section has been added on how to run Csound for Android on desktop
-	computers, etc., by using an Android emulator. 
+	<li><p>Csound has been upgraded to version 6.18.1.</p>
+	<li><p>The Ace Editor has been upgraded to version 1.24.1. 
 	</p>
-	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-	Broken links to the <i><b>Csound Reference Manual</b></i> and to the
-	Csound home page have been fixed.</p>
+	<li><p>Various plugin opcode libraries have been upgraded.</p>
+</ul>
+<h2 class="western">Enhanced Functionality</h2>
+<ul>
+	<li><p>The widgets are now arranged with one button to the left of
+	each slider, and the number of buttons and sliders has been
+	increased to 12 each.</p>
+	<li><p>The code editor now has visible scrollbars, faster scrolling,
+	and a context menu for search and replace, configuring the editor,
+	etc.</p>
+	<li><p>The <i><b>User Guide</b></i> has been improved with
+	instructions for using an Android emulator to run the app on
+	notebooks or desktops.</p>
+</ul>
+<h2 class="western">Bug Fixes</h2>
+<ul>
+	<li><p>The app no longer crashes when run without first loading a
+	.csd file.</p>
+	<li><p>The broken link to the online <i><b>Csound Reference Manual</b></i>
+	has been fixed.</p>
+</ul>
+<h2 class="western">Downgraded Functionality</h2>
+<ul>
+	<li><p>The Ableton Link opcodes have been removed.</p>
 </ul>
 <h1 class="western" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 Introduction</h1>
@@ -110,7 +133,10 @@ widgets, and so forth. The tabs are:</p>
 	<i><b>Editor</b></i><span style="font-variant: normal"> – </span><span style="font-variant: normal"><font size="3" style="font-size: 12pt"><span style="font-style: normal"><span style="font-weight: normal">Provides
 	a built-in text editor based on Ace, with find and replace
 	functionalit</span></span></font></span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">y.
-	Press Ctrl-F to invoke the find and replace dialog.</span></span></span></p>
+	</span></span></span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">Touch
+	the editor screen to enable a context menu (a little box with three
+	dots), from which you can select the </span></span></span><span style="font-variant: normal"><i><b>Find</b></i></span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">
+	command.</span></span></span></p>
 	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 	<i><b>Messages</b></i><span style="font-variant: normal"> – </span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">Shows
 	all diagnostic and informative messages printed by Csound.</span></span></span></p>
@@ -121,11 +147,12 @@ widgets, and so forth. The tabs are:</p>
 	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 	<i><b>Widgets</b></i><span style="font-variant: normal"> –
 	</span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">Provides
-	a predefined set of 9</span></span></span><span style="font-variant: normal">
-	</span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">sliders,
-	5 buttons, and a trackpad that send updates to predefined Csound
-	control channels. These widgets are backwards compatible with
-	previous versions of the Csound for Android app.</span></span></span></p>
+	a predefined set of </span></span></span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">12
+	buttons, 12</span></span></span><span style="font-variant: normal">
+	</span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">sliders
+	and a trackpad that send updates to predefined Csound control
+	channels. These widgets are backwards compatible with previous
+	versions of the Csound for Android app.</span></span></span></p>
 	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 	<i><b>Help</b></i><span style="font-variant: normal"> – </span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">Provides
 	an embedded browser for the </span></span></span><i><b>Csound
@@ -251,7 +278,7 @@ csoundApp.setControlChannel('gk_Reverb_Feedback', numberValue);
 }
 &lt;/script&gt;</pre><h1 class="western">
 Debugging Crashes</h1>
-<p>If Csound crashes when it starts or while it is running, then the
+<p>If Csound crashes when it starts, or while it is running, then the
 Csound for Android app simply exits without warning or information.</p>
 <p>This is because Csound is written in C, and the C runtime library
 handles crashes using signal handlers or an atexit function. But the
@@ -264,7 +291,7 @@ Java exception or to call from the signal handler back into Java to
 show an alert from the signal handler.</p>
 <p>However, it is still possible to figure out what caused the crash.
 This is done by putting a diagnostic print statement such as <font face="Courier New, monospace">prints
-“Got this far…\n”</font>  in your Csound orchestra code,
+“Got this far…\n”</font> in your Csound orchestra code,
 starting in the orchestra header, and moving this print statement
 around in the orchestra until the app crashes before you see the
 message. That must be just after where the crash happened, so you can
@@ -441,18 +468,27 @@ you experiences glitches or low latency, try the following:</p>
 <h2 class="western">File System</h2>
 <p>The Android operating system has new and sometimes awkward
 security restrictions on how applications can read and write files on
-your device. Applications are required to specify any storage
-directories on which the user might write files. 
+your device. 
 </p>
-<p>For the Csound for Android app, the default public storage
-directory is <font face="Courier New, monospace">Music</font>, which
-on many devices is <span style="font-variant: normal"><font face="Courier New, monospace"><span style="font-style: normal">/storage/emulated/0/Music</span></font></span><span style="font-variant: normal"><span style="font-style: normal">.
+<p>In Android 10, applications are required to specify any storage
+directories on which the user might write files. For the Csound for
+Android app, the default public storage directory is <font face="Courier New, monospace">Music</font>,
+which on many devices is <span style="font-variant: normal"><font face="Courier New, monospace"><span style="font-style: normal">/storage/emulated/0/Music</span></font></span><span style="font-variant: normal"><span style="font-style: normal">.
 If your pieces cannot read or write some file, such as a SoundFont,
 sample soundfile, include file, or anything else, try putting
 everything in this directory. Subdirectories of this should also
 work. On startup, you can look at the </span></span><i><b>Messages</b></i><span style="font-variant: normal">
 </span><span style="font-variant: normal"><span style="font-style: normal">pane
 to see what Csound is actually using for the public data directory.</span></span></p>
+<p><span style="font-variant: normal"><span style="font-style: normal">From
+Android 11 on, security restrictions have made it more and more
+difficult to read and write files. For this reason, the Csound for
+Android app uses the </span></span><span style="font-variant: normal"><font face="Courier New, monospace"><span style="font-style: normal">MANAGE_EXTERNAL_STORAGE</span></font></span><span style="font-variant: normal"><span style="font-style: normal">
+permission, which allows the app to read and write files anywhere on
+a device. However, rest assured that the app never, on its own, reads
+any private information, or sends any private information anywhere.
+Of course, a user can write a Csound piece that can do these things,
+so exercise due care.</span></span></p>
 <h2 class="western">Screen Sizes</h2>
 <p>The sizes of fonts and widgets in the Csound for Android app can
 be configured to some extent in the device’s Android settings,

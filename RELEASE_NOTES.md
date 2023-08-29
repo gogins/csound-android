@@ -12,8 +12,9 @@ release of this app since 2021.
 The Csound for Android app now targets Android version 13. This has required 
 adding `MANAGE_EXTERNAL_STORAGE` permission, so that the app can now read and 
 write all files on a device. Be assured that the app does not, on its own, 
-read any private data or send any private data anywhere, although a user could 
-write a .csd file that could do these things.
+read any private data, or send any private data anywhere, or download any data 
+or software on its own. Of course, a user could write a .csd file that can do 
+these things, so exercise due care.
 
 Android versions from 10 forward are still supported.
 

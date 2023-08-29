@@ -447,12 +447,6 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                         LoadFile(outFile);
                     }
                     return true;
-                case R.id.itemParachronic:
-                    outFile = copyAsset("examples/Gogins/parachronic.html");
-                    if (outFile != null) {
-                        LoadFile(outFile);
-                    }
-                    return true;
                 case R.id.itemXanadu:
                     outFile = copyAsset("examples/Kung/xanadu.csd");
                     if (outFile != null) {

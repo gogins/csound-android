@@ -26,24 +26,20 @@ Android versions from 10 forward are still supported.
 
 * The widgets are now arranged with one button to the left of each slider, 
   and the number of buttons and sliders has been increased to 12 each.
-   
 * The code editor now has visible scrollbars, faster scrolling, and a context 
   menu for search and replace, configuring the editor, and so on.
-   
 * The __**User Guide**__ has been improved with instructions for running the 
   Csound for Android app on desktop computers, using an Android emulator.
 
-### Bug fixes
+### Bug Fixes
 
 * The app no longer crashes when run without first loading a .csd file.
-
-* The broken link to the online **__Csound Reference Manual__** has been fixed.
+* The broken link to the online ***Csound Reference Manual_*** has been fixed.
 
 ### Downgraded Functionality
 
 * The `fluid` family of SoundFont plugin opcodes has been removed. The 
   `sf` family of built-in opcodes provides an adequate replacement.
-   
 * The `STK` family of opcodes has been removed. There are built-in opcodes 
   that implement many of the same algorithms.
 

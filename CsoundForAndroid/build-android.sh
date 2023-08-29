@@ -17,6 +17,7 @@ if [ -z "NDK_MODULE_PATH" ]; then
     echo "ERROR: NDK_MODULE_PATH is not set. Please set this variable to point to the ndk-libraries directory of this project to continue.";
     exit;
 fi
+NDK_BUILD_CMD="$ANDROID_NDK_ROOT/ndk-build -j6"
 MACHINE="$(uname -s)"
 case "${MACHINE}" in 
   MINGW*) NDK_BUILD_CMD=$ANDROID_NDK_ROOT/ndk-build.cmd;;

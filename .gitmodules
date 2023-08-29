@@ -31,3 +31,6 @@
 [submodule "CsoundForAndroid/csound-examples"]
 	path = CsoundForAndroid/csound-examples
 	url = https://github.com/gogins/csound-examples.git
+[submodule "CsoundForAndroid/ndk-libraries/plugins"]
+	path = CsoundForAndroid/ndk-libraries/plugins
+	url = https://github.com/csound/plugins.git

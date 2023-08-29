@@ -14,6 +14,6 @@ LOCAL_CPPFLAGS += -std=c++11 -pthread -frtti -fcxx-exceptions -Wno-multichar -fe
 LOCAL_LDLIBS := -latomic
 LOCAL_LDFLAGS += -Wl,--export-dynamic
 
-LOCAL_SRC_FILES := $(CSOUND_SRC_ROOT)/Opcodes/ableton_link_opcodes.cpp
+LOCAL_SRC_FILES := ../../plugins/src/AbletonLinkOpcodes/ableton_link_opcodes.cpp
 
 include $(BUILD_SHARED_LIBRARY)

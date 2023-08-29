@@ -13,7 +13,7 @@ LOCAL_CFLAGS := -D__BUILDING_LIBCSOUND -DENABLE_NEW_PARSER -DLINUX -DHAVE_DIRENT
 LOCAL_CPPFLAGS :=$(LOCAL_CFLAGS)
 LOCAL_CPPFLAGS += -std=c++11 -pthread -frtti -fexceptions
 
-LOCAL_SRC_FILES := $(CSOUND_SRC_ROOT)/Opcodes/fluidOpcodes/fluidOpcodes.cpp 
+LOCAL_SRC_FILES := ../../plugins/src/fluidOpcodes/fluidOpcodes.cpp 
 
 LOCAL_LDLIBS += -ldl
 

@@ -22,7 +22,7 @@ LOCAL_LDFLAGS += -Wl,--export-dynamic
 #            src/TcpServer.cpp   src/Thread.cpp
 #            src/UdpSocket.cpp)
 
-LOCAL_SRC_FILES := $(CSOUND_SRC_ROOT)/Opcodes/stk/stkOpcodes.cpp \
+LOCAL_SRC_FILES := ../../plugins/src/stk/stkOpcodes.cpp \
     ../../stk/src/ADSR.cpp \
     ../../stk/src/Asymp.cpp \
     ../../stk/src/BandedWG.cpp \

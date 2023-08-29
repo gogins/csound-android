@@ -2,7 +2,7 @@
 
 export ANDROID_NDK_ROOT=$NDK
 
-$ANDROID_NDK_ROOT/ndk-build TARGET_PLATFORM=android-9 $@
+$ANDROID_NDK_ROOT/ndk-build TARGET_PLATFORM=android-22 $@
 
 
 

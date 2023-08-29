@@ -28,13 +28,13 @@ Android versions from 10 forward are still supported.
   and the number of buttons and sliders has been increased to 12 each.
 * The code editor now has visible scrollbars, faster scrolling, and a context 
   menu for search and replace, configuring the editor, and so on.
-* The __**User Guide**__ has been improved with instructions for running the 
-  Csound for Android app on desktop computers, using an Android emulator.
+* The ***User Guide*** has been improved with instructions for using an 
+  Android emulator to run the app on notebooks or desktops.
 
 ### Bug Fixes
 
 * The app no longer crashes when run without first loading a .csd file.
-* The broken link to the online ***Csound Reference Manual_*** has been fixed.
+* The broken link to the online ***Csound Reference Manual*** has been fixed.
 
 ### Downgraded Functionality
 

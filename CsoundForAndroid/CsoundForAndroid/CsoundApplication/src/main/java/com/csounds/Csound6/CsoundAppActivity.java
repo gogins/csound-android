@@ -1185,11 +1185,6 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         editor.evaluateJavascript("getEmbeddedEditorTextAndRun();", this);
     }
 
-    public void getEditorTextAndSave() {
-        Log.i("Csound:", "getEditorTextAndSave...");
-        editor.evaluateJavascript("getEmbeddedEditorTextAndSave();", this);
-    }
-
     @JavascriptInterface
     public void setCsoundText(String text) {
         postMessage("setCsoundText...\n");

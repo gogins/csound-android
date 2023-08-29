@@ -8,7 +8,6 @@
     body {
         overflow: hidden;
     }
-
     #editor {
         margin: 0;
         position: absolute;
@@ -23,14 +22,14 @@
 
 <pre id="editor"></pre>
 
-<script src="src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/cobalt");
     editor.session.setMode("ace/mode/javascript");
     editor.setOption("autoScrollEditorIntoView", "true");
-    editor.session.setOption("hScrollBarAlwaysVisible", "true");
-    editor.session.setOption("vScrollBarAlwaysVisible", "true");
+    editor.setOption("hScrollBarAlwaysVisible", "true");
+    editor.setOption("vScrollBarAlwaysVisible", "true");
 
     var setEmbeddedEditorText = function(mode) {
         try {
@@ -64,15 +63,6 @@
         }
     }
 
-    var getEmbeddedEditorTextAndSave = function() {
-        try {
-            var text = codemirror_editor.getDoc().getValue();
-            csoundApp.setCsoundText(text);
-            return 'getEmbeddedEditorTextAndSave ' + text;
-        } catch (e) {
-            return e.description;
-        }
-    }
 </script>
 
 </body>

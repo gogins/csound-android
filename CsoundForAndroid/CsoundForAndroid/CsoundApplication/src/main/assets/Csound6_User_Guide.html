@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.4.2.3 (MacOSX)"/>
 	<meta name="created" content="2013-06-11T00:00:00.020113632"/>
-	<meta name="changed" content="2023-08-29T16:39:17.055878127"/>
+	<meta name="changed" content="2023-08-29T21:07:42.167102196"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -56,6 +56,8 @@ that can do these things, so exercise due care.</p>
 <h2 class="western">Upgraded libraries</h2>
 <ul>
 	<li><p>Csound has been upgraded to version 6.18.1.</p>
+	<li><p>Google’s Oboe audio driver wrapper has been upgraded to
+	version 1.7.5.</p>
 	<li><p>The Ace Editor has been upgraded to version 1.24.1. 
 	</p>
 	<li><p>Various plugin opcode libraries have been upgraded.</p>
@@ -100,7 +102,7 @@ some types of pieces on multi-core systems.</p>
 <p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">The
 Csound for Android app is by Victor Lazzarini, Steven Yi, Michael
 Gogins, and others, and is currently maintained by Michael Gogins in
-the <a href="https://github.com/gogins/csound-extended">csound-a</a>ndroid
+the <a href="https://github.com/gogins/csound-android">csound-android</a>
 repository. The app contains virtually all of Csound, including many
 of the more frequently used plugin opcodes:</p>
 <ul>
@@ -133,10 +135,9 @@ widgets, and so forth. The tabs are:</p>
 	<i><b>Editor</b></i><span style="font-variant: normal"> – </span><span style="font-variant: normal"><font size="3" style="font-size: 12pt"><span style="font-style: normal"><span style="font-weight: normal">Provides
 	a built-in text editor based on Ace, with find and replace
 	functionalit</span></span></font></span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">y.
-	</span></span></span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">Touch
-	the editor screen to enable a context menu (a little box with three
-	dots), from which you can select the </span></span></span><span style="font-variant: normal"><i><b>Find</b></i></span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">
-	command.</span></span></span></p>
+	Touch the editor screen to enable a context menu (a little box with
+	three dots), from which you can select the </span></span></span><span style="font-variant: normal"><i><b>Find</b></i></span><span style="font-variant: normal">
+	</span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">command.</span></span></span></p>
 	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 	<i><b>Messages</b></i><span style="font-variant: normal"> – </span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">Shows
 	all diagnostic and informative messages printed by Csound.</span></span></span></p>
@@ -147,8 +148,7 @@ widgets, and so forth. The tabs are:</p>
 	<li><p style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 	<i><b>Widgets</b></i><span style="font-variant: normal"> –
 	</span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">Provides
-	a predefined set of </span></span></span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">12
-	buttons, 12</span></span></span><span style="font-variant: normal">
+	a predefined set of 12 buttons, 12</span></span></span><span style="font-variant: normal">
 	</span><span style="font-variant: normal"><span style="font-style: normal"><span style="font-weight: normal">sliders
 	and a trackpad that send updates to predefined Csound control
 	channels. These widgets are backwards compatible with previous
@@ -268,36 +268,20 @@ interactive composition. All methods callable from <font face="Courier New, mono
 and <font face="Courier New, monospace">CsoundOboe</font> are marked
 with the <font face="Courier New, monospace">@JavascriptInterface</font>
 attribute in the Csound for Android source code. For a basic example
-of a user-defined widget setup, see the <font face="Courier New, monospace">Drone-HTML5.csd</font>
-example file. Here is a snippet showing a slider's <font face="Courier New, monospace">onInput</font>
-event handler setting a Csound control channel:</p>
+of a user-defined widget setup, see the <span style="text-decoration: none"><font face="Liberation Serif, serif"><i>Message
+from Another Planet</i></font></span> example. Here is a snippet
+showing a slider's <font face="Courier New, monospace">onInput</font>
+event handler setting a Csound control channel:<br/>
+<br/>
+
+</p>
 <pre class="western" style="line-height: 115%; page-break-inside: avoid; page-break-before: auto; page-break-after: auto">&lt;script&gt;
 function gk_Reverb_FeedbackUpdate(value) {
-var numberValue = parseFloat(value)
-csoundApp.setControlChannel('gk_Reverb_Feedback', numberValue);
+    var numberValue = parseFloat(value)
+    csoundApp.setControlChannel('gk_Reverb_Feedback', numberValue);
 }
 &lt;/script&gt;</pre><h1 class="western">
-Debugging Crashes</h1>
-<p>If Csound crashes when it starts, or while it is running, then the
-Csound for Android app simply exits without warning or information.</p>
-<p>This is because Csound is written in C, and the C runtime library
-handles crashes using signal handlers or an atexit function. But the
-Csound for Android app is written in Java, and runs on a Java virtual
-machine. When a fatal error occurs, the signal handler is duly
-called, but the state of the Java virtual machine at that time cannot
-be known. Therefore, the results of calling Java code from the signal
-handler cannot be determined. And so, it’s not possible to throw a
-Java exception or to call from the signal handler back into Java to
-show an alert from the signal handler.</p>
-<p>However, it is still possible to figure out what caused the crash.
-This is done by putting a diagnostic print statement such as <font face="Courier New, monospace">prints
-“Got this far…\n”</font> in your Csound orchestra code,
-starting in the orchestra header, and moving this print statement
-around in the orchestra until the app crashes before you see the
-message. That must be just after where the crash happened, so you can
-often figure out the cause of the crash by the carefully reading the
-code that runs just before the print statement.</p>
-<h1 class="western">Running on Other Operating Systems</h1>
+Running on Other Operating Systems</h1>
 <p>The Csound for Android app can run on any desktop operating system
 that has an Android emulator installed. This can sometimes provide
 higher performance or a better user interface than running on an
@@ -483,12 +467,15 @@ to see what Csound is actually using for the public data directory.</span></span
 <p><span style="font-variant: normal"><span style="font-style: normal">From
 Android 11 on, security restrictions have made it more and more
 difficult to read and write files. For this reason, the Csound for
-Android app uses the </span></span><span style="font-variant: normal"><font face="Courier New, monospace"><span style="font-style: normal">MANAGE_EXTERNAL_STORAGE</span></font></span><span style="font-variant: normal"><span style="font-style: normal">
-permission, which allows the app to read and write files anywhere on
-a device. However, rest assured that the app never, on its own, reads
-any private information, or sends any private information anywhere.
-Of course, a user can write a Csound piece that can do these things,
-so exercise due care.</span></span></p>
+Android app requests</span></span><span style="font-variant: normal">
+</span><span style="font-variant: normal"><span style="font-style: normal">the
+</span></span><span style="font-variant: normal"><font face="Courier New, monospace"><span style="font-style: normal">MANAGE_EXTERNAL_STORAGE</span></font></span><span style="font-variant: normal">
+</span><span style="font-variant: normal"><span style="font-style: normal">permission,
+which allows the app to read and write files anywhere on a device.
+However, rest assured that the app never, on its own, reads any
+private information, or sends any private information anywhere,
+downloads any data or any software on its own. Of course, a user can
+write a Csound piece that can do these things, so exercise due care.</span></span></p>
 <h2 class="western">Screen Sizes</h2>
 <p>The sizes of fonts and widgets in the Csound for Android app can
 be configured to some extent in the device’s Android settings,
@@ -504,5 +491,29 @@ to exit the app and reload the piece.</p>
 <p>In general, for HTML pieces, it is necessary to click on the <i><b>Run</b></i>
 button, as for any other Csound piece, before Csound is instantiated
 in the JavaScript context and can render the piece.</p>
+<h2 class="western">Debugging Crashes</h2>
+<p>If Csound crashes when it starts, or while it is running, then the
+Csound for Android app simply exits without warning or information.</p>
+<p>That is because Csound is written in C, and the C runtime library
+handles crashes using signal handlers or an atexit function. But the
+Csound for Android app is written in Java, and runs on a Java virtual
+machine. When a fatal error occurs, the signal handler is duly
+called, but the state of the Java virtual machine at that time cannot
+be known. Therefore, the results of calling Java code from the signal
+handler cannot be determined. And so, it’s not possible to throw a
+Java exception or to call from the signal handler back into Java to
+show an alert from the signal handler.</p>
+<p>However, it is still possible to figure out what caused the crash.
+This is done by putting a diagnostic print statement such as <font face="Courier New, monospace">prints
+“Got this far…\n”</font> in your Csound orchestra code,
+starting in the orchestra header, and moving this print statement
+around in the orchestra until the app crashes before you see the
+message. That must be just after where the crash happened, so you can
+often figure out the cause of the crash by the carefully reading the
+code that runs just before the print statement.</p>
+<h1 class="western"><br/>
+<br/>
+
+</h1>
 </body>
 </html>

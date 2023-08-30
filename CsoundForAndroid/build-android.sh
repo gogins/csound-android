@@ -28,6 +28,16 @@ echo
 
 cd ndk-libraries
 
+cd plugin-opcodes
+echo "Building `pwd`..."
+$NDK_BUILD_CMD $1
+if [ $? -eq 0 ]; then
+    echo OK
+else
+    echo "Not building `pwd` libraries..."
+fi
+cd ..
+
 cd doppler-opcodes
 echo "Building `pwd`..."
 $NDK_BUILD_CMD $1
@@ -107,6 +117,28 @@ else
     echo "Not building `pwd` library..."
 fi
 cd ..
+
+# Not doing these for now.
+
+#~ cd link-opcodes
+#~ echo "Building `pwd`..."
+#~ $NDK_BUILD_CMD $1
+#~ if [ $? -eq 0 ]; then
+    #~ echo OK
+#~ else
+    #~ echo "Not building `pwd` library..."
+#~ fi
+#~ cd ..
+
+#~ cd luajit-opcodes
+#~ echo "Building `pwd`..."
+#~ $NDK_BUILD_CMD $1
+#~ if [ $? -eq 0 ]; then
+    #~ echo OK
+#~ else
+    #~ echo "Not building `pwd` library..."
+#~ fi
+#~ cd ..
 
 cd ..
 

@@ -934,7 +934,7 @@ public:
         return CsoundThreaded::ScoreEvent(type, pFields, numFields);
     }
     
-    virtual void SetAudioChannel(const char *name, MYFLT *samples) {
+    virtual void SetAudioChannel(const char *name, MYFLT *samples) override {
         CsoundThreaded::SetChannel(name, samples);
     }
     virtual void setAudioChannel(const char *name, MYFLT *samples){

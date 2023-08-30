@@ -48,16 +48,6 @@ else
 fi
 cd ..
 
-cd link-opcodes
-echo "Building `pwd`..."
-$NDK_BUILD_CMD $1
-if [ $? -eq 0 ]; then
-    echo OK
-else
-    echo "Not building `pwd` library..."
-fi
-cd ..
-
 cd oboe-csound
 echo "Building `pwd`..."
 $NDK_BUILD_CMD $1
@@ -99,16 +89,6 @@ fi
 cd ..
 
 cd stdutil-opcodes
-echo "Building `pwd`..."
-$NDK_BUILD_CMD $1
-if [ $? -eq 0 ]; then
-    echo OK
-else
-    echo "Not building `pwd` library..."
-fi
-cd ..
-
-cd plugin-opcodes
 echo "Building `pwd`..."
 $NDK_BUILD_CMD $1
 if [ $? -eq 0 ]; then

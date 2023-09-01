@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.4.2.3 (MacOSX)"/>
 	<meta name="created" content="2013-06-11T00:00:00.020113632"/>
-	<meta name="changed" content="2023-08-29T21:07:42.167102196"/>
+	<meta name="changed" content="2023-08-31T15:41:29.253162134"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -32,7 +32,7 @@ Csound for Android
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 <i><b>Michael Gogins</b></i></p>
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-<i><b>29 August 2023</b></i></p>
+<i><b>31 August 2023</b></i></p>
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 <br/>
 
@@ -43,7 +43,7 @@ should be just enough to get you started if you already have some
 experience with Csound or, at least, some other “Music N” type
 software synthesizer.</p>
 <h1 class="western" style="line-height: 115%">Changes in This Version</h1>
-<p>This is the Android for Csound app, release code 35. It is the
+<p>This is the Android for Csound app, version code 37. It is the
 first major release of this app since 2021.</p>
 <p>The Csound for Android app now targets Android version 13. This
 has required adding <font face="Courier New, monospace">MANAGE_EXTERNAL_STORAGE</font>
@@ -80,10 +80,15 @@ that can do these things, so exercise due care.</p>
 	.csd file.</p>
 	<li><p>The broken link to the online <i><b>Csound Reference Manual</b></i>
 	has been fixed.</p>
+	<li><p>A number of plugin opcode libraries that went missing in the
+	Android build have now been restored.</p>
+	<li><p>A bug in requesting permission to write files in Android 11
+	and higher has been fixed.</p>
 </ul>
 <h2 class="western">Downgraded Functionality</h2>
 <ul>
 	<li><p>The Ableton Link opcodes have been removed.</p>
+	<li><p>The LuaJit opcodes have been removed.</p>
 </ul>
 <h1 class="western" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 Introduction</h1>
@@ -271,10 +276,7 @@ attribute in the Csound for Android source code. For a basic example
 of a user-defined widget setup, see the <span style="text-decoration: none"><font face="Liberation Serif, serif"><i>Message
 from Another Planet</i></font></span> example. Here is a snippet
 showing a slider's <font face="Courier New, monospace">onInput</font>
-event handler setting a Csound control channel:<br/>
-<br/>
-
-</p>
+event handler setting a Csound control channel:</p>
 <pre class="western" style="line-height: 115%; page-break-inside: avoid; page-break-before: auto; page-break-after: auto">&lt;script&gt;
 function gk_Reverb_FeedbackUpdate(value) {
     var numberValue = parseFloat(value)
@@ -473,14 +475,36 @@ Android app requests</span></span><span style="font-variant: normal">
 </span><span style="font-variant: normal"><span style="font-style: normal">permission,
 which allows the app to read and write files anywhere on a device.
 However, rest assured that the app never, on its own, reads any
-private information, or sends any private information anywhere,
-downloads any data or any software on its own. Of course, a user can
-write a Csound piece that can do these things, so exercise due care.</span></span></p>
+private information, or sends any private information anywhere, </span></span><span style="font-variant: normal"><span style="font-style: normal">or
+</span></span><span style="font-variant: normal"><span style="font-style: normal">downloads
+any data or any software on its own. Of course, a user can write a
+Csound piece that can do these things, so exercise due care.</span></span></p>
 <h2 class="western">Screen Sizes</h2>
 <p>The sizes of fonts and widgets in the Csound for Android app can
 be configured to some extent in the device’s Android settings,
 namely in the <i><b>Settings</b></i>, <i><b>Display</b></i>, <i><b>Font
 size and style</b></i> section and <i><b>Screen zoom</b></i> section.</p>
+<h2 class="western">Editor</h2>
+<p>The Ace editor used in this app currently has some issues.</p>
+<ul>
+	<li><p>The user should touch the editor to bring up the virtual
+	keyboard, only in text above where the keyboard will appear.</p>
+	<li><p>A context menu (three dots) appears when the editor is
+	touched. The <i><b>Select All</b></i>, <i><b>Cut</b></i>, and <i><b>Find</b></i>
+	(and <i><b>Replace</b></i>) commands work, but the <i><b>Paste</b></i>
+	and <i><b>Undo</b></i> commands do not work. However, the standard
+	Android select, copy, cut, and paste operations <i>do</i> work. 
+	</p>
+	<li><p>The scrollbars operate in a manner that might not be
+	intuitive for desktop users. The visible bars at the left and bottom
+	of the editor are the scrollbar “thumbs”, and on a mobile device
+	they are not draggable except as part of the editor panel. Rather,
+	the thumbs simply indicate the relative size and position of the
+	visible document with respect to the entire document. To scroll,
+	simply touch a scrollbar (the very leftmost or bottommost part of
+	the screen, where the thumbs appear) and the editor will jump to the
+	corresponding position in the document.</p>
+</ul>
 <h2 class="western">HTML Pieces</h2>
 <p>When an HTML example loads, the app may briefly display a popup
 message about a missing <font face="Courier New, monospace">csound.js</font>
@@ -510,7 +534,7 @@ starting in the orchestra header, and moving this print statement
 around in the orchestra until the app crashes before you see the
 message. That must be just after where the crash happened, so you can
 often figure out the cause of the crash by the carefully reading the
-code that runs just before the print statement.</p>
+code that runs just before the unprinted print statement.</p>
 <h1 class="western"><br/>
 <br/>
 

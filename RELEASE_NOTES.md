@@ -6,7 +6,7 @@ http://michaelgogins.tumblr.com
 
 ## Introduction
 
-This is the Android for Csound app, version code 36. It is the first major 
+This is the Android for Csound app, version code 37. It is the first major 
 release of this app since 2021.
 
 The Csound for Android app now targets Android version 13. This has required 
@@ -43,6 +43,8 @@ Android versions from 10 forward are still supported.
 * The broken link to the online ***Csound Reference Manual*** has been fixed.
 * A number of plugin opcode libraries that went missing in the Android build 
   have now been restored.
+* A bug in requesting permission to write files in Android 11 and higher has 
+  been fixed.
 
 ### Downgraded Functionality
 

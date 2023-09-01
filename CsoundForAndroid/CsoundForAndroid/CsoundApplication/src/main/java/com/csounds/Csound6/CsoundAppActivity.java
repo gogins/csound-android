@@ -80,6 +80,7 @@ import java.util.List;
 
 import csnd.CsoundCallbackWrapper;
 import csnd.CsoundOboe;
+import csnd.csound_oboeJNI;
 
 import static android.support.design.widget.TabLayout.*;
 import static android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
@@ -791,11 +792,21 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         sliders.add((SeekBar) findViewById(R.id.seekBar7));
         sliders.add((SeekBar) findViewById(R.id.seekBar8));
         sliders.add((SeekBar) findViewById(R.id.seekBar9));
+        sliders.add((SeekBar) findViewById(R.id.seekBar10));
+        sliders.add((SeekBar) findViewById(R.id.seekBar11));
+        sliders.add((SeekBar) findViewById(R.id.seekBar12));
         buttons.add((Button) findViewById(R.id.button1));
         buttons.add((Button) findViewById(R.id.button2));
         buttons.add((Button) findViewById(R.id.button3));
         buttons.add((Button) findViewById(R.id.button4));
         buttons.add((Button) findViewById(R.id.button5));
+        buttons.add((Button) findViewById(R.id.button6));
+        buttons.add((Button) findViewById(R.id.button7));
+        buttons.add((Button) findViewById(R.id.button8));
+        buttons.add((Button) findViewById(R.id.button9));
+        buttons.add((Button) findViewById(R.id.button10));
+        buttons.add((Button) findViewById(R.id.button11));
+        buttons.add((Button) findViewById(R.id.button12));
         pad = findViewById(R.id.pad);
         html_tab.getSettings().setJavaScriptEnabled(true);
         html_tab.getSettings().setBuiltInZoomControls(true);
@@ -819,7 +830,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         editor.loadUrl("file:///android_asset/embedded_editor.html");
         editor.setBackgroundColor(0);
         // Add slider handlers.
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 12; i++) {
             SeekBar seekBar = sliders.get(i);
             final String channelName = "slider" + (i + 1);
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -843,7 +854,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             });
         }
         // Add button handlers.
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 12; i++) {
             Button button = buttons.get(i);
             final String channelName = "butt" + (i + 1);
             button.setOnTouchListener(new OnTouchListener() {
@@ -867,7 +878,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             });
         }
         // Add trackpad handler.
-        pad.setOnTouchListener(new View.OnTouchListener() {
+        pad.setOnTouchListener(new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction() & MotionEvent.ACTION_MASK;
                 double xpos = 0;
@@ -909,7 +920,6 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 public void onAccuracyChanged(Sensor sensor, int accuracy) {
                     // Not used.
                 }
-
                 public void onSensorChanged(SensorEvent event) {
                     double accelerometerX = event.values[0];
                     double accelerometerY = event.values[1];
@@ -923,16 +933,43 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     }
                 }
             };
-            int microseconds = 1000000 / 20;
-            sensorManager.registerListener(motionListener, sensor, microseconds);
+            sensorManager.registerListener(motionListener, sensor, SensorManager.SENSOR_DELAY_GAME);
         }
         // Log some useful information for the user.
         postMessage("This is the Csound for Android app version code: " +  BuildConfig.VERSION_CODE + "\n");
-        postMessage( "The Csound native library version is: " + csnd.csound_oboeJNI.csoundGetVersion() + "\n");
+        postMessage( "The Csound native library version is: " + csound_oboeJNI.csoundGetVersion() + "\n");
         postMessage(
             "The external storage public directory for music for Csound is: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).toString() + "\n");
         postMessage(
             "The external files directory for music for Csound is: " + external_files_dir_music.toString() + "\n");
+        List<Sensor> all_sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
+        postMessage("The available sensors on this device are:\n");
+        SensorEventListener genericSensorEventListener = new SensorEventListener() {
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                // Not used.
+            }
+            public void onSensorChanged(SensorEvent event) {
+                 synchronized (this) {
+                    if (csound_oboe != null) {
+                        String[] parts = event.sensor.getStringType().split("\\.");
+                        String base_name = parts[parts.length - 1];
+                        for (int i = 0; i < event.values.length; ++i) {
+                            double value = event.values[i];
+                            String name = base_name + String.valueOf(i + 1);
+                            csound_oboe.setControlChannel(name, value);
+                            //Log.d("Csound sensor", name + ": " + value + "\n");
+                        }
+                    }
+                }
+            }
+        };
+        for (int i = 0; i < all_sensors.size(); ++i) {
+            Sensor sensor = all_sensors.get(i);
+            String[] parts = sensor.getStringType().split("\\.");
+            String name = parts[parts.length - 1];
+            postMessage("  type: " + name + " maximum range:" + sensor.getMaximumRange() + "\n");
+            //sensorManager.registerListener(genericSensorEventListener, sensor, SensorManager.SENSOR_DELAY_GAME);
+        };
      }
 
     @Override
@@ -1045,7 +1082,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 permissions_to_request.add(Manifest.permission.MANAGE_EXTERNAL_STORAGE);
             }
         }
-        if(Build.VERSION.SDK_INT < 30) {
+        if(Build.VERSION.SDK_INT <= 29) {
             if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 request_permissions = true;
@@ -1124,8 +1161,10 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 setTitle(title);
             }
             if (requestCode == SAVE_FILE_REQUEST && intent != null) {
-                if (checkOnePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    return;
+                if (Build.VERSION.SDK_INT <= 29) {
+                    if (checkOnePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
                 }
                 csound_uri_intent = intent;
                 csound_uri = intent.getData();

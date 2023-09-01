@@ -8,14 +8,32 @@
     body {
         overflow: hidden;
     }
+    .ace_scrollbar {
+        overflow: hidden;
+    }
     .ace_scroll-v {
         z-index: 1000;
         position: absolute;
         top: 0;
         right: 0;
-        bottom: 12px;
-        width: 12px;
-        background: whitesmoke
+        bottom: 12sp;
+        width: 12sp;
+        background: whitesmoke;
+    }
+    .ace_thumb-v {
+        background: gainsboro;
+    }
+    .ace_scroll-h {
+        z-index: 1000;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 12sp;
+        background: whitesmoke;
+    }
+    .ace_thumb-h {
+        background: gainsboro;
     }
     #editor {
         margin: 0;
@@ -37,7 +55,7 @@
     editor.setTheme("ace/theme/cobalt");
     editor.session.setMode("ace/mode/javascript");
     editor.setOption("autoScrollEditorIntoView", "true");
-    editor.setOption("customScrollbar", "true");
+    editor.setOption("customScrollbar", "false");
     editor.setOption("scrollSpeed", "50");
 
     var setEmbeddedEditorText = function(mode) {

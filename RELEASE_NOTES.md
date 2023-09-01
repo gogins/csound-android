@@ -6,7 +6,7 @@ http://michaelgogins.tumblr.com
 
 ## Introduction
 
-This is the Android for Csound app, version code 37. It is the first major 
+This is the Android for Csound app, version code 38. It is the first major 
 release of this app since 2021.
 
 The Csound for Android app now targets Android version 13. This has required 
@@ -35,6 +35,12 @@ Android versions from 10 forward are still supported.
 * The ***User Guide*** has been improved with instructions for using an 
   Android emulator to run the app on notebooks or desktops. Hints for 
   debugging crashes have also been added.
+* The data from _all_ accessible sensors on a device are now routed to Csound 
+  event channels. The names of the sensors are printed to the Messages panel
+  when Csound starts up. The names of the corresponding Csound control 
+  channels are the same, with the index of the value appended, e.g. the 
+  `accelerometer` sensor events convey three values, so the Csound control 
+  channel names are `accelerometer1`, `accelerometer2`, and `accelerometer3`.
 
 ### Bug Fixes
 

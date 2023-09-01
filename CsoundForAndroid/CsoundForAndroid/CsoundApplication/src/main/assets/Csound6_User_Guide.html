@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.4.2.3 (MacOSX)"/>
 	<meta name="created" content="2013-06-11T00:00:00.020113632"/>
-	<meta name="changed" content="2023-08-31T15:41:29.253162134"/>
+	<meta name="changed" content="2023-09-01T14:03:30.182697098"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -43,8 +43,9 @@ should be just enough to get you started if you already have some
 experience with Csound or, at least, some other “Music N” type
 software synthesizer.</p>
 <h1 class="western" style="line-height: 115%">Changes in This Version</h1>
-<p>This is the Android for Csound app, version code 37. It is the
-first major release of this app since 2021.</p>
+<p>This is the Android for Csound app, version code 38. This is a bug
+fix release from 37, which was the first major release of this app
+since 2021.</p>
 <p>The Csound for Android app now targets Android version 13. This
 has required adding <font face="Courier New, monospace">MANAGE_EXTERNAL_STORAGE</font>
 permission, so that the app can now read and write all files on a
@@ -73,6 +74,15 @@ that can do these things, so exercise due care.</p>
 	<li><p>The <i><b>User Guide</b></i> has been improved with
 	instructions for using an Android emulator to run the app on
 	notebooks or desktops.</p>
+	<li><p>The data from <i>all</i> accessible sensors on a device are
+	now routed to Csound event channels. The names of the sensors are
+	printed to the <i><b>Messages</b></i> pane when Csound starts up.
+	The names of the corresponding Csound control channels are the same
+	but with the index of the value appended, e.g. the <font face="Courier New, monospace">accelerometer</font>
+	sensor events convey three values, so its Csound control channel
+	names are <font face="Courier New, monospace">accelerometer1</font>,
+	<font face="Courier New, monospace">accelerometer2</font>, and
+	<font face="Courier New, monospace">accelerometer3</font>.</p>
 </ul>
 <h2 class="western">Bug Fixes</h2>
 <ul>
@@ -475,10 +485,9 @@ Android app requests</span></span><span style="font-variant: normal">
 </span><span style="font-variant: normal"><span style="font-style: normal">permission,
 which allows the app to read and write files anywhere on a device.
 However, rest assured that the app never, on its own, reads any
-private information, or sends any private information anywhere, </span></span><span style="font-variant: normal"><span style="font-style: normal">or
-</span></span><span style="font-variant: normal"><span style="font-style: normal">downloads
-any data or any software on its own. Of course, a user can write a
-Csound piece that can do these things, so exercise due care.</span></span></p>
+private information, or sends any private information anywhere, or
+downloads any data or any software on its own. Of course, a user can
+write a Csound piece that can do these things, so exercise due care.</span></span></p>
 <h2 class="western">Screen Sizes</h2>
 <p>The sizes of fonts and widgets in the Csound for Android app can
 be configured to some extent in the device’s Android settings,

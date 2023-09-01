@@ -968,7 +968,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             String[] parts = sensor.getStringType().split("\\.");
             String name = parts[parts.length - 1];
             postMessage("  type: " + name + " maximum range:" + sensor.getMaximumRange() + "\n");
-            //sensorManager.registerListener(genericSensorEventListener, sensor, SensorManager.SENSOR_DELAY_GAME);
+            sensorManager.registerListener(genericSensorEventListener, sensor, SensorManager.SENSOR_DELAY_GAME);
         };
      }
 

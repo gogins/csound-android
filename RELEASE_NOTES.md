@@ -51,6 +51,9 @@ Android versions from 10 forward are still supported.
   have now been restored.
 * A bug in requesting permission to write files in Android 11 and higher has 
   been fixed.
+* The editor size was misbehaving when the mobile keyboard appeared or 
+  disappeared; fixed by changing the host element for the editor back to 
+  `<div>` from `<pre>`.
 
 ### Downgraded Functionality
 

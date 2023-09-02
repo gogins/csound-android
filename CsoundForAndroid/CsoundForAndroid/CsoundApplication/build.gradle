@@ -28,7 +28,7 @@ android {
             storeFile file('/Users/michaelgogins/csound-android/CsoundForAndroid/CsoundForAndroid/CsoundApplication/CsoundForAndroid.jks')
         }
     }
-    compileSdk 33
+    compileSdk 22
     defaultConfig {
         applicationId "com.csounds.Csound6"
         minSdkVersion 22

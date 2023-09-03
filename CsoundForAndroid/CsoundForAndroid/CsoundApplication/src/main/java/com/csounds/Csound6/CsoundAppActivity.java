@@ -8,6 +8,9 @@
  */
 package com.csounds.Csound6;
 
+//import static android.support.design.widget.TabLayout.*;
+//import static android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
+
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ComponentName;
@@ -30,23 +33,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceError;
@@ -56,15 +50,21 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-import com.csounds.Csound6.BuildConfig;
-import java.io.BufferedOutputStream;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,15 +82,12 @@ import csnd.CsoundCallbackWrapper;
 import csnd.CsoundOboe;
 import csnd.csound_oboeJNI;
 
-import static android.support.design.widget.TabLayout.*;
-import static android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
-
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 @SuppressWarnings("unused")
 public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObjListener,
-        CsoundObj.MessagePoster, */ OnTabSelectedListener,
+        CsoundObj.MessagePoster, */ TabLayout.OnTabSelectedListener,
         SharedPreferences.OnSharedPreferenceChangeListener, ValueCallback<String>,
-        OnRequestPermissionsResultCallback {
+    ActivityCompat.OnRequestPermissionsResultCallback {
     String code = "";
     CsoundOboe csound_oboe = null;
     Uri csound_uri = null;
@@ -857,7 +854,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         for (int i = 0; i < 12; i++) {
             Button button = buttons.get(i);
             final String channelName = "butt" + (i + 1);
-            button.setOnTouchListener(new OnTouchListener() {
+            button.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -878,7 +875,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             });
         }
         // Add trackpad handler.
-        pad.setOnTouchListener(new OnTouchListener() {
+        pad.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction() & MotionEvent.ACTION_MASK;
                 double xpos = 0;
@@ -1251,7 +1248,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     @Override
-    public void onTabSelected(Tab tab) {
+    public void onTabSelected(TabLayout.Tab tab) {
         String text = tab.getText().toString();
         if (text.contentEquals("Editor")) {
             editor_tab.setVisibility(View.VISIBLE);
@@ -1275,7 +1272,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     @Override
-    public void onTabUnselected(Tab tab) {
+    public void onTabUnselected(TabLayout.Tab tab) {
         String text = tab.getText().toString();
         if (text.contentEquals("Editor")) {
             editor_tab.setVisibility(View.GONE);
@@ -1293,7 +1290,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     @Override
-    public void onTabReselected(Tab tab) {
+    public void onTabReselected(TabLayout.Tab tab) {
 
     }
 

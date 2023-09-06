@@ -17,11 +17,15 @@
     <output-test url="file://$MODULE_DIR$/../../../CsoundApplication/build/intermediates/javac/debugAndroidTest/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/ap_generated_sources/debugAndroidTest/out" />
-    <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/res/resValues/androidTest/debug" />
-    <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/source/buildConfig/androidTest/debug" />
+    <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/res/resValues/androidTest/debug">
+      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/res/resValues/androidTest/debug" type="java-test-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/source/buildConfig/androidTest/debug">
+      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/source/buildConfig/androidTest/debug" isTestSource="true" generated="true" />
+    </content>
     <content url="file://$MODULE_DIR$/../../../CsoundApplication/src/androidTest" />
     <content url="file://$MODULE_DIR$/../../../CsoundApplication/src/androidTestDebug" />
-    <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="CsoundForAndroid.CsoundApplication.main" scope="TEST" />
     <orderEntry type="module" module-name="CsoundForAndroid.CsoundAndroid.main" scope="TEST" />

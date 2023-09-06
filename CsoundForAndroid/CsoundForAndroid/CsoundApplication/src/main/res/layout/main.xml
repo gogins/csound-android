@@ -489,5 +489,14 @@
         android:id="@+id/portal_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
+    <androidx.fragment.app.FragmentContainerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.csounds.Csound6.SettingsFragment"
+        android:tag="my_tag" >
+    </androidx.fragment.app.FragmentContainerView>
 </LinearLayout>
+

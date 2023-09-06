@@ -13,6 +13,7 @@ package com.csounds.Csound6;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -33,7 +34,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.preference.PreferenceManager;
+
+import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -424,9 +427,22 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     goToUrl("http://csound.github.io/csound_for_android_privacy.html");
                     return true;
                 case R.id.itemSettings:
-                    Intent intent1 = new Intent(this, SettingsActivity.class);
-                    startActivity(intent1);
+                    // https://www.25yearsofprogramming.com/computer-science/how-to-create-android-settings-screen-using-preferencefragment.html
+                    // Create new fragment and transaction
+                    SettingsFragment newFragment = new SettingsFragment();
+                    // consider using Java coding conventions (upper first char class names!!!)
+                    androidx.fragment.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    // Replace whatever is in the fragment_container view with this fragment,
+                    // and add the transaction to the back stack
+                    transaction.replace(R.id.fragment_container_view, newFragment);
+                    transaction.addToBackStack(null);
+                    // Commit the transaction
+                    transaction.commit();
                     return true;
+
+                    /// Intent intent1 = new Intent(this, SettingsFragment.class);
+                    ///     startActivity(intent1);
+                    /// return true;
                 case R.id.itemTrapped:
                     outFile = copyAsset("examples/Boulanger/trapped.csd");
                     if (outFile != null) {

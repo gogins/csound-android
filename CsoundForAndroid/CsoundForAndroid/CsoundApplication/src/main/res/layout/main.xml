@@ -91,7 +91,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -103,7 +103,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider1"
@@ -120,7 +120,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -132,7 +132,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider2"
@@ -149,7 +149,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -161,7 +161,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider3"
@@ -178,7 +178,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -190,7 +190,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider4"
@@ -207,7 +207,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -219,7 +219,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider5"
@@ -236,7 +236,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -248,7 +248,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider6"
@@ -265,7 +265,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -277,7 +277,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider7"
@@ -294,7 +294,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -306,7 +306,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider8"
@@ -323,7 +323,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -335,7 +335,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider9"
@@ -352,7 +352,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -364,7 +364,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider10"
@@ -381,7 +381,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -393,7 +393,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider11"
@@ -410,7 +410,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="2dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -422,7 +422,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
-                        style="@style/csoundSeekBar"
+                        style="@style/csoundLabelStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/slider12"
@@ -456,8 +456,8 @@
                 android:id="@+id/messageTextViewSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:padding="5dp"
+                android:layout_margin="2dp"
+                android:padding="2dp"
                 android:textColor="#00ff00"
                 android:textSize="10sp"
                 android:typeface="monospace" />
@@ -474,8 +474,8 @@
             android:id="@+id/messageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
+            android:layout_margin="2dp"
+            android:padding="2dp"
             android:textColor="#00ff00"
             android:textSize="10sp"
             android:typeface="monospace" />

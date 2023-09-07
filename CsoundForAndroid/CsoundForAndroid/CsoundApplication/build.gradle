@@ -2,13 +2,15 @@ buildscript {
     repositories {
         google()
         jcenter()
-    }
+        mavenCentral()
+      }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.1.1'
-        classpath 'com.android.support.constraint:constraint-layout:1.1.3'
-
+        classpath 'com.android.support.constraint:constraint-layout:2.0.4'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        // Java language implementation
     }
 }
 apply plugin: 'com.android.application'
@@ -63,9 +65,9 @@ android {
 dependencies {
     implementation project(':CsoundAndroid')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation("com.android.support.constraint:constraint-layout:2.0.4")
-    implementation('com.android.support:appcompat-v7:28.0.0')
-    implementation('com.android.support:design:28.0.0')
-
-
+    implementation('androidx.constraintlayout:constraintlayout:2.1.4')
+    implementation('androidx.appcompat:appcompat:1.6.1')
+    implementation('com.google.android.material:material:1.9.0')
+    implementation('androidx.preference:preference:1.2.1')
+    implementation('androidx.fragment:fragment:1.6.1')
 }

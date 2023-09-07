@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/settingsActivityTitle" android:key="@string/settings">
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/settingsActivityTitle" android:key="@string/settings">
     <ListPreference
         android:title="Audio driver"
         android:key="audioDriver"
@@ -11,4 +12,5 @@
     <EditTextPreference android:key="SSDIR" android:title="Samples directory" android:enabled="true"/>
     <EditTextPreference android:key="SADIR" android:title="Analysis directory" android:enabled="true"/>
     <EditTextPreference android:key="INCDIR" android:title="Include directory" android:enabled="true"/>
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>
+

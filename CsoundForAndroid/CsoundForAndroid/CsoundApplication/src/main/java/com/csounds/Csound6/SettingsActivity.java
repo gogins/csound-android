@@ -1,38 +1,41 @@
 package com.csounds.Csound6;
 
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.preference.ListPreference;
 
-public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
-    public static final String KEY_AUDIO_DRIVER_PREFERENCE = "audioDriver";
-    public ListPreference audioDriverPreference;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceFragmentCompat;
+
+public class SettingsActivity extends androidx.appcompat.app.AppCompatActivity {
+    @SuppressLint("ResourceType")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.settings);
-        audioDriverPreference = (ListPreference)findPreference(KEY_AUDIO_DRIVER_PREFERENCE);
-
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Setup the initial values
-        // Set up a listener whenever a key changes
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (savedInstanceState == null) {
+            SettingsFragment settingsFragment = new SettingsFragment();
+            transaction.replace(android.R.id.content, settingsFragment);
+         }
+        transaction.commit();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Unregister the listener whenever a key changes
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-    }
+    // below inner class is a fragment, which must be called in the main activity
+    public static class SettingsHolder extends PreferenceFragmentCompat {
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            // here we should call settings ui
+            addPreferencesFromResource(R.xml.settings);
 
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(KEY_AUDIO_DRIVER_PREFERENCE)) {
-            audioDriverPreference.setSummary("Selected driver is " + audioDriverPreference.getEntry().toString());
+        }
+
+        @Override
+        public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
+            ///super.onCreate(savedInstanceState);
+            // here we should call settings ui
+            addPreferencesFromResource(R.xml.settings);
+
         }
     }
 }

@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.4.2.3 (MacOSX)"/>
 	<meta name="created" content="2013-06-11T00:00:00.020113632"/>
-	<meta name="changed" content="2023-09-01T14:03:30.182697098"/>
+	<meta name="changed" content="2023-09-07T08:55:18.330275334"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -42,12 +42,20 @@ is an extremely basic guide to using the Csound for Android app. It
 should be just enough to get you started if you already have some
 experience with Csound or, at least, some other “Music N” type
 software synthesizer.</p>
-<h1 class="western" style="line-height: 115%">Changes in This Version</h1>
-<p>This is the Android for Csound app, version code 38. This is a bug
-fix release from 37, which was the first major release of this app
-since 2021.</p>
-<p>The Csound for Android app now targets Android version 13. This
-has required adding <font face="Courier New, monospace">MANAGE_EXTERNAL_STORAGE</font>
+<h1 class="western" style="line-height: 115%">Release Notes</h1>
+<h2 class="western">Version 39</h2>
+<p>This is a bug fix release. The sizes and spacings of the buttons,
+labels, and sliders in the <i><b>Widgets</b></i> tab have been
+refined in order to display more widgets on smartphones.</p>
+<h2 class="western">Version 38</h2>
+<p>This is a bug fix release. The editor size was misbehaving when
+the mobile keyboard appeared or disappeared; fixed by changing the
+host element for the editor back to <font face="Courier New, monospace">&lt;div&gt;</font>
+from <font face="Courier New, monospace">&lt;pre&gt;</font>.</p>
+<h1 class="western">Introduction</h1>
+<p>The Csound for Android app now targets Android version 13; this is
+the first major release of the app since 2021. This has required
+adding <font face="Courier New, monospace">MANAGE_EXTERNAL_STORAGE</font>
 permission, so that the app can now read and write all files on a
 device. Be assured that the app does not, on its own, read any
 private data, or send any private data anywhere, or download any data

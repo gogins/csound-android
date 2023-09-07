@@ -13,7 +13,6 @@ package com.csounds.Csound6;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -34,9 +33,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -64,6 +60,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -1089,7 +1086,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             }
         }
         boolean request_permissions = false;
-        ArrayList<String> permissions_to_request = new ArrayList();
+        ArrayList<String> permissions_to_request = new ArrayList<String>();
         if (Build.VERSION.SDK_INT >= 30) {
             if (!Environment.isExternalStorageManager()) {
                 request_permissions = true;

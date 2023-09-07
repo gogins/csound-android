@@ -428,6 +428,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     return true;
                 case R.id.itemSettings:
                     // https://www.25yearsofprogramming.com/computer-science/how-to-create-android-settings-screen-using-preferencefragment.html
+                    /*
                     // Create new fragment and transaction
                     SettingsFragment newFragment = new SettingsFragment();
                     // consider using Java coding conventions (upper first char class names!!!)
@@ -439,10 +440,10 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     // Commit the transaction
                     transaction.commit();
                     return true;
-
-                    /// Intent intent1 = new Intent(this, SettingsFragment.class);
-                    ///     startActivity(intent1);
-                    /// return true;
+                    */
+                    Intent settingsIntent = new Intent(this.getBaseContext(), SettingsActivity.class);
+                    startActivity(settingsIntent);
+                    return true;
                 case R.id.itemTrapped:
                     outFile = copyAsset("examples/Boulanger/trapped.csd");
                     if (outFile != null) {

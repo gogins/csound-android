@@ -13,6 +13,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
          // Indicate here the XML resource you created above that holds the preferences
         setPreferencesFromResource(R.xml.settings, rootKey);
+        /*
         audioDriverPreference = (ListPreference)  getPreferenceManager().findPreference("audioDriver");
         audioDriverPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -21,5 +22,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 // your code here
             }
         });
+        */
     }
 }

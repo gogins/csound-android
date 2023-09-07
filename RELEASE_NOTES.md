@@ -6,8 +6,23 @@ http://michaelgogins.tumblr.com
 
 ## Introduction
 
-This is the Android for Csound app, version code 38. It is the first major 
-release of this app since 2021.
+### v39
+
+- The buttons, labels, and sliders on the Widgets pane have been styled to be smaller and more uniform, in order to fit more widgets onto smartphone screens (#27).
+
+- The **_Settings_** code has been rewritten to avoid deprecated classes and methods (#28).
+
+### v38
+
+This is the Android for Csound app, version code 38.  It is a bug fix release from v37.
+
+* The editor size was misbehaving when the mobile keyboard appeared or 
+  disappeared; fixed by changing the host element for the editor back to 
+  `<div>` from `<pre>`.
+
+### v37
+
+This is the first major release of this app since 2021.
 
 The Csound for Android app now targets Android version 13. This has required 
 adding `MANAGE_EXTERNAL_STORAGE` permission, so that the app can now read and 

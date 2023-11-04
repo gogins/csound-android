@@ -1161,6 +1161,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         try {
             Log.d("Csound", "onActivityResult: " + requestCode + "," + resultCode + ", " + intent.toString() + "\n");
             if (requestCode == NEW_FILE_REQUEST && intent != null) {
@@ -1200,13 +1201,13 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 String extension = "";
                 int i = pathname.lastIndexOf('.');
                 if (i >= 0) {
-                    extension = pathname.substring(i+1);
+                    extension = pathname.substring(i + 1);
                 }
                 setEditorText(text, extension);
                 loadWebView();
                 String title = uriToFilename(csound_uri);
                 setTitle(title);
-             }
+            }
         } catch (Exception e) {
             Log.e("Csound:", e.toString());
         }

@@ -35,7 +35,7 @@ android {
         applicationId "com.csounds.Csound6"
         minSdkVersion 22
         targetSdkVersion 33
-        versionCode 40
+        versionCode 41
         versionName '6.19.0'
         multiDexEnabled true
         signingConfig signingConfigs.release

@@ -37,6 +37,8 @@ import android.os.Handler;
 
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -329,12 +331,17 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         }
         if (csound_uri == null) {
             Toast.makeText(getApplicationContext(), "You have not selected a piece to run!", Toast.LENGTH_LONG).show();
-        } else if (csound_uri.toString().toLowerCase().endsWith(".csd")) {
-            int result = 0;
-            String filepath = uriToFilepath(csound_uri);
-            result = csound_oboe.CompileCsdText(code);
-            result = csound_oboe.Start();
-            result = csound_oboe.PerformAndReset();
+        } else {
+            String uri_path = csound_uri.getPath();
+            Log.d("Csound", "csound_uri.getPath(): " + uri_path);
+            // Can use content URI if MANAGE_EXTERNAL_STORAGE permission has not been granted.
+            if (csound_uri.toString().toLowerCase().endsWith(".csd") || csound_uri.toString().startsWith("content://com.android.providers.media.documents/document/audio")) {
+                int result = 0;
+                String filepath = uriToFilepath(csound_uri);
+                result = csound_oboe.CompileCsdText(code);
+                result = csound_oboe.Start();
+                result = csound_oboe.PerformAndReset();
+            }
         }
     }
 
@@ -1131,6 +1138,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     public void saveTextToUri(String text, Uri uri)  {
         postMessage("saveTextToUri...\n");
         try {
+            String uri_path = uri.getPath();
+            Log.d("Csound", "uri.getPath(): " + uri_path);
             ContentResolver contentResolver = getContentResolver();
             OutputStream outputStream = contentResolver.openOutputStream(uri, "rwt");
             outputStream.write(code.getBytes());
@@ -1147,6 +1156,32 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
 
     public String loadTextFromUri(Uri uri) throws java.io.IOException {
         postMessage("loadTextFromUri...\n");
+        String uri_path;
+        Uri document_uri;
+        String document_uri_path = null;
+        Uri media_uri;
+        String media_uri_path = null;
+        String path;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            try {
+                document_uri = MediaStore.getDocumentUri(getApplicationContext(), uri);
+                document_uri_path = document_uri.getPath();
+            } catch (Exception e) {
+                Log.e("Csound:", e.toString());
+            }
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            try {
+                media_uri = MediaStore.getMediaUri(getApplicationContext(), uri);
+                media_uri_path = media_uri.getPath();
+            } catch (Exception e) {
+                Log.e("Csound:", e.toString());
+            }
+        }
+        uri_path = uri.getPath();
+        Log.d("Csound", "uri.getPath(): " + uri_path);
+        Log.d("Csound", "document_uri.getPath(): " + document_uri_path);
+        Log.d("Csound", "media_uri.getPath(): " + media_uri_path);
         InputStream inputStream = getContentResolver().openInputStream(uri);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -1183,6 +1218,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 }
                 csound_uri_intent = intent;
                 csound_uri = intent.getData();
+                String csound_uri_path = csound_uri.getPath();
+                Log.e("Csound", "csound_uri.getPath(): " + csound_uri_path);
                 getEditorText();
                 saveTextToUri(code, csound_uri);
                 String title = uriToFilename(csound_uri);

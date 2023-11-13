@@ -30,12 +30,12 @@ android {
             storeFile file('/Users/michaelgogins/csound-android/CsoundForAndroid/CsoundForAndroid/CsoundApplication/CsoundForAndroid.jks')
         }
     }
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         applicationId "com.csounds.Csound6"
         minSdkVersion 22
-        targetSdkVersion 33
-        versionCode 41
+        targetSdkVersion 34
+        versionCode 43
         versionName '6.19.0'
         multiDexEnabled true
         signingConfig signingConfigs.release
@@ -70,4 +70,5 @@ dependencies {
     implementation('com.google.android.material:material:1.9.0')
     implementation('androidx.preference:preference:1.2.1')
     implementation('androidx.fragment:fragment:1.6.1')
+    // implementation('com.google.android.material:material:1.5.0-alpha02')
 }

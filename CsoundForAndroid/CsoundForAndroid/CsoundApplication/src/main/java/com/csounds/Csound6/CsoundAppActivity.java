@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -217,7 +218,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         try {
             Class<?> libcore = Class.forName("libcore.io.Libcore");
             if (libcore == null) {
-                Log.w("Csound:", "Cannot find libcore.os.Libcore;");
+                Log.w("Csound", "Cannot find libcore.os.Libcore;");
                 //                return;
             } else {
                 final Object os = Class.forName("libcore.io.Libcore").getField("os").get(null);
@@ -225,8 +226,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 method.invoke(os, variable, value, true);
             }
         } catch (Exception e) {
-            Log.w("Csound:", Log.getStackTraceString(e));
-            Log.w("Csound:", e.getMessage());
+            Log.w("Csound", Log.getStackTraceString(e));
+            Log.w("Csound", e.getMessage());
         }
     }
 
@@ -334,7 +335,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         } else {
             String uri_path = csound_uri.getPath();
             Log.d("Csound", "csound_uri.getPath(): " + uri_path);
-            // Can use content URI if MANAGE_EXTERNAL_STORAGE permission has not been granted.
+            // Can use content URI for .csd pieces if MANAGE_EXTERNAL_STORAGE permission has not
+            // been granted.
             if (csound_uri.toString().toLowerCase().endsWith(".csd") || csound_uri.toString().startsWith("content://com.android.providers.media.documents/document/audio")) {
                 int result = 0;
                 String filepath = uriToFilepath(csound_uri);
@@ -569,7 +571,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     csoundMessageStringBuilder.append(c);
                 }
             }
-            Log.i("Csound:", message);
+            Log.i("Csound", message);
             }
         });
     }
@@ -633,6 +635,22 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         }
         return code;
     }
+    public String getFilePathFromContentUri(Uri contentUri) {
+        try {
+            File file = new File(contentUri.getPath());
+            ContentResolver contentResolver = getApplicationContext().getContentResolver();
+            Cursor cursor = contentResolver.query(contentUri, null, null, null, null);
+            if (cursor != null) {
+                int columnIndex = cursor.getColumnIndexOrThrow("document_id");
+                cursor.moveToFirst();
+                String result = cursor.getString(columnIndex);
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     protected void loadWebView() {
@@ -662,15 +680,18 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                         settings.setJavaScriptEnabled(true);
                     }
-                    String filepath = uriToFilepath(csound_uri);
+                    String filepath = getFilePathFromContentUri(csound_uri);
+                    Log.d("Csound", "getFilePathFromContentUri: filepath: " + filepath);
+                    filepath = uriToFilepath(csound_uri);
+                    Log.d("Csound", "uriToFilepath: filepath: " + filepath);
                     File file = new File(filepath);
                     baseUrl = file.getParentFile().toURI().toURL();
                     String baseUrlString = baseUrl.toString();
                     baseUrlString = baseUrlString.replace("file:/root/", "file:/");
                     String baseUriPath = csound_uri.getPath();
-                    Log.d("Csound:", "csound_uri.toString(): " + csound_uri.toString());
-                    Log.d("Csound:", "csound_uri.getPath(): " + csound_uri.getPath());
-                    Log.d("Csound:", "baseUrlString: " + baseUrlString);
+                    Log.d("Csound", "csound_uri.toString(): " + csound_uri.toString());
+                    Log.d("Csound", "csound_uri.getPath(): " + csound_uri.getPath());
+                    Log.d("Csound", "baseUrlString from filepath: " + baseUrlString);
                     if (baseUrlString.endsWith("/") == false) {
                         baseUrlString = baseUrlString + "/";
                     }
@@ -691,7 +712,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     private void LoadFile(File file) {
-        Log.d("Csound:", file.getAbsolutePath());
+        Log.d("Csound", file.getAbsolutePath());
         String pathname = file.getPath();
         String extension = "";
         int i = pathname.lastIndexOf('.');
@@ -708,12 +729,12 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("Csound:", "onStop...");
+        Log.d("Csound", "onStop...");
     }
 
     @Override
     protected void onDestroy() {
-        Log.d("Csound:", "onDestroy...");
+        Log.d("Csound", "onDestroy...");
         super.onDestroy();
         final boolean b = stopService(csound_service_intent);
         try {
@@ -723,7 +744,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 }
             }
         } catch (Exception e) {
-            Log.e("Csound:", "Could not stop csound_oboe: \n" + e.toString());
+            Log.e("Csound", "Could not stop csound_oboe: \n" + e.toString());
         }
         finishAndRemoveTask();
     }
@@ -736,7 +757,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        Log.d("Csound:", "onCreate...");
+        Log.d("Csound", "onCreate...");
         external_files_dir_music = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC);
         // Start a service that will keep this activity's process running in the background.
         csound_service_intent = new Intent(this, CsoundService.class);
@@ -1009,7 +1030,23 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         }
         return result;
     }
-
+    private String uriToTitle(android.net.Uri contentUri) {
+        try {
+            File file = new File(contentUri.getPath());
+            ContentResolver contentResolver = getApplicationContext().getContentResolver();
+            Cursor cursor = contentResolver.query(contentUri, null, null, null, null);
+            String column_names[] = cursor.getColumnNames();
+            if (cursor != null) {
+                int columnIndex = cursor.getColumnIndexOrThrow("_display_name");
+                cursor.moveToFirst();
+                String result = cursor.getString(columnIndex);
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
     private String uriToFilepath(android.net.Uri uri) {
         String absolute_filepath = null;
         // We must distinguish between content (external) Uris and
@@ -1082,12 +1119,12 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                         @Override
                         public void onClick(View v) {
                             try {
-                                Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
-                                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
-                                startActivityForResult(intent, REQUEST_ALL_FILES_ACCESS_PERMISSION);
-                            } catch (Exception ex) {
                                 Intent intent = new Intent();
                                 intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                                startActivityForResult(intent, REQUEST_ALL_FILES_ACCESS_PERMISSION);
+                            } catch (Exception ex) {
+                                Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
                                 startActivityForResult(intent, REQUEST_ALL_FILES_ACCESS_PERMISSION);
                             }
                         }
@@ -1167,7 +1204,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 document_uri = MediaStore.getDocumentUri(getApplicationContext(), uri);
                 document_uri_path = document_uri.getPath();
             } catch (Exception e) {
-                Log.e("Csound:", e.toString());
+                Log.e("Csound", e.toString());
             }
         }
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
@@ -1175,7 +1212,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 media_uri = MediaStore.getMediaUri(getApplicationContext(), uri);
                 media_uri_path = media_uri.getPath();
             } catch (Exception e) {
-                Log.e("Csound:", e.toString());
+                Log.e("Csound", e.toString());
             }
         }
         uri_path = uri.getPath();
@@ -1242,15 +1279,15 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 }
                 setEditorText(text, extension);
                 loadWebView();
-                String title = uriToFilename(csound_uri);
+                String title = uriToTitle(csound_uri);
                 setTitle(title);
             }
         } catch (Exception e) {
-            Log.e("Csound:", e.toString());
+            Log.e("Csound", e.toString());
         }
     }
     public void setEditorText(String text, String extension) {
-        Log.i("Csound:", "setEditorText...");
+        Log.i("Csound", "setEditorText...");
         code = text;
         String mode = "ace/mode/csound_document";
         if (extension.compareToIgnoreCase("html") == 0) {
@@ -1261,26 +1298,26 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     public void getEditorText() {
-        Log.i("Csound:", "getEditorText...");
+        Log.i("Csound", "getEditorText...");
         editor.evaluateJavascript("getEmbeddedEditorText();", this);
     }
 
     public void getEditorTextAndRun() {
-        Log.i("Csound:", "getEditorTextAndRun...");
+        Log.i("Csound", "getEditorTextAndRun...");
         editor.evaluateJavascript("getEmbeddedEditorTextAndRun();", this);
     }
 
     @JavascriptInterface
     public void setCsoundText(String text) {
         postMessage("setCsoundText...\n");
-        Log.i("Csound:", "setCsoundText...");
+        Log.i("Csound", "setCsoundText...");
         code = text;
     }
 
     @JavascriptInterface
     public void setCsoundTextAndRun(String text) {
         postMessage("setCsoundTextAndRun...\n");
-        Log.i("Csound:", "setCsoundTextAndRun...");
+        Log.i("Csound", "setCsoundTextAndRun...");
         code = text;
     }
 

@@ -687,7 +687,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     File file = new File(filepath);
                     baseUrl = file.getParentFile().toURI().toURL();
                     String baseUrlString = baseUrl.toString();
-                    baseUrlString = baseUrlString.replace("file:/root/", "file:/");
+                    //baseUrlString = baseUrlString.replace("file:/root/", "file:/");
                     String baseUriPath = csound_uri.getPath();
                     Log.d("Csound", "csound_uri.toString(): " + csound_uri.toString());
                     Log.d("Csound", "csound_uri.getPath(): " + csound_uri.getPath());
@@ -1244,7 +1244,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 csound_uri = intent.getData();
                 setEditorText(csdTemplate, "csd");
                 saveTextToUri(csdTemplate, csound_uri);
-                String title = uriToFilename(csound_uri);
+                String title = uriToTitle(csound_uri);
                 setTitle(title);
             }
             if (requestCode == SAVE_FILE_REQUEST && intent != null) {
@@ -1259,7 +1259,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                 Log.e("Csound", "csound_uri.getPath(): " + csound_uri_path);
                 getEditorText();
                 saveTextToUri(code, csound_uri);
-                String title = uriToFilename(csound_uri);
+                String title = uriToTitle(csound_uri);
                 setTitle(title);
             }
             if (requestCode == OPEN_FILE_REQUEST && intent != null) {

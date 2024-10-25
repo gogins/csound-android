@@ -674,7 +674,8 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     settings.setDisplayZoomControls(false);
                     settings.setAllowFileAccess(true);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        settings.setAllowFileAccessFromFileURLs(true);
+                        /// This is redundant with the next line.
+                        /// settings.setAllowFileAccessFromFileURLs(true);
                         settings.setAllowUniversalAccessFromFileURLs(true);
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {

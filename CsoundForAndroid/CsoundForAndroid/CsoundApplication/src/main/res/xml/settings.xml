@@ -11,6 +11,7 @@
     <EditTextPreference android:key="SFDIR" android:title="Output directory" android:enabled="true"/>
     <EditTextPreference android:key="SSDIR" android:title="Samples directory" android:enabled="true"/>
     <EditTextPreference android:key="SADIR" android:title="Analysis directory" android:enabled="true"/>
-    <EditTextPreference android:key="INCDIR" android:title="Include directory" android:enabled="true"/>
+    <EditTextPreference android:key="WEBPORT" android:title="Web server port" android:enabled="true"/>
+    <EditTextPreference android:key="WEBDIR" android:title="Web server html directory" android:enabled="true"/>
 </androidx.preference.PreferenceScreen>
 

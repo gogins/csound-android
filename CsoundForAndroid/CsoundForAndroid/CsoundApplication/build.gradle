@@ -77,5 +77,6 @@ dependencies {
     implementation('androidx.fragment:fragment:1.8.4')
     implementation('androidx.browser:browser:1.8.0')
     implementation('androidx.webkit:webkit:1.12.1')
+    implementation('org.nanohttpd:nanohttpd:2.3.1')
     // implementation('com.google.android.material:material:1.5.0-alpha02')
 }

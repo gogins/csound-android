@@ -84,12 +84,44 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import fi.iki.elonen.NanoHTTPD;
+
 import csnd.CsoundCallbackWrapper;
 import csnd.CsoundOboe;
 import csnd.csound_oboeJNI;
 
+import fi.iki.elonen.NanoHTTPD;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 @SuppressWarnings("unused")
+class CsoundHTTPD extends NanoHTTPD {
+    private File baseDirectory;
+
+    public CsoundHTTPD(int port, File baseDirectory) {
+        super(port);
+        this.baseDirectory = baseDirectory;
+    }
+
+    @Override
+    public Response serve(IHTTPSession session) {
+        String uri = session.getUri();
+        File requestedFile = new File(baseDirectory, uri);
+
+        if (requestedFile.exists() && requestedFile.isFile()) {
+            try {
+                FileInputStream fis = new FileInputStream(requestedFile);
+                return newFixedLengthResponse(Response.Status.OK, "text/html", fis, requestedFile.length());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "File not found");
+    }
+}
+
 public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObjListener,
         CsoundObj.MessagePoster, */ TabLayout.OnTabSelectedListener,
         SharedPreferences.OnSharedPreferenceChangeListener, ValueCallback<String>,
@@ -127,6 +159,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     private TextView messageTextView = null;
     private TextView messageTextViewSmall = null;
     private WebView html_tab = null;
+    private CsoundHTTPD csound_httpd = null;
     private TableLayout widgets_tab = null;
     private ScrollView messages_tab = null;
     private ScrollView messageTextViewSmallScrollView = null;

@@ -91,5 +91,6 @@
     <orderEntry type="library" name="Gradle: androidx.resourceinspection:resourceinspection-annotation:1.0.1" level="project" />
     <orderEntry type="library" name="Gradle: androidx.collection:collection-ktx:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:listenablefuture:1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.nanohttpd:nanohttpd:2.3.1" level="project" />
   </component>
 </module>

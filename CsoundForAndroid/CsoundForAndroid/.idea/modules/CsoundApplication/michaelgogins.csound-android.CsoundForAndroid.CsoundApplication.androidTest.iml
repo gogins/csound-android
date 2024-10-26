@@ -18,7 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/ap_generated_sources/debugAndroidTest/out" isTestSource="true" generated="true" />
     </content>
     <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/res/resValues/androidTest/debug">
-      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/res/resValues/androidTest/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/res/resValues/androidTest/debug" type="java-test-resource" generated="true" />
     </content>
     <content url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/source/buildConfig/androidTest/debug">
       <sourceFolder url="file://$MODULE_DIR$/../../../CsoundApplication/build/generated/source/buildConfig/androidTest/debug" isTestSource="true" generated="true" />
@@ -88,6 +88,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.resourceinspection:resourceinspection-annotation:1.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.collection:collection-ktx:1.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:listenablefuture:1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.nanohttpd:nanohttpd:2.3.1" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="CsoundForAndroid.CsoundApplication.main" />
 </module>

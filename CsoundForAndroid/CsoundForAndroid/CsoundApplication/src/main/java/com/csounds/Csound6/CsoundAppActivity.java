@@ -14,6 +14,7 @@ package com.csounds.Csound6;
 import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -22,6 +23,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -101,7 +103,6 @@ import android.webkit.MimeTypeMap;
 
 import java.io.FileInputStream;
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 @SuppressWarnings("unused")
 
 class CsoundHTTPD extends NanoHTTPD {
@@ -113,6 +114,8 @@ class CsoundHTTPD extends NanoHTTPD {
         this.baseDirectoryUri = baseDirectoryUri;
     }
 
+
+
     @Override
     public Response serve(IHTTPSession session) {
         String decodedPath;
@@ -122,16 +125,15 @@ class CsoundHTTPD extends NanoHTTPD {
             e.printStackTrace();
             return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "Encoding Error");
         }
-
         DocumentFile baseDir = DocumentFile.fromTreeUri(context, baseDirectoryUri);
         if (baseDir == null) {
             return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "Directory Access Error");
         }
-
         DocumentFile fileToServe = baseDir.findFile(decodedPath.substring(1));
-        if (fileToServe != null && fileToServe.isFile()) {
+        if (fileToServe != null) { /// && fileToServe.isFile()) {
             try {
-                InputStream inputStream = context.getContentResolver().openInputStream(fileToServe.getUri());
+                Uri uri_to_serve = fileToServe.getUri();
+                InputStream inputStream = context.getContentResolver().openInputStream(uri_to_serve);
                 String mimeType = getMimeType(decodedPath);
                 return newFixedLengthResponse(Response.Status.OK, mimeType, inputStream, inputStream.available());
             } catch (IOException e) {
@@ -746,52 +748,31 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     settings.setDisplayZoomControls(false);
                     settings.setAllowFileAccess(true);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        /// This is redundant with the next line.
-                        /// settings.setAllowFileAccessFromFileURLs(true);
+                        settings.setAllowFileAccessFromFileURLs(true);
                         settings.setAllowUniversalAccessFromFileURLs(true);
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                         settings.setJavaScriptEnabled(true);
                     }
-                    String filepath = getFilePathFromContentUri(csound_uri);
-                    // For the local Web server, just try splitting filepath into path and file,
-                    // then recreate csound_httpd for path, then serve https://localhost:port/file.
-                    Log.d("Csound", "getFilePathFromContentUri: filepath: " + filepath);
-                    filepath = uriToFilepath(csound_uri);
+                    String filepath = uriToFilepath(csound_uri);
                     Log.d("Csound", "uriToFilepath: filepath: " + filepath);
-                    File file = new File(filepath);
-                    baseUrl = file.getParentFile().toURI().toURL();
-                    String baseUrlString = baseUrl.toString();
-                    //baseUrlString = baseUrlString.replace("file:/root/", "file:/");
-                    String baseUriPath = csound_uri.getPath();
-                    Log.d("Csound", "csound_uri.toString(): " + csound_uri.toString());
-                    Log.d("Csound", "csound_uri.getPath(): " + csound_uri.getPath());
-                    Log.d("Csound", "baseUrlString from filepath: " + baseUrlString);
-                    if (baseUrlString.endsWith("/") == false) {
-                        baseUrlString = baseUrlString + "/";
-                    }
-                    html_tab.addJavascriptInterface(csound_oboe, "csound");
-                    html_tab.addJavascriptInterface(CsoundAppActivity.this, "CsoundApp");
-
-                    // Get the full path
-                    //String path = url.getPath();
-
-                    // Extract the file (last part of the path)
                     String filename = filepath.substring(filepath.lastIndexOf('/') + 1);
-
-                    // Extract the base directory
-                    String baseDirectory = filepath.substring(0, filepath.lastIndexOf('/') + 1);
-
                     if (csound_httpd != null) {
                         csound_httpd.stop();
                     }
                     Uri htmlDirectoryUri = this.getHtmlDirectoryUri();
                     csound_httpd = new CsoundHTTPD(8080, getApplicationContext(), htmlDirectoryUri);
                     csound_httpd.start();
+                    settings.setJavaScriptEnabled(true);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
+                            html_tab.setWebContentsDebuggingEnabled(true);
+                        }
+                    }
+                    html_tab.addJavascriptInterface(csound_oboe, "csound");
+                    html_tab.addJavascriptInterface(CsoundAppActivity.this, "CsoundApp");
                     String local_url = "http://localhost:8080/" + filename;
                     html_tab.loadUrl(local_url);
-                    //html_tab.loadDataWithBaseURL(baseUrlString,
-                    //        html5_page, "text/html", "utf-8", null);
                     html_tab.invalidate();
                 }
             } else {
@@ -1532,6 +1513,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
             return false;
         }
 
+        @SuppressLint("NewApi")
         @Override
         public void onReceivedError(WebView view,
                                     WebResourceRequest request,

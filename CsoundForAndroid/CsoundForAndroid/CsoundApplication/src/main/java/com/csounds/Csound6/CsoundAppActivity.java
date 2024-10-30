@@ -11,13 +11,10 @@ package com.csounds.Csound6;
 //import static android.support.design.widget.TabLayout.*;
 //import static android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -42,7 +39,6 @@ import android.os.Environment;
 import android.os.Handler;
 
 import androidx.documentfile.provider.DocumentFile;
-import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import android.provider.MediaStore;
@@ -101,8 +97,6 @@ import fi.iki.elonen.NanoHTTPD;
 
 import android.webkit.MimeTypeMap;
 
-import java.io.FileInputStream;
-
 @SuppressWarnings("unused")
 
 class CsoundHTTPD extends NanoHTTPD {
@@ -114,7 +108,38 @@ class CsoundHTTPD extends NanoHTTPD {
         this.baseDirectoryUri = baseDirectoryUri;
     }
 
-
+    public boolean uriEndsWithFilename(Uri uri, String filename) {
+        if (uri == null || filename == null) {
+            return false;
+        }
+        // Decode the URI and get the last path segment
+        String decodedLastSegment = Uri.decode(uri.getLastPathSegment());
+        // Check if the last segment ends with the specified filename
+        return decodedLastSegment != null && decodedLastSegment.endsWith(filename);
+    }
+    /**
+     * Recursively performs a depth-first search for a file in a directory
+     * tree, using the Storage Access Framework. The local URLs are not
+     * encoded, so the URIs here are decoded before comparing them to
+     * the target filename.
+     * @param directory_file
+     * @param target_file
+     * @return DocumentFile for located file, or null if not found.
+     */
+    public DocumentFile recursive_find(DocumentFile directory_file, String target_file) {
+        for (DocumentFile file : directory_file.listFiles()) {
+            if (file.isDirectory()) {
+                // Recursive call to search within subdirectories
+                DocumentFile foundFile = recursive_find(file, target_file);
+                if (foundFile != null) {
+                    return foundFile; // Return the file if found in a subdirectory
+                }
+            } else if (file.isFile() && file.getName() != null && uriEndsWithFilename(file.getUri(), target_file)) {
+                return file; // Found the target file
+            }
+        }
+        return null; // File not found in this directory or its subdirectories
+    }
 
     @Override
     public Response serve(IHTTPSession session) {
@@ -129,7 +154,8 @@ class CsoundHTTPD extends NanoHTTPD {
         if (baseDir == null) {
             return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "Directory Access Error");
         }
-        DocumentFile fileToServe = baseDir.findFile(decodedPath.substring(1));
+        ///DocumentFile fileToServe = baseDir.findFile(decodedPath.substring(1));
+        DocumentFile fileToServe = recursive_find(baseDir, decodedPath.substring(decodedPath.lastIndexOf("/")));
         if (fileToServe != null) { /// && fileToServe.isFile()) {
             try {
                 Uri uri_to_serve = fileToServe.getUri();

@@ -12,6 +12,9 @@
     <EditTextPreference android:key="SSDIR" android:title="Samples directory" android:enabled="true"/>
     <EditTextPreference android:key="SADIR" android:title="Analysis directory" android:enabled="true"/>
     <EditTextPreference android:key="WEBPORT" android:title="Web server port" android:enabled="true"/>
-    <EditTextPreference android:key="WEBDIR" android:title="Web server html directory" android:enabled="true"/>
+    <Preference
+        android:key="pick_html_directory"
+        android:title="Select HTML directory"
+        android:summary="This is the embedded Web server's base directory" />
 </androidx.preference.PreferenceScreen>
 

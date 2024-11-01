@@ -8,9 +8,6 @@
  */
 package com.csounds.Csound6;
 
-//import static android.support.design.widget.TabLayout.*;
-//import static android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -83,7 +80,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.net.URLDecoder;
 
 import java.util.ArrayList;
@@ -108,13 +104,11 @@ class CsoundHTTPD extends NanoHTTPD {
         this.baseDirectoryUri = baseDirectoryUri;
     }
 
-    public boolean uriEndsWithFilename(Uri uri, String filename) {
+    public boolean uri_ends_with_filename(Uri uri, String filename) {
         if (uri == null || filename == null) {
             return false;
         }
-        // Decode the URI and get the last path segment
         String decodedLastSegment = Uri.decode(uri.getLastPathSegment());
-        // Check if the last segment ends with the specified filename
         return decodedLastSegment != null && decodedLastSegment.endsWith(filename);
     }
     /**
@@ -129,12 +123,11 @@ class CsoundHTTPD extends NanoHTTPD {
     public DocumentFile recursive_find(DocumentFile directory_file, String target_file) {
         for (DocumentFile file : directory_file.listFiles()) {
             if (file.isDirectory()) {
-                // Recursive call to search within subdirectories
-                DocumentFile foundFile = recursive_find(file, target_file);
-                if (foundFile != null) {
-                    return foundFile; // Return the file if found in a subdirectory
+                DocumentFile found_file = recursive_find(file, target_file);
+                if (found_file != null) {
+                    return found_file; // Return the file if found in a subdirectory
                 }
-            } else if (file.isFile() && file.getName() != null && uriEndsWithFilename(file.getUri(), target_file)) {
+            } else if (file.isFile() && file.getName() != null && uri_ends_with_filename(file.getUri(), target_file)) {
                 return file; // Found the target file
             }
         }
@@ -154,9 +147,8 @@ class CsoundHTTPD extends NanoHTTPD {
         if (baseDir == null) {
             return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "Directory Access Error");
         }
-        ///DocumentFile fileToServe = baseDir.findFile(decodedPath.substring(1));
         DocumentFile fileToServe = recursive_find(baseDir, decodedPath.substring(decodedPath.lastIndexOf("/")));
-        if (fileToServe != null) { /// && fileToServe.isFile()) {
+        if (fileToServe != null) {
             try {
                 Uri uri_to_serve = fileToServe.getUri();
                 InputStream inputStream = context.getContentResolver().openInputStream(uri_to_serve);
@@ -181,10 +173,13 @@ class CsoundHTTPD extends NanoHTTPD {
     }
 }
 
-public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObjListener,
-        CsoundObj.MessagePoster, */ TabLayout.OnTabSelectedListener,
-    SharedPreferences.OnSharedPreferenceChangeListener, ValueCallback<String>,
-    ActivityCompat.OnRequestPermissionsResultCallback {
+public class CsoundAppActivity
+    extends AppCompatActivity
+    implements TabLayout.OnTabSelectedListener,
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    ValueCallback<String>,
+    ActivityCompat.OnRequestPermissionsResultCallback
+{
     String code = "";
     CsoundOboe csound_oboe = null;
     Uri csound_uri = null;
@@ -196,7 +191,6 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     private final Boolean firstLvl = true;
     private File external_files_dir_music = null;
     String csdTemplate = null;
-    URL baseUrl = null;
     PackageInfo packageInfo = null;
     // Csound environment variables managed on Android.
     static String OPCODE6DIR = null;
@@ -400,8 +394,9 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         csnd.csound_oboeJNI.csoundSetGlobalEnv("INCDIR", INCDIR);
         int[] exclusive_cores = getExclusiveCores();
         csound_oboe = new CsoundOboe();
-        String driver_value = PreferenceManager
-            .getDefaultSharedPreferences(this).getString("audioDriver", "0");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String driver_value = sharedPreferences.getString("audioDriver", "0");
         int driver_index = Integer.parseInt(driver_value);
         csound_oboe.setOboeApi(driver_index);
         oboe_callback_wrapper = new CsoundCallbackWrapper(csound_oboe.getCsound()) {
@@ -429,8 +424,6 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         } else {
             String uri_path = csound_uri.getPath();
             Log.d("Csound", "csound_uri.getPath(): " + uri_path);
-            // Can use content URI for .csd pieces if MANAGE_EXTERNAL_STORAGE permission has not
-            // been granted.
             if (csound_uri.toString().toLowerCase().endsWith(".csd") || csound_uri.toString().startsWith("content://com.android.providers.media.documents/document/audio")) {
                 int result = 0;
                 String filepath = uriToFilepath(csound_uri);
@@ -530,20 +523,6 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                     goToUrl("http://csound.github.io/csound_for_android_privacy.html");
                     return true;
                 case R.id.itemSettings:
-                    // https://www.25yearsofprogramming.com/computer-science/how-to-create-android-settings-screen-using-preferencefragment.html
-                    /*
-                    // Create new fragment and transaction
-                    SettingsFragment newFragment = new SettingsFragment();
-                    // consider using Java coding conventions (upper first char class names!!!)
-                    androidx.fragment.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    // Replace whatever is in the fragment_container view with this fragment,
-                    // and add the transaction to the back stack
-                    transaction.replace(R.id.fragment_container_view, newFragment);
-                    transaction.addToBackStack(null);
-                    // Commit the transaction
-                    transaction.commit();
-                    return true;
-                    */
                     Intent settingsIntent = new Intent(this.getBaseContext(), SettingsActivity.class);
                     startActivity(settingsIntent);
                     return true;
@@ -748,11 +727,16 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
     }
 
     private Uri getHtmlDirectoryUri() {
-        SharedPreferences prefs = getApplicationContext().getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
-        String uriString = prefs.getString("html_directory_uri", null);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String uriString = sharedPreferences.getString("html_directory_uri", null);
         return uriString != null ? Uri.parse(uriString) : null;
     }
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+
+    private int getHtmlPort() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String port_string = sharedPreferences.getString("html_port", "8080");
+        return Integer.parseInt(port_string);
+    }
     protected void loadWebView() {
         try {
             getEditorText();
@@ -787,17 +771,18 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
                         csound_httpd.stop();
                     }
                     Uri htmlDirectoryUri = this.getHtmlDirectoryUri();
-                    csound_httpd = new CsoundHTTPD(8080, getApplicationContext(), htmlDirectoryUri);
+                    int port = this.getHtmlPort();
+                    csound_httpd = new CsoundHTTPD(port, getApplicationContext(), htmlDirectoryUri);
                     csound_httpd.start();
-                    settings.setJavaScriptEnabled(true);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
                             html_tab.setWebContentsDebuggingEnabled(true);
                         }
                     }
+                    settings.setJavaScriptEnabled(true);
                     html_tab.addJavascriptInterface(csound_oboe, "csound");
                     html_tab.addJavascriptInterface(CsoundAppActivity.this, "CsoundApp");
-                    String local_url = "http://localhost:8080/" + filename;
+                    String local_url = "http://localhost:" + port + "/" + filename;
                     html_tab.loadUrl(local_url);
                     html_tab.invalidate();
                 }
@@ -878,8 +863,7 @@ public class CsoundAppActivity extends AppCompatActivity implements /* CsoundObj
         // Bug since not turned back on: audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
         OPCODE6DIR = getBaseContext().getApplicationInfo().nativeLibraryDir;
-        final SharedPreferences sharedPreferences = PreferenceManager
-            .getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         OPCODE6DIR = sharedPreferences.getString("OPCODE6DIR", OPCODE6DIR);
         SSDIR = packageInfo.applicationInfo.dataDir + "/samples";

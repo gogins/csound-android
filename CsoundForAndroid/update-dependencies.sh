@@ -7,6 +7,10 @@ git pull --recurse-submodules
 git branch
 echo "Finished updating all submodules for CsoundForAndroid."
 ls -ll
+# The idea here is to drop all of cloud-5 into the html directory of the app.
+wget https://github.com/gogins/gogins.github.io/archive/refs/heads/main.zip -O cloud-5.zip
+mkdir -p CsoundForAndroid/CsoundApplication/src/main/assets/cloud-5
+tar -xf cloud-5.zip --strip-components 1 -C CsoundForAndroid/CsoundApplication/src/main/assets/cloud-5
 cp -rf csound-examples/csound-for-android/* CsoundForAndroid/CsoundApplication/src/main/assets/examples
 cp -rf csound-examples/docs/* CsoundForAndroid/CsoundApplication/src/main/assets/examples/Gogins
 find CsoundForAndroid/CsoundApplication/src/main/assets/ -name "*.lisp" -delete

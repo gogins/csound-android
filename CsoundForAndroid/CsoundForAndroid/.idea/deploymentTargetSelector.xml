@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="CsoundApplication">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-10-31T13:53:43.867895Z">
+        <DropdownSelection timestamp="2024-11-01T23:41:42.586290Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/michaelgogins/.android/avd/Pixel_Fold_API_35.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/michaelgogins/.android/avd/Pixel_Tablet_API_34-ext12.avd" />
             </handle>
           </Target>
         </DropdownSelection>

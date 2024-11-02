@@ -5,7 +5,7 @@
 	<title></title>
 	<meta name="generator" content="LibreOffice 7.4.2.3 (MacOSX)"/>
 	<meta name="created" content="2013-06-11T00:00:00.020113632"/>
-	<meta name="changed" content="2023-11-14T20:36:15.265442038"/>
+	<meta name="changed" content="2024-11-01T20:00:54.401200952"/>
 	<meta name="created" content="00:00:00">
 	<meta name="created" content="00:00:00">
 	<style type="text/css">
@@ -32,7 +32,7 @@ Csound for Android
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 <i><b>Michael Gogins</b></i></p>
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
-<i><b>14 November 2023</b></i></p>
+<i><b>1 November 2024</b></i></p>
 <p align="center" style="line-height: 115%; margin-top: 0.08in; margin-bottom: 0in">
 <br/>
 
@@ -43,6 +43,16 @@ should be just enough to get you started if you already have some
 experience with Csound or, at least, some other “Music N” type
 software synthesizer.</p>
 <h1 class="western" style="line-height: 115%">Release Notes</h1>
+<h2 class="western">Version 48</h2>
+<p style="line-height: 115%">Changes in Android up to version 15 have
+required many changes to Csound for Android. The major change is to
+embed a local Web server, based on NanoHTTPD, in the app in order to
+simplify permissions. All HTML pieces are now served by this embedded
+Web server on <font face="Courier New, monospace">localhost</font>
+from a user-configurable port and Web directory. The user should
+notice few if any differences, apart from the need to set the Web
+directory for a piece before running it.</p>
+<p style="line-height: 115%">Some other code has been simplified.</p>
 <h2 class="western">Version 46</h2>
 <p style="line-height: 115%">The code for managing permissions has
 been improved. It is now possible to load and render .csd pieces from
@@ -64,8 +74,8 @@ the mobile keyboard appeared or disappeared; fixed by changing the
 host element for the editor back to <font face="Courier New, monospace">&lt;div&gt;</font>
 from <font face="Courier New, monospace">&lt;pre&gt;</font>.</p>
 <h1 class="western">Introduction</h1>
-<p>The Csound for Android app now targets Android version 13; this is
-the first major release of the app since 2021. This has required
+<p>The Csound for Android app now targets Android version 15; this is
+the first major release of the app since 2023. This has required
 adding <font face="Courier New, monospace">MANAGE_EXTERNAL_STORAGE</font>
 permission, so that the app can now read and write all files on a
 device. Be assured that the app does not, on its own, read any
@@ -503,10 +513,17 @@ Android app requests</span></span><span style="font-variant: normal">
 </span></span><span style="font-variant: normal"><font face="Courier New, monospace"><span style="font-style: normal">MANAGE_EXTERNAL_STORAGE</span></font></span><span style="font-variant: normal">
 </span><span style="font-variant: normal"><span style="font-style: normal">permission,
 which allows the app to read and write files anywhere on a device.
-However, rest assured that the app never, on its own, reads any
-private information, or sends any private information anywhere, or
-downloads any data or any software on its own. Of course, a user can
-write a Csound piece that can do these things, so exercise due care.</span></span></p>
+</span></span><span style="font-variant: normal"><span style="font-style: normal">Android
+also enforces new restrictions on file access from the built-in Web
+browser. These restrictions are now handled by running HTML pieces
+from an embedded Web server running on </span></span><span style="font-variant: normal"><font face="Courier New, monospace"><span style="font-style: normal">localhost</span></font></span><span style="font-variant: normal"><span style="font-style: normal">.
+</span></span>
+</p>
+<p><span style="font-variant: normal"><span style="font-style: normal">However,
+rest assured that the app never, on its own, reads any private
+information, or sends any private information anywhere, or downloads
+any data or any software on its own. Of course, a user can write a
+Csound piece that can do these things, so exercise due care.</span></span></p>
 <h2 class="western">Screen Sizes</h2>
 <p>The sizes of fonts and widgets in the Csound for Android app can
 be configured to some extent in the device’s Android settings,
@@ -534,6 +551,12 @@ size and style</b></i> section and <i><b>Screen zoom</b></i> section.</p>
 	corresponding position in the document.</p>
 </ul>
 <h2 class="western">HTML Pieces</h2>
+<p>Before running an HTML piece, the user must pick a directory in
+the <i><b>Settings</b></i> that will be the Web directory of the
+embedded Web server, and this directory must contain all HTML files
+and other assets required for pieces. The <font face="Courier New, monospace">examples/Gogins
+</font>directory contains HTML pieces and other assets, and you can
+create new HTML pieces in that directory.</p>
 <p>When an HTML example loads, the app may briefly display a popup
 message about a missing <font face="Courier New, monospace">csound.js</font>
 file. This message can be ignored and should not recur. The piece
